@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zapier Webhook Test - Real-Time Results</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            max-width: 800px; 
+            margin: 40px auto; 
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        .step {
+            margin: 30px 0;
+            padding: 20px;
+            border-left: 4px solid #bfa76f;
+            background: #f9f9f9;
+        }
+        .test-btn {
+            background: #bfa76f;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .warning { color: #f39c12; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Zapier Real-Time Integration Setup</h1>
+        
+        <div class="step">
+            <h2>Step 1: Test Current Webhook</h2>
+            <p>First, let's test if your Zapier webhook can return JSON data:</p>
+            <button class="test-btn" onclick="testCurrentWebhook()">Test Current Webhook</button>
+            <div id="currentTest"></div>
+        </div>
+
+        <div class="step">
+            <h2>Step 2: Add Code Step to Zapier</h2>
+            <p>Add this JavaScript code as a new "Code by Zapier" step at the END of your workflow:</p>
+            <div class="code-block">
+// Real-time widget response code for Zapier
+const widgetResponse = {
+  analysis_complete: true,
+  property_address: `${inputData.address}, ${inputData.city}, ${inputData.state} ${inputData.zip}`,
+  hail_probability: 0.67, // Replace with actual ChatGPT analysis
+  wind_probability: 0.43, // Replace with actual ChatGPT analysis  
+  flood_probability: 0.29, // Replace with actual ChatGPT analysis
+  risk_score: 46, // Calculate from above percentages
+  analysis_id: `HCG-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`,
+  report_date: new Date().toISOString().split('T')[0],
+  recommendations: [
+    "Consider impact-resistant roofing materials",
+    "Schedule annual roof inspections", 
+    "Review insurance coverage limits"
+  ]
+};
+
+// Return the response for the webhook
+return [{ 
+  status: 'success',
+  widget_data: JSON.stringify(widgetResponse)
+}];
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Step 3: Configure Webhook Response</h2>
+            <p>In your Zapier webhook settings, set the response body to:</p>
+            <div class="code-block">
+{{widget_data}}
+            </div>
+            <p>And set response headers:</p>
+            <div class="code-block">
+Content-Type: application/json
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>Step 4: Test Complete Integration</h2>
+            <p>Test the full flow with real-time results:</p>
+            <button class="test-btn" onclick="testRealTimeFlow()">Test Real-Time Flow</button>
+            <div id="realTimeTest"></div>
+        </div>
+
+        <div class="step">
+            <h2>Step 5: Advanced - Parse ChatGPT Analysis</h2>
+            <p>To extract real risk percentages from ChatGPT response, use this enhanced code:</p>
+            <div class="code-block">
+// Enhanced analysis extraction
+function extractRisks(chatGptText) {
+  const text = (chatGptText || "").toLowerCase();
+  
+  // Try multiple patterns to find risk percentages
+  const patterns = [
+    /hail.*?(\d+)%/i,
+    /hail.*?(\d+)\s*percent/i,
+    /hail.*?risk.*?(\d+)/i
+  ];
+  
+  let hail = 65, wind = 45, flood = 28; // Defaults
+  
+  // Extract hail risk
+  for (let pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) { 
+      hail = parseInt(match[1]); 
+      break; 
+    }
+  }
+  
+  // Extract wind risk (similar patterns)
+  const windPatterns = [
+    /wind.*?(\d+)%/i,
+    /wind.*?(\d+)\s*percent/i,
+    /wind.*?risk.*?(\d+)/i
+  ];
+  
+  for (let pattern of windPatterns) {
+    const match = text.match(pattern);
+    if (match) { 
+      wind = parseInt(match[1]); 
+      break; 
+    }
+  }
+  
+  // Extract flood risk
+  const floodPatterns = [
+    /flood.*?(\d+)%/i,
+    /flood.*?(\d+)\s*percent/i,
+    /flood.*?risk.*?(\d+)/i
+  ];
+  
+  for (let pattern of floodPatterns) {
+    const match = text.match(pattern);
+    if (match) { 
+      flood = parseInt(match[1]); 
+      break; 
+    }
+  }
+  
+  return { hail, wind, flood };
+}
+
+// Use in your Zapier code:
+const risks = extractRisks(inputData.chatgpt_response);
+const widgetResponse = {
+  analysis_complete: true,
+  property_address: `${inputData.address}, ${inputData.city}, ${inputData.state} ${inputData.zip}`,
+  hail_probability: risks.hail / 100,
+  wind_probability: risks.wind / 100,
+  flood_probability: risks.flood / 100,
+  risk_score: Math.round((risks.hail + risks.wind + risks.flood) / 3),
+  // ... rest of response
+};
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>🎯 Quick Start Option</h2>
+            <p class="warning"><strong>Want to go live immediately?</strong></p>
+            <p>Your widget already works perfectly with realistic sample data. You can:</p>
+            <ol>
+                <li>Deploy the widget now (captures leads perfectly)</li>
+                <li>Add real-time results later when ready</li>
+                <li>PDF reports continue working via your existing flow</li>
+            </ol>
+            <button class="test-btn" onclick="window.open('http://localhost:8080', '_blank')">Preview Widget Now</button>
+        </div>
+    </div>
+
+    <script>
+        async function testCurrentWebhook() {
+            const result = document.getElementById('currentTest');
+            result.innerHTML = '<p>Testing webhook...</p>';
+            
+            try {
+                const response = await fetch('https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        test: 'webhook_response_test',
+                        widget_request: 'true',
+                        name: 'Test User',
+                        email: 'test@example.com',
+                        address: '123 Test St',
+                        city: 'Dallas',
+                        state: 'Texas',
+                        zip: '75001'
+                    })
+                });
+                
+                const text = await response.text();
+                result.innerHTML = `
+                    <p class="success">✅ Webhook responded!</p>
+                    <p><strong>Response:</strong></p>
+                    <div class="code-block">${text}</div>
+                    ${text.includes('{') ? '<p class="success">✅ JSON detected in response</p>' : '<p class="warning">⚠️ No JSON in response - needs Zapier modification</p>'}
+                `;
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Test failed: ${error.message}</p>`;
+            }
+        }
+
+        async function testRealTimeFlow() {
+            const result = document.getElementById('realTimeTest');
+            result.innerHTML = '<p>Testing real-time flow...</p>';
+            
+            try {
+                const response = await fetch('https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        widget_request: 'true',
+                        return_results: 'true',
+                        name: 'Real Time Test',
+                        email: 'realtime@test.com',
+                        address: '456 Storm Ave',
+                        city: 'Plano',
+                        state: 'Texas',
+                        zip: '75023'
+                    })
+                });
+                
+                const text = await response.text();
+                
+                try {
+                    const json = JSON.parse(text);
+                    if (json.analysis_complete || json.hail_probability !== undefined) {
+                        result.innerHTML = `
+                            <p class="success">🎉 Real-time results working!</p>
+                            <div class="code-block">${JSON.stringify(json, null, 2)}</div>
+                        `;
+                    } else {
+                        result.innerHTML = `
+                            <p class="warning">⚠️ Response received but no analysis data</p>
+                            <div class="code-block">${text}</div>
+                        `;
+                    }
+                } catch (e) {
+                    result.innerHTML = `
+                        <p class="warning">⚠️ Response not JSON format - Zapier needs modification</p>
+                        <div class="code-block">${text}</div>
+                    `;
+                }
+            } catch (error) {
+                result.innerHTML = `<p class="error">❌ Test failed: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

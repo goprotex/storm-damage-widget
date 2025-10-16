@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storm Damage Assessment - Hayden Claims Group</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Get your personalized Texas storm risk analysis from Hayden Claims Group">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel: Form -->
+        <div class="left-panel" id="formPanel">
+            <div class="form-container">
+                <div class="logo-section">
+                    <h1>Hayden Claims Group</h1>
+                    <p class="tagline">Expert Storm Damage Assessment</p>
+                </div>
+                
+                <form id="stormForm">
+                    <h2>Get Your Storm Risk Analysis</h2>
+                    <p class="form-description">Enter your property details for a comprehensive Texas storm damage assessment</p>
+                    
+                    <div class="input-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required autocomplete="name">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required autocomplete="email">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" autocomplete="tel">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="address">Property Address *</label>
+                        <input type="text" id="address" name="address" required autocomplete="street-address">
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" name="city" required autocomplete="address-level2">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" value="Texas" readonly>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="zip">ZIP Code *</label>
+                            <input type="text" id="zip" name="zip" required pattern="[0-9]{5}" autocomplete="postal-code">
+                        </div>
+                    </div>
+                    
+                    <div class="date-section">
+                        <h3>Storm Date Range (Optional)</h3>
+                        <div class="input-row">
+                            <div class="input-group">
+                                <label for="startDate">From</label>
+                                <input type="date" id="startDate" name="startDate">
+                            </div>
+                            <div class="input-group">
+                                <label for="endDate">To</label>
+                                <input type="date" id="endDate" name="endDate">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <span class="btn-text">Run Assessment</span>
+                        <span class="btn-loader hidden">Processing...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Panel: Loading & Results -->
+        <div class="right-panel" id="resultsPanel">
+            <!-- Loading State -->
+            <div id="loading" class="loading-container">
+                <div class="swirl-container">
+                    <div class="swirl">
+                        <div class="swirl-inner"></div>
+                        <div class="swirl-outer"></div>
+                    </div>
+                </div>
+                <div class="breathing-text">Hayden Claims Group</div>
+                <div id="statusMessage" class="status-text">Initializing storm analysis...</div>
+                <div id="fact" class="fact-text"></div>
+                <div class="progress-indicators">
+                    <div class="progress-dot active"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                    <div class="progress-dot"></div>
+                </div>
+            </div>
+
+            <!-- Results State -->
+            <div id="results" class="results-container hidden">
+                <div class="results-header">
+                    <div class="success-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40">
+                            <circle cx="20" cy="20" r="18" stroke="#bfa76f" stroke-width="2" fill="none"/>
+                            <path d="M13 20 L18 25 L27 15" stroke="#bfa76f" stroke-width="2" fill="none" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Storm Risk Assessment Complete</h3>
+                </div>
+                
+                <div id="property" class="property-info"></div>
+                
+                <div id="riskSummary" class="risk-summary">
+                    <h4>Risk Analysis Results</h4>
+                    <div class="risk-item">
+                        <span class="risk-label">Hail Risk:</span>
+                        <div class="risk-bar">
+                            <div class="risk-fill" data-risk="hail"></div>
+                        </div>
+                        <span class="risk-percent" id="hailPercent">0%</span>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-label">Wind Risk:</span>
+                        <div class="risk-bar">
+                            <div class="risk-fill" data-risk="wind"></div>
+                        </div>
+                        <span class="risk-percent" id="windPercent">0%</span>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-label">Flood Risk:</span>
+                        <div class="risk-bar">
+                            <div class="risk-fill" data-risk="flood"></div>
+                        </div>
+                        <span class="risk-percent" id="floodPercent">0%</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <a id="pdfLink" href="#" class="button primary" target="_blank">Download Full Report</a>
+                    <button class="button secondary" onclick="resetForm()">New Assessment</button>
+                </div>
+            </div>
+
+            <!-- Confirmation State -->
+            <div id="confirmation" class="confirmation-container hidden">
+                <div class="confirmation-icon">
+                    <svg width="60" height="60" viewBox="0 0 60 60">
+                        <circle cx="30" cy="30" r="28" stroke="#bfa76f" stroke-width="2" fill="none"/>
+                        <path d="M20 30 L27 37 L40 23" stroke="#bfa76f" stroke-width="3" fill="none" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h3>Assessment Received!</h3>
+                <p>Your personalized storm damage report is being generated and will be emailed to you within 5 minutes.</p>
+                <div class="next-steps">
+                    <p><strong>What happens next:</strong></p>
+                    <ul>
+                        <li>AI analysis of your property's storm history</li>
+                        <li>Comprehensive risk assessment report</li>
+                        <li>Professional recommendations</li>
+                    </ul>
+                </div>
+                <p class="contact-info">Questions? Call us at <strong>(469) 434-2121</strong></p>
+                <button class="button secondary" onclick="resetForm()">Run Another Assessment</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

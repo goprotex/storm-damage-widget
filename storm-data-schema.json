@@ -1,0 +1,328 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/storm-data-schema.json",
+  "title": "Hayden Claims Group - Storm Data Extraction Schema",
+  "description": "JSON schema for storm data extraction from vector store within 15-mile radius",
+  "type": "object",
+  "properties": {
+    "property_coordinates": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90,
+          "description": "Property latitude in decimal degrees"
+        },
+        "longitude": {
+          "type": "number", 
+          "minimum": -180,
+          "maximum": 180,
+          "description": "Property longitude in decimal degrees"
+        },
+        "address_verified": {
+          "type": "boolean",
+          "description": "Whether the address coordinates were successfully verified"
+        }
+      },
+      "required": ["latitude", "longitude", "address_verified"],
+      "additionalProperties": false
+    },
+    "search_parameters": {
+      "type": "object",
+      "properties": {
+        "radius_miles": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "description": "Search radius in miles from property"
+        },
+        "total_pins_found": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of data pins found in search area"
+        },
+        "date_range": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2} to \\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date range of available data (YYYY-MM-DD to YYYY-MM-DD)"
+        }
+      },
+      "required": ["radius_miles", "total_pins_found", "date_range"],
+      "additionalProperties": false
+    },
+    "hail_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Event date in YYYY-MM-DD format"
+          },
+          "time": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$",
+            "description": "Event time in HH:MM format if available"
+          },
+          "hail_size_inches": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 10,
+            "description": "Measured hail size in inches"
+          },
+          "distance_miles": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "description": "Distance from property in miles"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+            "description": "Direction from property"
+          },
+          "vector_pin_id": {
+            "type": "string",
+            "description": "Unique identifier for the data source pin"
+          },
+          "additional_data": {
+            "type": "string",
+            "description": "Any additional measurements or notes"
+          }
+        },
+        "required": ["date", "hail_size_inches", "distance_miles", "direction", "vector_pin_id"],
+        "additionalProperties": false
+      }
+    },
+    "wind_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Event date in YYYY-MM-DD format"
+          },
+          "time": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$",
+            "description": "Event time in HH:MM format if available"
+          },
+          "wind_speed_mph": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 300,
+            "description": "Measured wind speed in mph"
+          },
+          "wind_type": {
+            "type": "string",
+            "enum": ["straight_line", "tornado", "microburst", "downburst", "other"],
+            "description": "Type of wind event"
+          },
+          "distance_miles": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "description": "Distance from property in miles"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+            "description": "Direction from property"
+          },
+          "vector_pin_id": {
+            "type": "string",
+            "description": "Unique identifier for the data source pin"
+          },
+          "additional_data": {
+            "type": "string",
+            "description": "Any additional measurements or notes"
+          }
+        },
+        "required": ["date", "wind_speed_mph", "wind_type", "distance_miles", "direction", "vector_pin_id"],
+        "additionalProperties": false
+      }
+    },
+    "tornado_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Event date in YYYY-MM-DD format"
+          },
+          "time": {
+            "type": "string",
+            "pattern": "^\\d{2}:\\d{2}$",
+            "description": "Event time in HH:MM format if available"
+          },
+          "ef_rating": {
+            "type": "string",
+            "enum": ["EF0", "EF1", "EF2", "EF3", "EF4", "EF5"],
+            "description": "Enhanced Fujita Scale rating"
+          },
+          "path_width_yards": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 5000,
+            "description": "Tornado path width in yards if available"
+          },
+          "distance_miles": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "description": "Distance from property in miles"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+            "description": "Direction from property"
+          },
+          "vector_pin_id": {
+            "type": "string",
+            "description": "Unique identifier for the data source pin"
+          },
+          "additional_data": {
+            "type": "string",
+            "description": "Path information or damage reports"
+          }
+        },
+        "required": ["date", "ef_rating", "distance_miles", "direction", "vector_pin_id"],
+        "additionalProperties": false
+      }
+    },
+    "flood_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Event date in YYYY-MM-DD format"
+          },
+          "flood_type": {
+            "type": "string",
+            "enum": ["flash", "river", "urban", "coastal", "other"],
+            "description": "Type of flooding event"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["minor", "moderate", "major", "record"],
+            "description": "Flood severity level"
+          },
+          "distance_miles": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "description": "Distance from property in miles"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+            "description": "Direction from property"
+          },
+          "vector_pin_id": {
+            "type": "string",
+            "description": "Unique identifier for the data source pin"
+          },
+          "additional_data": {
+            "type": "string",
+            "description": "Depth, duration, or damage reports"
+          }
+        },
+        "required": ["date", "flood_type", "severity", "distance_miles", "direction", "vector_pin_id"],
+        "additionalProperties": false
+      }
+    },
+    "damage_reports": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+            "description": "Report date in YYYY-MM-DD format"
+          },
+          "report_type": {
+            "type": "string",
+            "enum": ["structural", "vehicle", "crop", "tree", "power", "other"],
+            "description": "Type of damage reported"
+          },
+          "damage_description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Brief description of the damage"
+          },
+          "distance_miles": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 50,
+            "description": "Distance from property in miles"
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["N", "NE", "E", "SE", "S", "SW", "W", "NW"],
+            "description": "Direction from property"
+          },
+          "source": {
+            "type": "string",
+            "description": "Vector pin ID or reference source"
+          }
+        },
+        "required": ["date", "report_type", "damage_description", "distance_miles", "direction", "source"],
+        "additionalProperties": false
+      }
+    },
+    "data_summary": {
+      "type": "object",
+      "properties": {
+        "total_events_found": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number of storm events found"
+        },
+        "closest_event_distance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50,
+          "description": "Distance to closest storm event in miles"
+        },
+        "most_recent_event": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Date of most recent storm event"
+        },
+        "most_severe_event": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Description of most severe event found"
+        },
+        "data_completeness": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low"],
+          "description": "Assessment of data completeness based on pin density"
+        }
+      },
+      "required": ["total_events_found", "data_completeness"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "property_coordinates",
+    "search_parameters", 
+    "hail_events",
+    "wind_events",
+    "tornado_events",
+    "flood_events",
+    "damage_reports",
+    "data_summary"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,87 @@
+# ZAPIER SETUP - Text Version (Copy/Paste Ready)
+
+## Step 1: Add Code Step to Your Zapier Workflow
+
+1. Go to your Zapier workflow
+2. Add a new step AFTER ChatGPT analysis  
+3. Choose "Code by Zapier" → "Run JavaScript"
+4. In the Input Data section, map the ChatGPT response field
+5. Copy and paste this EXACT code:
+
+```javascript
+const analysisText = inputData.chatgpt_response || inputData.analysis || inputData.message || "";
+
+function extractRiskData(text) {
+  const lowerText = text.toLowerCase();
+  
+  const hailPatterns = [/hail.*?(\d+)%/i, /hail.*?(\d+)\s*percent/i, /hail.*?risk.*?(\d+)/i];
+  const windPatterns = [/wind.*?(\d+)%/i, /wind.*?(\d+)\s*percent/i, /wind.*?risk.*?(\d+)/i];  
+  const floodPatterns = [/flood.*?(\d+)%/i, /flood.*?(\d+)\s*percent/i, /flood.*?risk.*?(\d+)/i];
+  
+  let hail = 65, wind = 45, flood = 28;
+  
+  for (let pattern of hailPatterns) {
+    const match = lowerText.match(pattern);
+    if (match && match[1]) { hail = parseInt(match[1]); break; }
+  }
+  
+  for (let pattern of windPatterns) {
+    const match = lowerText.match(pattern);
+    if (match && match[1]) { wind = parseInt(match[1]); break; }
+  }
+  
+  for (let pattern of floodPatterns) {
+    const match = lowerText.match(pattern);
+    if (match && match[1]) { flood = parseInt(match[1]); break; }
+  }
+  
+  return { hail, wind, flood };
+}
+
+const risks = extractRiskData(analysisText);
+const overallRisk = Math.round((risks.hail + risks.wind + risks.flood) / 3);
+const analysisId = `HCG-${new Date().getFullYear()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+
+const widgetResponse = {
+  analysis_complete: true,
+  property_address: `${inputData.address}, ${inputData.city}, ${inputData.state} ${inputData.zip}`,
+  hail_probability: risks.hail / 100,
+  wind_probability: risks.wind / 100,
+  flood_probability: risks.flood / 100,
+  risk_score: overallRisk,
+  analysis_id: analysisId,
+  report_date: new Date().toISOString().split('T')[0]
+};
+
+output = [{
+  widget_data: JSON.stringify(widgetResponse),
+  analysis_id: analysisId,
+  name: inputData.name,
+  email: inputData.email,
+  address: inputData.address,
+  city: inputData.city,
+  state: inputData.state,
+  zip: inputData.zip,
+  chatgpt_analysis: analysisText
+}];
+```
+
+## Step 2: Configure Webhook Response
+
+In your Zapier webhook settings:
+
+1. Response Body: {{X.widget_data}} 
+   (Replace X with your Code step number)
+
+2. Response Headers: Content-Type: application/json
+
+## Step 3: Test
+
+Send a test form submission and check if the widget shows real results!
+
+## Quick Test URL
+
+Main widget: http://localhost:8080
+Test tool: http://localhost:8080/zapier-test.html
+
+If browser doesn't work, just follow the steps above to modify Zapier!

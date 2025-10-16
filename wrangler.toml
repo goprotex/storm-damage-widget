@@ -1,0 +1,18 @@
+name = "storm-widget"
+main = "worker.js"
+compatibility_date = "2023-10-16"
+
+# Environment variables for production
+[env.production.vars]
+ZAPIER_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/"
+
+# Route configuration
+[[env.production.routes]]
+pattern = "haydenclaim.com/storm-track/*"
+zone_name = "haydenclaim.com"
+
+# KV namespace for analytics (optional)
+# [[kv_namespaces]]
+# binding = "ANALYTICS"
+# id = "your-kv-namespace-id"
+# preview_id = "your-preview-kv-namespace-id"
