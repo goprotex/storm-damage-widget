@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Property Research and Vulnerability Assessment Schema",
+  "type": "object",
+  "required": ["property_address", "research_summary", "building_details", "vulnerability_assessment"],
+  "properties": {
+    "property_address": {
+      "type": "object",
+      "required": ["full_address", "city", "state", "zip_code"],
+      "properties": {
+        "full_address": {"type": "string"},
+        "city": {"type": "string"},
+        "state": {"type": "string"},
+        "zip_code": {"type": "string"},
+        "county": {"type": ["string", "null"]}
+      }
+    },
+    "research_summary": {
+      "type": "object",
+      "required": ["data_sources_found", "confidence_level", "last_updated"],
+      "properties": {
+        "data_sources_found": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["county_assessor", "zillow", "realtor_com", "google_streetview", "building_dept", "hoa_records", "recent_sales"]
+          }
+        },
+        "confidence_level": {
+          "type": "string",
+          "enum": ["high", "medium", "low"]
+        },
+        "last_updated": {"type": "string", "format": "date"},
+        "research_notes": {"type": ["string", "null"]}
+      }
+    },
+    "building_details": {
+      "type": "object",
+      "properties": {
+        "year_built": {"type": ["integer", "null"]},
+        "building_age_years": {"type": ["integer", "null"]},
+        "square_footage": {"type": ["integer", "null"]},
+        "stories": {"type": ["integer", "null"]},
+        "roof_material": {
+          "type": ["string", "null"],
+          "enum": [null, "asphalt_shingles", "metal", "tile", "slate", "wood_shake", "membrane", "unknown"]
+        },
+        "roof_age_estimate": {
+          "type": ["string", "null"],
+          "enum": [null, "new_0_5_years", "recent_5_10_years", "moderate_10_20_years", "older_20_plus_years", "unknown"]
+        },
+        "siding_material": {
+          "type": ["string", "null"],
+          "enum": [null, "vinyl", "wood", "brick", "stucco", "fiber_cement", "metal", "stone", "unknown"]
+        },
+        "foundation_type": {
+          "type": ["string", "null"],
+          "enum": [null, "slab_on_grade", "crawl_space", "basement", "pier_beam", "unknown"]
+        },
+        "garage_type": {
+          "type": ["string", "null"],
+          "enum": [null, "attached", "detached", "carport", "none", "unknown"]
+        },
+        "pool_present": {"type": ["boolean", "null"]},
+        "outbuildings": {"type": ["boolean", "null"]}
+      }
+    },
+    "construction_era": {
+      "type": "object",
+      "properties": {
+        "building_code_era": {
+          "type": ["string", "null"],
+          "enum": [null, "pre_1980_minimal_codes", "1980s_basic_codes", "1990s_improved_codes", "2000s_modern_codes", "2010_plus_enhanced_codes"]
+        },
+        "wind_resistance_likely": {
+          "type": ["string", "null"],
+          "enum": [null, "minimal", "basic", "good", "excellent", "unknown"]
+        },
+        "impact_windows": {"type": ["boolean", "null"]},
+        "recent_renovations": {"type": ["string", "null"]}
+      }
+    },
+    "location_factors": {
+      "type": "object",
+      "properties": {
+        "lot_size_acres": {"type": ["number", "null"]},
+        "tree_coverage": {
+          "type": ["string", "null"],
+          "enum": [null, "heavy", "moderate", "light", "minimal", "unknown"]
+        },
+        "elevation_factors": {"type": ["string", "null"]},
+        "neighborhood_type": {
+          "type": ["string", "null"],
+          "enum": [null, "urban", "suburban", "rural", "coastal", "unknown"]
+        },
+        "property_value_range": {"type": ["string", "null"]}
+      }
+    },
+    "vulnerability_assessment": {
+      "type": "object",
+      "required": ["overall_vulnerability", "primary_risk_factors"],
+      "properties": {
+        "overall_vulnerability": {
+          "type": "string",
+          "enum": ["very_low", "low", "moderate", "high", "very_high"]
+        },
+        "primary_risk_factors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["old_building_age", "vulnerable_roof_material", "large_trees_nearby", "poor_building_codes", "exposed_location", "attached_garage", "multiple_stories", "aging_materials"]
+          }
+        },
+        "protective_factors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["newer_construction", "impact_windows", "metal_roof", "brick_exterior", "recent_renovation", "good_building_codes", "protected_location"]
+          }
+        },
+        "claims_considerations": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}
