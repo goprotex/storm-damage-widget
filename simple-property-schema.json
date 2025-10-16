@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Simple Property Research Schema",
+  "type": "object",
+  "required": ["property_address", "building_details", "research_notes"],
+  "properties": {
+    "property_address": {
+      "type": "object",
+      "required": ["full_address", "city", "state", "zip_code"],
+      "properties": {
+        "full_address": {"type": "string"},
+        "city": {"type": "string"},
+        "state": {"type": "string"},
+        "zip_code": {"type": "string"},
+        "county": {"type": ["string", "null"]}
+      }
+    },
+    "building_details": {
+      "type": "object",
+      "properties": {
+        "year_built": {"type": ["integer", "null"]},
+        "building_age_years": {"type": ["integer", "null"]},
+        "square_footage": {"type": ["integer", "null"]},
+        "stories": {"type": ["integer", "null"]},
+        "roof_material": {"type": "string"},
+        "siding_material": {"type": "string"},
+        "foundation_type": {"type": "string"},
+        "garage_type": {"type": "string"},
+        "pool_present": {"type": ["boolean", "null"]},
+        "outbuildings": {"type": ["boolean", "null"]}
+      }
+    },
+    "research_notes": {
+      "type": "object",
+      "properties": {
+        "data_sources": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "confidence_level": {"type": "string"},
+        "construction_era": {"type": "string"}
+      }
+    }
+  }
+}
