@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "GPT-5 Comprehensive Storm Damage Intelligence Schema",
   "type": "object",
-  "required": ["analysis_summary", "storm_building_interactions", "emergency_response", "contractor_intelligence", "insurance_coverage_analysis", "legal_risk_assessment"],
+  "required": ["analysis_summary", "storm_building_interactions", "emergency_response", "contractor_intelligence", "insurance_coverage_analysis", "legal_risk_assessment", "pdf_tables"],
   "properties": {
     "analysis_summary": {
       "type": "object",
@@ -137,6 +137,67 @@
           "enum": ["low", "medium", "high", "very_high"]
         }
       }
+    },
+    "pdf_tables": {
+      "type": "object",
+      "description": "Structured tables for PDF generation with professional formatting",
+      "properties": {
+        "storm_damage_summary_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        },
+        "property_vulnerability_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        },
+        "repair_cost_breakdown_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        },
+        "insurance_coverage_analysis_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        },
+        "contractor_market_analysis_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        },
+        "risk_mitigation_opportunities_table": {
+          "type": "object",
+          "properties": {
+            "title": {"type": "string"},
+            "headers": {"type": "array", "items": {"type": "string"}},
+            "rows": {"type": "array", "items": {"type": "array", "items": {"type": "string"}}}
+          },
+          "required": ["title", "headers", "rows"]
+        }
+      },
+      "required": ["storm_damage_summary_table", "property_vulnerability_table", "repair_cost_breakdown_table", "insurance_coverage_analysis_table", "contractor_market_analysis_table", "risk_mitigation_opportunities_table"]
     }
   }
 }
