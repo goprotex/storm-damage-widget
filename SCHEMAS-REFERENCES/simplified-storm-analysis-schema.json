@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Simplified Storm Damage Analysis Schema",
+  "description": "Back-to-basics storm analysis focusing on actual damage-causing events",
+  "type": "object",
+  "required": [
+    "damage_causing_storms",
+    "non_damaging_storms", 
+    "property_vulnerability",
+    "claim_recommendation",
+    "visual_evidence"
+  ],
+  "properties": {
+    "damage_causing_storms": {
+      "type": "array",
+      "description": "Only storms that can actually damage buildings (1\"+ hail, 70+ mph wind, any tornado)",
+      "items": {
+        "type": "object",
+        "required": ["date", "type", "size_or_speed", "distance_miles", "damage_probability", "why_damaging", "estimated_damage"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Storm event date in YYYY-MM-DD format"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["Hail", "Wind", "Tornado"],
+            "description": "Type of damaging storm event"
+          },
+          "size_or_speed": {
+            "type": "string",
+            "description": "Specific measurement: '2.5 inch hail' or '85 mph wind'"
+          },
+          "distance_miles": {
+            "type": "number",
+            "description": "Distance from property in miles"
+          },
+          "damage_probability": {
+            "type": "string",
+            "enum": ["Moderate", "High", "Very High"],
+            "description": "Realistic damage probability based on storm physics"
+          },
+          "why_damaging": {
+            "type": "string",
+            "description": "Simple explanation of damage physics - why this storm causes damage"
+          },
+          "estimated_damage": {
+            "type": "string",
+            "description": "Realistic damage cost range: '$15,000-$25,000'"
+          },
+          "satellite_image": {
+            "type": "string",
+            "format": "uri",
+            "description": "Satellite imagery URL from storm imagery system"
+          },
+          "radar_image": {
+            "type": "string", 
+            "format": "uri",
+            "description": "Weather radar URL from storm imagery system"
+          }
+        }
+      }
+    },
+    "non_damaging_storms": {
+      "type": "array",
+      "description": "Storms that don't cause building damage (under 1\" hail, under 70 mph wind)",
+      "items": {
+        "type": "object",
+        "required": ["date", "type", "size_or_speed", "distance_miles", "why_not_damaging"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["Hail", "Wind", "Rain"]
+          },
+          "size_or_speed": {
+            "type": "string",
+            "description": "Measurement showing why it's not damaging: '0.75 inch hail'"
+          },
+          "distance_miles": {
+            "type": "number"
+          },
+          "why_not_damaging": {
+            "type": "string",
+            "description": "Simple explanation why this storm doesn't cause damage"
+          }
+        }
+      }
+    },
+    "property_vulnerability": {
+      "type": "object",
+      "required": ["construction_year", "vulnerability_level", "most_vulnerable_to"],
+      "properties": {
+        "construction_year": {
+          "type": "string",
+          "description": "Property construction year from research"
+        },
+        "vulnerability_level": {
+          "type": "string",
+          "enum": ["Low", "Moderate", "High", "Very High"],
+          "description": "Overall vulnerability based on age and materials"
+        },
+        "most_vulnerable_to": {
+          "type": "string",
+          "description": "Specific vulnerability: 'Hail damage on asphalt shingles, wind damage on vinyl siding'"
+        },
+        "property_map": {
+          "type": "string",
+          "format": "uri",
+          "description": "Property map URL from storm imagery system"
+        }
+      }
+    },
+    "claim_recommendation": {
+      "type": "object",
+      "required": ["file_claim", "reason", "estimated_total_damage"],
+      "properties": {
+        "file_claim": {
+          "type": "string",
+          "enum": ["Yes", "No", "Maybe"],
+          "description": "Clear recommendation based on damage analysis"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Clear explanation based on actual damage physics"
+        },
+        "best_storm_for_claim": {
+          "type": "string",
+          "description": "Date and details of most damaging storm event"
+        },
+        "estimated_total_damage": {
+          "type": "string",
+          "description": "Total estimated damage range across all events"
+        }
+      }
+    },
+    "visual_evidence": {
+      "type": "object",
+      "required": ["satellite_overview", "weather_radar", "property_location", "evidence_summary"],
+      "properties": {
+        "satellite_overview": {
+          "type": "string",
+          "format": "uri",
+          "description": "Main satellite image URL"
+        },
+        "weather_radar": {
+          "type": "string",
+          "format": "uri", 
+          "description": "Weather radar image URL"
+        },
+        "property_location": {
+          "type": "string",
+          "format": "uri",
+          "description": "Property location map URL"
+        },
+        "evidence_summary": {
+          "type": "string",
+          "description": "Brief summary of what the visual evidence shows"
+        }
+      }
+    }
+  }
+}
