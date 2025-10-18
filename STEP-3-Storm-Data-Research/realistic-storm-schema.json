@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/realistic-storm-schema.json",
+  "$id": "https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/STEP-3-Storm-Data-Research/realistic-storm-schema.json",
   "title": "Hayden Claims Group - Storm Events Table Schema",
   "description": "Simplified table format for all storm events with complete information",
   "type": "object",
