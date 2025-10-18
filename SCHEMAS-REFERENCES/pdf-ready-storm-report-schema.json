@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Storm Damage Intelligence Report Schema - PDF Ready",
+  "description": "Schema matching exact PDF structure for professional storm damage reports",
+  "type": "object",
+  "required": [
+    "report_title",
+    "generated_at",
+    "company",
+    "customer_input",
+    "property",
+    "peril_summary",
+    "recent_storms",
+    "address_match",
+    "images",
+    "hail_size_reference",
+    "recommendations",
+    "disclaimer",
+    "prepared_by"
+  ],
+  "properties": {
+    "report_title": {
+      "type": "string",
+      "description": "Title of the report",
+      "default": "Storm Damage Intelligence Report"
+    },
+    "generated_at": {
+      "type": "string",
+      "description": "Report generation timestamp in YYYY-MM-DD HH:MM:SS format"
+    },
+    "company": {
+      "type": "object",
+      "required": ["name", "tagline", "phone", "email", "website", "logo_url", "license_info", "address"],
+      "properties": {
+        "name": {"type": "string", "default": "Hayden Claims Group"},
+        "tagline": {"type": "string", "default": "Mother Nature is not fair but insurance should be"},
+        "phone": {"type": "string", "default": "+1 830 777 9111"},
+        "email": {"type": "string", "default": "office@haydenclaim.com"},
+        "website": {"type": "string", "default": "https://www.haydenclaim.com"},
+        "logo_url": {"type": "string", "default": "https://www.haydenclaim.com/assets/logo.png"},
+        "license_info": {"type": "string", "default": "Texas Department of Insurance Public Adjuster License 3378204"},
+        "address": {"type": "string", "default": "5900 Balcones Drive Suite 26922 Austin TX 78731"}
+      }
+    },
+    "customer_input": {
+      "type": "object",
+      "required": ["address_input"],
+      "properties": {
+        "address_input": {"type": "string", "description": "Original address entered by customer"},
+        "contact_name": {"type": ["string", "null"], "description": "Customer contact name if provided"},
+        "contact_email": {"type": ["string", "null"], "description": "Customer email if provided"},
+        "contact_phone": {"type": ["string", "null"], "description": "Customer phone if provided"}
+      }
+    },
+    "property": {
+      "type": "object",
+      "required": ["address_line1", "city", "state", "postal_code", "lat", "lon"],
+      "properties": {
+        "address_line1": {"type": "string", "description": "Street address"},
+        "city": {"type": "string", "description": "City name"},
+        "state": {"type": "string", "description": "State abbreviation"},
+        "postal_code": {"type": "string", "description": "ZIP code"},
+        "county": {"type": ["string", "null"], "description": "County name"},
+        "lat": {"type": "number", "description": "Property latitude"},
+        "lon": {"type": "number", "description": "Property longitude"},
+        "structure_type": {"type": ["string", "null"], "description": "Building type"},
+        "roof_type": {"type": ["string", "null"], "description": "Roof material type"},
+        "year_built": {"type": ["integer", "null"], "description": "Construction year"},
+        "building_sqft": {"type": ["integer", "null"], "description": "Building square footage"}
+      }
+    },
+    "peril_summary": {
+      "type": "object",
+      "required": ["overall_risk_score"],
+      "properties": {
+        "overall_risk_score": {"type": "number", "minimum": 0, "maximum": 1, "description": "Overall risk score 0-1"},
+        "hail_probability_last_24_months": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "wind_probability_last_24_months": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "flood_probability_last_24_months": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "notes": {"type": ["string", "null"], "description": "Risk assessment notes"}
+      }
+    },
+    "recent_storms": {
+      "type": "array",
+      "description": "Array of storm events affecting the property",
+      "items": {
+        "type": "object",
+        "required": ["event_date", "peril", "distance_miles", "severity_score"],
+        "properties": {
+          "event_date": {"type": "string", "format": "date", "description": "Storm date YYYY-MM-DD"},
+          "peril": {"type": "string", "enum": ["hail", "wind", "tornado", "flood"], "description": "Type of storm peril"},
+          "magnitude": {"type": ["string", "null"], "description": "Hail size like '2.50 inch'"},
+          "max_wind_mph": {"type": ["number", "null"], "description": "Maximum wind speed"},
+          "distance_miles": {"type": "number", "description": "Distance from property in miles"},
+          "bearing": {"type": ["string", "null"], "description": "Direction from property like 'NE'"},
+          "severity_score": {"type": "number", "minimum": 0, "maximum": 1, "description": "Severity score 0-1"},
+          "swath_id": {"type": ["string", "null"], "description": "Storm swath identifier"},
+          "city_nearby": {"type": ["string", "null"], "description": "Nearby city reference"},
+          "source_list": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string", "description": "Source name"},
+                "url": {"type": "string", "description": "Source URL"}
+              }
+            }
+          },
+          "narrative": {"type": ["string", "null"], "description": "Storm event description"}
+        }
+      }
+    },
+    "address_match": {
+      "type": "object",
+      "required": ["match_confidence"],
+      "properties": {
+        "geocoder": {"type": ["string", "null"], "description": "Geocoding service used"},
+        "match_confidence": {"type": "number", "minimum": 0, "maximum": 1, "description": "Address match confidence"},
+        "parcel_id": {"type": ["string", "null"], "description": "Property parcel ID"},
+        "census_block": {"type": ["string", "null"], "description": "Census block identifier"},
+        "dpv_confirmed": {"type": ["boolean", "null"], "description": "Delivery point validation"}
+      }
+    },
+    "images": {
+      "type": "object",
+      "properties": {
+        "map_image_url": {"type": ["string", "null"], "format": "uri", "description": "Property map image URL"},
+        "hail_swath_overlay_url": {"type": ["string", "null"], "format": "uri", "description": "Hail swath overlay URL"},
+        "wind_swath_overlay_url": {"type": ["string", "null"], "format": "uri", "description": "Wind swath overlay URL"},
+        "property_photo_urls": {
+          "type": "array",
+          "items": {"type": "string", "format": "uri"},
+          "description": "Array of property photo URLs"
+        },
+        "satellite_image_url": {"type": ["string", "null"], "format": "uri", "description": "Satellite imagery URL"},
+        "radar_image_url": {"type": ["string", "null"], "format": "uri", "description": "Weather radar URL"}
+      }
+    },
+    "hail_size_reference": {
+      "type": "array",
+      "description": "Hail size reference chart",
+      "items": {
+        "type": "object",
+        "required": ["size", "common_name", "typical_damage"],
+        "properties": {
+          "size": {"type": "string", "description": "Hail size measurement"},
+          "common_name": {"type": "string", "description": "Common object comparison"},
+          "typical_damage": {"type": "string", "description": "Expected damage description"}
+        }
+      },
+      "default": [
+        {"size": "0.75 inch", "common_name": "penny", "typical_damage": "minor shingle bruising soft metals dings screens"},
+        {"size": "1.00 inch", "common_name": "quarter", "typical_damage": "granule loss bruising small fractures gutters and fascia dents"},
+        {"size": "1.50 inch", "common_name": "ping pong ball", "typical_damage": "shingle fractures cracked vents broken screens wide metal damage"},
+        {"size": "2.00 inch", "common_name": "hen egg", "typical_damage": "shattered skylights cracked tiles large dents to metal ridge and vents"},
+        {"size": "2.50 inch", "common_name": "tennis ball", "typical_damage": "punctures on aged shingles broken windows heavy metal deformation"}
+      ]
+    },
+    "recommendations": {
+      "type": "array",
+      "description": "Inspection and claim recommendations",
+      "items": {
+        "type": "object",
+        "required": ["title", "detail"],
+        "properties": {
+          "title": {"type": "string", "description": "Recommendation title"},
+          "detail": {"type": "string", "description": "Detailed recommendation"}
+        }
+      }
+    },
+    "disclaimer": {
+      "type": "string",
+      "description": "Report disclaimer text",
+      "default": "This report aggregates third party storm intelligence and public reports. Probabilities are estimates and not guarantees. Always verify conditions on site and follow local code and safety requirements."
+    },
+    "prepared_by": {
+      "type": "object",
+      "required": ["name", "title", "tdi_license"],
+      "properties": {
+        "name": {"type": "string", "default": "Hayden Oehler"},
+        "title": {"type": "string", "default": "Public Adjuster"},
+        "tdi_license": {"type": "string", "default": "3378204"},
+        "signature_image_url": {"type": ["string", "null"], "format": "uri", "description": "Digital signature image URL"}
+      }
+    }
+  }
+}
