@@ -6,7 +6,9 @@
   "required": [
     "property_coordinates",
     "search_summary", 
-    "storm_events"
+    "storm_events",
+    "event_dates",
+    "event_types"
   ],
   "properties": {
     "property_coordinates": {
@@ -84,6 +86,14 @@
           }
         }
       }
+    },
+    "event_dates": {
+      "type": "string",
+      "description": "Comma-separated list of all storm event dates for Step 3.5 processing: '2024-05-15,2024-04-09,2024-03-22'"
+    },
+    "event_types": {
+      "type": "string", 
+      "description": "Comma-separated list of all storm event types for Step 3.5 processing: 'Hail,Wind,Tornado'"
     },
     "analysis_summary": {
       "type": "string",
