@@ -1,0 +1,362 @@
+<!-- Enhanced Widget HTML with Storm Imagery Integration -->
+
+<div class="storm-imagery-container" id="stormImagerySection">
+    <!-- Header Section -->
+    <div class="storm-imagery-header">
+        <h3>Storm Visual Intelligence</h3>
+        <p>Professional meteorological evidence supporting your damage assessment</p>
+    </div>
+
+    <!-- Loading State (Hidden by default) -->
+    <div class="imagery-loading" id="imageryLoading" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Collecting storm imagery and satellite data...</p>
+    </div>
+
+    <!-- Error State (Hidden by default) -->
+    <div class="imagery-error" id="imageryError" style="display: none;">
+        <i class="fas fa-exclamation-triangle"></i>
+        <h4>Storm Imagery Unavailable</h4>
+        <p>Unable to retrieve visual storm data at this time. Analysis will continue with available data.</p>
+    </div>
+
+    <!-- Main Image Carousel -->
+    <div class="imagery-carousel" id="imageryCarousel" style="display: none;">
+        <!-- Dynamic image slides will be inserted here -->
+    </div>
+
+    <!-- Carousel Navigation -->
+    <div class="carousel-controls" id="carouselControls" style="display: none;">
+        <button class="carousel-nav" id="prevButton" onclick="previousImage()">
+            <i class="fas fa-chevron-left"></i>
+            Previous
+        </button>
+        
+        <div class="image-indicators" id="imageIndicators">
+            <!-- Dynamic indicators will be inserted here -->
+        </div>
+        
+        <button class="carousel-nav" id="nextButton" onclick="nextImage()">
+            Next
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Storm Timeline (Alternative Visualization) -->
+    <div class="storm-timeline" id="stormTimeline" style="display: none;">
+        <div class="timeline-header">
+            <h4>Storm Impact Timeline</h4>
+            <p>Visual progression of storm conditions over your property</p>
+        </div>
+        
+        <div class="timeline-track">
+            <div class="timeline-line"></div>
+            <div class="timeline-points" id="timelinePoints">
+                <!-- Timeline points will be dynamically generated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Gallery Grid (Alternative Layout) -->
+    <div class="imagery-grid" id="imageryGrid" style="display: none;">
+        <!-- Grid images will be dynamically populated -->
+    </div>
+</div>
+
+<script>
+/**
+ * Storm Imagery Widget JavaScript
+ * Handles dynamic loading and display of storm imagery
+ */
+
+class StormImageryWidget {
+    constructor() {
+        this.currentImageIndex = 0;
+        this.images = [];
+        this.autoplayInterval = null;
+        this.autoplayDelay = 8000; // 8 seconds
+    }
+
+    /**
+     * Initialize storm imagery widget with collected data
+     */
+    async initializeImagery(stormImageryData) {
+        try {
+            this.showLoading();
+            
+            if (stormImageryData && stormImageryData.featured_images) {
+                this.images = stormImageryData.featured_images.widget_carousel || [];
+                
+                if (this.images.length > 0) {
+                    this.renderImageCarousel();
+                    this.renderImageIndicators();
+                    this.showCarousel();
+                    this.startAutoplay();
+                    
+                    // Also render timeline if available
+                    if (stormImageryData.timeline_sequence) {
+                        this.renderTimeline(stormImageryData.timeline_sequence);
+                    }
+                } else {
+                    this.showFallbackContent();
+                }
+            } else {
+                this.showError();
+            }
+            
+        } catch (error) {
+            console.error('Storm imagery initialization failed:', error);
+            this.showError();
+        }
+    }
+
+    /**
+     * Render image carousel slides
+     */
+    renderImageCarousel() {
+        const carousel = document.getElementById('imageryCarousel');
+        carousel.innerHTML = '';
+
+        this.images.forEach((image, index) => {
+            const slide = document.createElement('div');
+            slide.className = `image-slide ${index === 0 ? 'active' : ''}`;
+            
+            slide.innerHTML = `
+                <img src="${image.processed_url || image.original_url}" 
+                     alt="${image.description}" 
+                     loading="lazy"
+                     onerror="this.src='${this.getFallbackImageUrl(image.type)}'">
+                
+                <div class="image-type-badge badge-${image.type}">
+                    ${this.getImageTypeLabel(image.type)}
+                </div>
+                
+                <div class="image-overlay">
+                    <h4>${image.title || this.getImageTypeLabel(image.type)}</h4>
+                    <p>${image.description}</p>
+                    <div class="image-metadata">
+                        <div class="metadata-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>${this.formatTimestamp(image.timestamp)}</span>
+                        </div>
+                        ${image.metadata ? this.renderMetadata(image.metadata) : ''}
+                    </div>
+                </div>
+            `;
+            
+            carousel.appendChild(slide);
+        });
+    }
+
+    /**
+     * Render image indicators
+     */
+    renderImageIndicators() {
+        const indicators = document.getElementById('imageIndicators');
+        indicators.innerHTML = '';
+
+        this.images.forEach((image, index) => {
+            const indicator = document.createElement('span');
+            indicator.className = `indicator ${index === 0 ? 'active' : ''}`;
+            indicator.onclick = () => this.goToImage(index);
+            indicator.title = image.title || this.getImageTypeLabel(image.type);
+            indicators.appendChild(indicator);
+        });
+    }
+
+    /**
+     * Render storm timeline
+     */
+    renderTimeline(timelineData) {
+        if (!timelineData || !timelineData.sequence) return;
+
+        const timeline = document.getElementById('stormTimeline');
+        const timelinePoints = document.getElementById('timelinePoints');
+        
+        timelinePoints.innerHTML = '';
+        
+        timelineData.sequence.forEach((point, index) => {
+            const timelinePoint = document.createElement('div');
+            timelinePoint.className = 'timeline-point';
+            timelinePoint.onclick = () => this.showTimelineImage(point);
+            
+            timelinePoint.innerHTML = `
+                <div class="timeline-dot"></div>
+                <div class="timeline-label">${point.label}</div>
+            `;
+            
+            timelinePoints.appendChild(timelinePoint);
+        });
+        
+        timeline.style.display = 'block';
+    }
+
+    /**
+     * Navigation functions
+     */
+    nextImage() {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+        this.updateActiveImage();
+    }
+
+    previousImage() {
+        this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+        this.updateActiveImage();
+    }
+
+    goToImage(index) {
+        this.currentImageIndex = index;
+        this.updateActiveImage();
+    }
+
+    updateActiveImage() {
+        // Update slides
+        document.querySelectorAll('.image-slide').forEach((slide, index) => {
+            slide.classList.toggle('active', index === this.currentImageIndex);
+        });
+
+        // Update indicators
+        document.querySelectorAll('.indicator').forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === this.currentImageIndex);
+        });
+
+        // Update navigation buttons
+        document.getElementById('prevButton').disabled = this.images.length <= 1;
+        document.getElementById('nextButton').disabled = this.images.length <= 1;
+    }
+
+    /**
+     * Autoplay functionality
+     */
+    startAutoplay() {
+        if (this.images.length > 1) {
+            this.autoplayInterval = setInterval(() => {
+                this.nextImage();
+            }, this.autoplayDelay);
+        }
+    }
+
+    stopAutoplay() {
+        if (this.autoplayInterval) {
+            clearInterval(this.autoplayInterval);
+            this.autoplayInterval = null;
+        }
+    }
+
+    /**
+     * State management functions
+     */
+    showLoading() {
+        document.getElementById('imageryLoading').style.display = 'flex';
+        document.getElementById('imageryCarousel').style.display = 'none';
+        document.getElementById('carouselControls').style.display = 'none';
+        document.getElementById('imageryError').style.display = 'none';
+    }
+
+    showCarousel() {
+        document.getElementById('imageryLoading').style.display = 'none';
+        document.getElementById('imageryCarousel').style.display = 'block';
+        document.getElementById('carouselControls').style.display = 'flex';
+        document.getElementById('imageryError').style.display = 'none';
+    }
+
+    showError() {
+        document.getElementById('imageryLoading').style.display = 'none';
+        document.getElementById('imageryCarousel').style.display = 'none';
+        document.getElementById('carouselControls').style.display = 'none';
+        document.getElementById('imageryError').style.display = 'block';
+    }
+
+    showFallbackContent() {
+        // Show a simplified message when no imagery is available
+        const container = document.getElementById('stormImagerySection');
+        container.innerHTML = `
+            <div class="storm-imagery-header">
+                <h3>Storm Analysis Complete</h3>
+                <p>Comprehensive storm data analysis has been completed for your property assessment.</p>
+            </div>
+        `;
+    }
+
+    /**
+     * Utility functions
+     */
+    getImageTypeLabel(type) {
+        const labels = {
+            'satellite': 'Satellite View',
+            'radar': 'Weather Radar',
+            'storm_track': 'Storm Track',
+            'damage_example': 'Damage Example',
+            'timeline': 'Timeline View'
+        };
+        return labels[type] || 'Storm Image';
+    }
+
+    getFallbackImageUrl(type) {
+        // Return placeholder images for different types
+        const fallbacks = {
+            'satellite': 'https://via.placeholder.com/800x400/4a90e2/ffffff?text=Satellite+Image+Unavailable',
+            'radar': 'https://via.placeholder.com/800x400/50c878/ffffff?text=Radar+Data+Unavailable',
+            'storm_track': 'https://via.placeholder.com/800x400/ffa500/ffffff?text=Storm+Track+Unavailable',
+            'damage_example': 'https://via.placeholder.com/800x400/ff6b6b/ffffff?text=Damage+Example+Unavailable'
+        };
+        return fallbacks[type] || 'https://via.placeholder.com/800x400/cccccc/666666?text=Image+Unavailable';
+    }
+
+    formatTimestamp(timestamp) {
+        if (!timestamp) return 'Unknown';
+        const date = new Date(timestamp);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+
+    renderMetadata(metadata) {
+        let metadataHtml = '';
+        
+        if (metadata.storm_intensity) {
+            metadataHtml += `
+                <div class="metadata-item">
+                    <i class="fas fa-bolt"></i>
+                    <span>${metadata.storm_intensity}</span>
+                </div>
+            `;
+        }
+        
+        if (metadata.distance || metadata.property_distance) {
+            metadataHtml += `
+                <div class="metadata-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${metadata.distance || metadata.property_distance}</span>
+                </div>
+            `;
+        }
+        
+        return metadataHtml;
+    }
+
+    showTimelineImage(timelinePoint) {
+        // Create modal or expanded view for timeline images
+        console.log('Show timeline image:', timelinePoint);
+    }
+}
+
+// Global widget instance
+let stormImageryWidget = new StormImageryWidget();
+
+// Global navigation functions for buttons
+function nextImage() {
+    stormImageryWidget.nextImage();
+}
+
+function previousImage() {
+    stormImageryWidget.previousImage();
+}
+
+// Pause autoplay on hover
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('imageryCarousel');
+    if (carousel) {
+        carousel.addEventListener('mouseenter', () => stormImageryWidget.stopAutoplay());
+        carousel.addEventListener('mouseleave', () => stormImageryWidget.startAutoplay());
+    }
+});
+</script>

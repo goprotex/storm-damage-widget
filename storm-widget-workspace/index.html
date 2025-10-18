@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Storm Intelligence Report | Hayden Claims Group</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #0a0a0a;
+    color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    max-width: 1100px;
+    height: 90vh;
+    background: #111;
+    border-radius: 14px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    overflow: hidden;
+  }
+  .form-section {
+    flex: 1;
+    background: #151515;
+    padding: 40px;
+  }
+  .viewer-section {
+    flex: 1;
+    background: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+  }
+  h1 {
+    color: #bfa76f;
+    margin-bottom: 10px;
+  }
+  label {
+    display: block;
+    margin-top: 12px;
+    font-size: 14px;
+    color: #ccc;
+  }
+  input, button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  input {
+    background: #222;
+    color: #f5f5f5;
+  }
+  button {
+    background: #bfa76f;
+    color: #000;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  button:hover { background: #d2be8e; }
+  .hidden { display: none; }
+
+  .swirl {
+    width: 120px;
+    height: 120px;
+    animation: spin 1.8s linear infinite;
+    filter: drop-shadow(0 0 10px #bfa76f);
+  }
+  @keyframes spin { from {transform:rotate(0);} to {transform:rotate(360deg);} }
+
+  .breathing {
+    font-size: 22px;
+    color: #bfa76f;
+    margin-top: 10px;
+    animation: breathe 3s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% { opacity:0.5; transform:scale(1); }
+    50% { opacity:1; transform:scale(1.05); }
+  }
+
+  .fact {
+    color:#aaa;
+    font-style:italic;
+    font-size:14px;
+    margin-top:16px;
+    text-align:center;
+    width:80%;
+    min-height:40px;
+    transition: opacity 0.5s;
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 1s forwards;
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="form-section">
+    <h1>Storm Damage Check</h1>
+    <p>Free Texas hail, wind, and flood assessment</p>
+
+    <form id="stormForm">
+      <label>Full Name</label>
+      <input type="text" name="name" placeholder="John Doe" required>
+
+      <label>Email</label>
+      <input type="email" name="email" placeholder="you@example.com" required>
+
+      <label>Street Address</label>
+      <input type="text" name="address" placeholder="123 Main St" required>
+
+      <label>City</label>
+      <input type="text" name="city" placeholder="City" required>
+
+      <label>State</label>
+      <input type="text" name="state" maxlength="2" placeholder="TX" required>
+
+      <label>ZIP</label>
+      <input type="text" name="zip" maxlength="5" placeholder="78028" required>
+
+      <label>Date Range</label>
+      <div style="display:flex;gap:8px;">
+        <input type="date" name="start_date" required>
+        <input type="date" name="end_date" required>
+      </div>
+
+      <button type="submit">Run Assessment</button>
+    </form>
+  </div>
+
+  <div class="viewer-section">
+    <div id="loading" class="hidden fade-in">
+      <img src="https://www.haydenclaim.com/assets/swirl.png" alt="loading" class="swirl" />
+      <div class="breathing">Hayden Claims Group</div>
+      <div id="status">Analyzing Texas storm data...</div>
+      <div id="fact" class="fact"></div>
+    </div>
+
+    <div id="done" class="hidden fade-in">
+      <h2>Assessment Received</h2>
+      <p>Your detailed storm report will arrive shortly at the email you entered.</p>
+      <p>Thank you for trusting <strong>Hayden Claims Group</strong>.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const facts = [
+  "Texas takes more hail hits than any other state in the country.",
+  "The largest hailstone found in Texas weighed over a pound.",
+  "A warm wind at dusk? Storm’s not far behind.",
+  "Old timers say thunder rolling east means hail’s coming west.",
+  "Lightning can flash 80 miles across the Hill Country sky.",
+  "2025 saw more roof claims in Texas than any other state.",
+  "If you smell rain on limestone, you’re already too late to run.",
+  "They say in Texas, the sky can go from blue to black in five minutes flat.",
+  "When the cicadas stop singing, the storm’s already forming.",
+  "Some hailstorms in the Panhandle have flipped semi-trailers on I-40.",
+  "Folks in Llano still talk about the storm of '58 that turned the river white with ice."
+];
+
+document.getElementById("stormForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const loading = document.getElementById("loading");
+  const done = document.getElementById("done");
+  const status = document.getElementById("status");
+  const fact = document.getElementById("fact");
+
+  form.classList.add("hidden");
+  loading.classList.remove("hidden");
+
+  // immediately show one fact
+  fact.textContent = facts[Math.floor(Math.random() * facts.length)];
+
+  // rotate through facts every few seconds
+  let factIndex = 0;
+  const factInterval = setInterval(() => {
+    fact.style.opacity = 0;
+    setTimeout(() => {
+      fact.textContent = facts[factIndex % facts.length];
+      fact.style.opacity = 1;
+      factIndex++;
+    }, 400);
+  }, 4000);
+
+  // rotating status messages
+  let step = 0;
+  const statusMsgs = [
+    "Pulling NOAA hail and wind archives...",
+    "Cross-checking radar and storm tracks...",
+    "Analyzing floodplain and hail swaths...",
+    "Finalizing your storm intelligence..."
+  ];
+  const statusInterval = setInterval(() => {
+    status.textContent = statusMsgs[step % statusMsgs.length];
+    step++;
+  }, 3000);
+
+  // collect form data and send to Zapier
+  const formData = new FormData(form);
+  const params = new URLSearchParams();
+  for (const [key, value] of formData.entries()) {
+    params.append(key, value);
+  }
+
+  try {
+    await fetch("https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString()
+    });
+
+    clearInterval(factInterval);
+    clearInterval(statusInterval);
+    loading.classList.add("hidden");
+    done.classList.remove("hidden");
+  } catch (err) {
+    clearInterval(factInterval);
+    clearInterval(statusInterval);
+    status.textContent = "Error contacting storm data server.";
+    fact.textContent = "Try again shortly.";
+    console.error(err);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storm Damage Check Form Preview</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 24px;
+        }
+        p {
+            margin: 0 0 20px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px 0;
+            font-weight: bold;
+            color: #333;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .flex-row {
+            display: flex;
+            gap: 8px;
+        }
+        .flex-row input, .flex-row select {
+            flex: 1;
+        }
+        .checkbox-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin: 15px 0;
+        }
+        .checkbox-row label {
+            margin: 0;
+            font-weight: normal;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .checkbox-row input[type="checkbox"] {
+            width: auto;
+        }
+        .spacer {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" action="https://your-domain.com/api/lead.assessAndLog">
+        <div>
+            <h3>Storm damage check</h3>
+            <p>Past 2 years • Free assessment</p>
+        </div>
+        
+        <label>Property address</label>
+        <input name="lead.address" placeholder="Street address" required>
+        
+        <div class="flex-row">
+            <input name="lead.city" placeholder="City" required>
+            <input name="lead.state" placeholder="State" maxlength="2" required>
+            <input name="lead.zip" placeholder="ZIP" pattern="^[0-9]{5}$" maxlength="5" required>
+        </div>
+
+        <div class="flex-row">
+            <input type="date" name="query.start" value="2023-10-14" max="2025-10-14" required>
+            <input type="date" name="query.end" value="2025-10-14" min="2023-10-14" required>
+        </div>
+
+        <div class="flex-row">
+            <select name="lead.homeType">
+                <option value="">Home type</option>
+                <option value="single_family">Single family</option>
+                <option value="townhome">Townhome</option>
+                <option value="condo">Condo</option>
+                <option value="mobile_home">Mobile home</option>
+                <option value="ranch_farm">Ranch or farm</option>
+                <option value="other">Other</option>
+            </select>
+            <select name="query.stormType">
+                <option value="any" selected>Any storm</option>
+                <option value="hail">Hail</option>
+                <option value="wind">Wind</option>
+                <option value="tornado">Tornado</option>
+                <option value="flood">Flood</option>
+            </select>
+        </div>
+
+        <label>Contact</label>
+        <input name="lead.name" placeholder="Full name" required>
+        
+        <div class="flex-row">
+            <input name="lead.email" type="email" placeholder="Email" required>
+            <input name="lead.phone" type="tel" placeholder="Phone">
+        </div>
+
+        <div class="checkbox-row">
+            <label><input type="checkbox" name="lead.isOwner"> I am the homeowner</label>
+            <div class="spacer"></div>
+            <label><input type="checkbox" name="lead.consent" required> I agree to be contacted</label>
+        </div>
+
+        <input type="hidden" name="meta.source" value="website">
+        <input type="hidden" name="meta.version" value="1.0.0">
+        <button type="submit">Check risk</button>
+    </form>
+</body>
+</html>

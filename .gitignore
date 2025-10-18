@@ -1,0 +1,15 @@
+# Ignore sensitive files
+.env
+*.env
+api-keys.txt
+config.json
+
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
