@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GPT-5 Storm Damage Reasoning Analysis Schema",
+  "type": "object",
+  "required": ["analysis_summary", "storm_building_interactions", "claims_assessment"],
+  "properties": {
+    "analysis_summary": {
+      "type": "object",
+      "required": ["overall_damage_likelihood", "primary_risk_factors", "total_events_analyzed"],
+      "properties": {
+        "overall_damage_likelihood": {
+          "type": "string",
+          "enum": ["low", "moderate", "high", "very_high"]
+        },
+        "primary_risk_factors": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "total_events_analyzed": {"type": "integer"},
+        "highest_risk_event": {"type": ["string", "null"]}
+      }
+    },
+    "storm_building_interactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_date", "storm_type", "storm_intensity", "building_vulnerability", "damage_probability"],
+        "properties": {
+          "event_date": {"type": "string", "format": "date"},
+          "storm_type": {
+            "type": "string",
+            "enum": ["significant_wind", "large_hail", "damage_report", "severe_storm"]
+          },
+          "storm_intensity": {"type": "string"},
+          "building_vulnerability": {"type": "string"},
+          "damage_probability": {
+            "type": "string",
+            "enum": ["very_low", "low", "moderate", "high", "very_high"]
+          },
+          "potential_damage": {"type": "string"},
+          "estimated_claim_range": {"type": ["string", "null"]},
+          "reasoning": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "claims_assessment": {
+      "type": "object",
+      "required": ["claim_probability", "most_likely_claim_scenario"],
+      "properties": {
+        "most_likely_claim_scenario": {"type": "string"},
+        "claim_probability": {
+          "type": "string", 
+          "enum": ["unlikely", "possible", "likely", "highly_likely"]
+        },
+        "estimated_total_exposure": {"type": ["string", "null"]},
+        "recommended_actions": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "inspection_priorities": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "reasoning_details": {
+      "type": "object",
+      "properties": {
+        "construction_era_impact": {"type": ["string", "null"]},
+        "material_vulnerability_analysis": {"type": ["string", "null"]},
+        "storm_building_science": {"type": ["string", "null"]},
+        "confidence_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "very_high"]
+        }
+      }
+    }
+  }
+}
