@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/realistic-storm-schema.json",
+  "title": "Hayden Claims Group - Storm Events Table Schema",
+  "description": "Simplified table format for all storm events with complete information",
+  "type": "object",
+  "properties": {
+    "property_coordinates": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "description": "Property latitude extracted from address"
+        },
+        "longitude": {
+          "type": "number", 
+          "description": "Property longitude extracted from address"
+        }
+      },
+      "required": ["latitude", "longitude"]
+    },
+    "search_summary": {
+      "type": "object",
+      "properties": {
+        "total_events_found": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total storm events found within search radius"
+        },
+        "search_radius_miles": {
+          "type": "integer",
+          "default": 15,
+          "description": "Search radius used for storm event search"
+        },
+        "closest_event_distance": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Distance to closest event in miles"
+        },
+        "date_range": {
+          "type": "string",
+          "description": "Date range of events found (e.g., '2023-03-15 to 2024-10-18')"
+        }
+      },
+      "required": ["total_events_found", "search_radius_miles"]
+    },
+    "storm_events_table": {
+      "type": "array",
+      "description": "Complete table of all storm events found, sorted by distance from property",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_date": {
+            "type": "string",
+            "description": "Date when storm event occurred (YYYY-MM-DD format)"
+          },
+          "storm_type": {
+            "type": "string",
+            "description": "Type of storm event: 'Hail', 'Wind', 'Tornado', 'Damage Report', or 'Unknown'"
+          },
+          "distance_miles": {
+            "type": "number",
+            "description": "Distance from property in miles (rounded to 2 decimal places)"
+          },
+          "latitude": {
+            "type": "number",
+            "description": "Event latitude coordinate"
+          },
+          "longitude": {
+            "type": "number",
+            "description": "Event longitude coordinate"
+          },
+          "hail_size_inches": {
+            "type": ["number", "null"],
+            "description": "Hail size in inches (null if not hail event)"
+          },
+          "wind_speed_mph": {
+            "type": ["number", "null"],
+            "description": "Wind speed in mph (null if not wind event)"
+          },
+          "tornado_rating": {
+            "type": ["string", "null"],
+            "description": "Tornado EF rating (e.g., 'EF0', 'EF1', 'EF2') or null if not tornado"
+          },
+          "damage_description": {
+            "type": ["string", "null"],
+            "description": "Description of damage reported (for damage reports)"
+          },
+          "report_source": {
+            "type": ["string", "null"],
+            "description": "Source of report (e.g., 'Law Enforcement', 'Storm Spotter', 'Public')"
+          },
+          "location_description": {
+            "type": ["string", "null"],
+            "description": "Location details from report (e.g., '4 W Marshall', 'Downtown Area')"
+          },
+          "report_details": {
+            "type": ["string", "null"],
+            "maxLength": 300,
+            "description": "Additional details from storm report or damage description"
+          },
+          "hazard_type_raw": {
+            "type": "string",
+            "description": "Raw hazard type from data source (for reference)"
+          },
+          "priority_score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Priority score based on proximity and severity (10 = highest priority)"
+          }
+        },
+        "required": [
+          "event_date", 
+          "storm_type", 
+          "distance_miles", 
+          "latitude", 
+          "longitude", 
+          "hazard_type_raw",
+          "priority_score"
+        ]
+      }
+    },
+    "analysis_summary": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Brief analysis of storm activity patterns and any data limitations"
+    }
+  },
+  "required": [
+    "property_coordinates",
+    "search_summary", 
+    "storm_events_table"
+  ],
+  "additionalProperties": false
+}
