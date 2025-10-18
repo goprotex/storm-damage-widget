@@ -1,0 +1,142 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GPT-5 Comprehensive Storm Damage Intelligence Schema",
+  "type": "object",
+  "required": ["analysis_summary", "storm_building_interactions", "emergency_response", "contractor_intelligence", "insurance_coverage_analysis", "legal_risk_assessment"],
+  "properties": {
+    "analysis_summary": {
+      "type": "object",
+      "required": ["overall_damage_likelihood", "primary_risk_factors", "total_events_analyzed"],
+      "properties": {
+        "overall_damage_likelihood": {
+          "type": "string",
+          "enum": ["low", "moderate", "high", "very_high"]
+        },
+        "primary_risk_factors": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "total_events_analyzed": {"type": "integer"},
+        "highest_risk_event": {"type": ["string", "null"]},
+        "hayden_competitive_advantage": {"type": ["string", "null"]}
+      }
+    },
+    "storm_building_interactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_date", "storm_type", "storm_intensity", "building_vulnerability", "damage_probability"],
+        "properties": {
+          "event_date": {"type": "string", "format": "date"},
+          "storm_type": {
+            "type": "string",
+            "enum": ["significant_wind", "large_hail", "damage_report", "severe_storm"]
+          },
+          "storm_intensity": {"type": "string"},
+          "building_vulnerability": {"type": "string"},
+          "damage_probability": {
+            "type": "string",
+            "enum": ["very_low", "low", "moderate", "high", "very_high"]
+          },
+          "potential_damage": {"type": "string"},
+          "estimated_claim_range": {"type": ["string", "null"]},
+          "reasoning": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "claims_assessment": {
+      "type": "object",
+      "required": ["claim_probability", "most_likely_claim_scenario"],
+      "properties": {
+        "most_likely_claim_scenario": {"type": "string"},
+        "claim_probability": {
+          "type": "string", 
+          "enum": ["unlikely", "possible", "likely", "highly_likely"]
+        },
+        "estimated_total_exposure": {"type": ["string", "null"]},
+        "recommended_actions": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "inspection_priorities": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "emergency_response": {
+      "type": "object",
+      "required": ["immediate_actions", "habitability_assessment"],
+      "properties": {
+        "immediate_actions": {"type": "array", "items": {"type": "string"}},
+        "habitability_assessment": {"type": "string", "enum": ["habitable", "uninhabitable", "marginal"]},
+        "emergency_vs_permanent_strategy": {"type": ["string", "null"]},
+        "time_sensitive_priorities": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "contractor_intelligence": {
+      "type": "object",
+      "properties": {
+        "post_storm_availability": {"type": "string", "enum": ["limited", "moderate", "good"]},
+        "pricing_surge_factor": {"type": ["string", "null"]},
+        "seasonal_timing_recommendation": {"type": "string", "enum": ["immediate", "spring", "summer", "fall"]},
+        "scam_prevention_flags": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "insurance_coverage_analysis": {
+      "type": "object",
+      "properties": {
+        "potential_coverage_gaps": {"type": "array", "items": {"type": "string"}},
+        "coverage_vs_actual_costs": {"type": "string", "enum": ["adequate", "insufficient", "unknown"]},
+        "deductible_strategy": {"type": ["string", "null"]},
+        "claim_complexity_level": {"type": "string", "enum": ["simple", "moderate", "complex"]}
+      }
+    },
+    "technology_recommendations": {
+      "type": "object",
+      "properties": {
+        "drone_survey_priority": {"type": "string", "enum": ["high", "medium", "low"]},
+        "thermal_imaging_areas": {"type": "array", "items": {"type": "string"}},
+        "moisture_detection_critical_zones": {"type": "array", "items": {"type": "string"}},
+        "documentation_requirements": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "legal_risk_assessment": {
+      "type": "object",
+      "properties": {
+        "carrier_denial_risk": {"type": "string", "enum": ["low", "moderate", "high"]},
+        "bad_faith_indicators": {"type": "array", "items": {"type": "string"}},
+        "appraisal_likelihood": {"type": "string", "enum": ["unlikely", "possible", "probable"]},
+        "negotiation_leverage": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "property_value_protection": {
+      "type": "object", 
+      "properties": {
+        "repair_quality_impact": {"type": ["string", "null"]},
+        "timing_considerations": {"type": ["string", "null"]},
+        "neighborhood_comparables": {"type": ["string", "null"]}
+      }
+    },
+    "mitigation_opportunities": {
+      "type": "object",
+      "properties": {
+        "required_code_upgrades": {"type": "array", "items": {"type": "string"}},
+        "storm_resistant_upgrades": {"type": "array", "items": {"type": "string"}},
+        "insurance_cost_reduction": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "reasoning_details": {
+      "type": "object",
+      "properties": {
+        "construction_era_impact": {"type": ["string", "null"]},
+        "material_vulnerability_analysis": {"type": ["string", "null"]},
+        "storm_building_science": {"type": ["string", "null"]},
+        "confidence_level": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "very_high"]
+        }
+      }
+    }
+  }
+}
