@@ -18,7 +18,7 @@
  * - report_id: Unique identifier
  */
 
-function buildHTML(analysis, formData, apiKeys = {}) {
+function buildHTML(analysis, formData, apiKeys = {}, stormSwathHtml = '') {
     // API Keys should be passed from Zapier environment variables:
     // apiKeys.googleMaps = process.env.GOOGLE_MAPS_API_KEY
     // apiKeys.weather = process.env.WEATHER_API_KEY
@@ -132,7 +132,7 @@ ${address}</span>
 <div class="detail-item"><span class="detail-label">Stories:</span> ${analysis.property_intelligence?.stories || '1'}</div>
 <div class="detail-item"><span class="detail-label">Garage:</span> ${analysis.property_intelligence?.garage_type || 'N/A'}</div></div></div>
 
-${buildTables(analysis.professional_tables, address)}
+${buildTables(analysis.professional_tables, address, stormSwathHtml)}
 
 <div class="no-break"><h1>Data Visualization & Analytics</h1>
 <div class="chart-grid">
@@ -456,7 +456,7 @@ function generateCharts(analysis) {
     return { riskGauge, progressBars, pieChart, timelineChart, barChart };
 }
 
-function buildTables(tables, address) {
+function buildTables(tables, address, stormSwathHtml = '') {
     if (!tables) return '';
     const keys = ['storm_risk_summary', 'property_damage_assessment', 'repair_cost_analysis', 'insurance_claim_strategy', 'contractor_market_intelligence', 'risk_mitigation_plan'];
     return keys.map((k, index) => {
@@ -465,7 +465,7 @@ function buildTables(tables, address) {
         
         // Add storm visual for storm_risk_summary table
         // Now uses real storm swath visualization from separate generator step
-        const stormVisual = (k === 'storm_risk_summary') ? (inputData.storm_swath_html || '') : '';
+        const stormVisual = (k === 'storm_risk_summary') ? (stormSwathHtml || '') : '';
         
         return `<div class="no-break"><h2>${t.title}</h2>${t.subtitle ? `<p style="font-size:9pt;color:#6c757d"><em>${t.subtitle}</em></p>` : ''}
 <table><thead><tr>${(t.headers || []).map(h => `<th>${h}</th>`).join('')}</tr></thead>
@@ -493,8 +493,17 @@ try {
         zip: inputData.zip || ''
     };
     
+    // API Keys (if provided via environment variables)
+    const apiKeys = {
+        googleMaps: inputData.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '',
+        weather: inputData.WEATHER_API_KEY || process.env.WEATHER_API_KEY || ''
+    };
+    
+    // Storm swath HTML from previous step
+    const stormSwathHtml = inputData.storm_swath_html || '';
+    
     // Generate HTML
-    const html = buildHTML(analysis, formData);
+    const html = buildHTML(analysis, formData, apiKeys, stormSwathHtml);
     const reportId = `HCG-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
     
     output = {
