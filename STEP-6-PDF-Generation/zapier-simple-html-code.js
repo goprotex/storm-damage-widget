@@ -125,8 +125,10 @@ ${address}</span>
 </div>
 </div></div>
 
-<div class="no-break"><h1>Executive Dashboard</h1>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:20px 0">
+<div class="no-break"><h1>Summary</h1>
+
+<!-- Executive Dashboard Cards -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:20px 0 25px 0">
 <div style="background:linear-gradient(135deg, ${colors.primary}, #d4c395);color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
 <div style="font-size:24pt;font-weight:bold;margin-bottom:5px">${analysis.executive_summary?.damage_probability || '85%'}</div>
 <div style="font-size:10pt;opacity:0.9">Damage Probability</div>
@@ -140,8 +142,6 @@ ${address}</span>
 <div style="font-size:10pt;opacity:0.9">Claim Value</div>
 </div>
 </div>
-
-<div class="no-break"><h1>Summary</h1>
 
 <!-- COST COMPARISON VISUAL -->
 <div class="no-break" style="margin:20px 0">
