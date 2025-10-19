@@ -1,0 +1,268 @@
+{
+  "report_id": "HCG-1729357200000-AB12CD",
+  "generated_date": "Saturday, October 19, 2025",
+  "generated_time": "2:30:00 PM",
+  
+  "company": {
+    "name": "Hayden Claims Group",
+    "tagline": "Mother Nature isn't fair but insurance should be",
+    "phone": "(469) 434-2121",
+    "email": "office@haydenclaim.com",
+    "website": "haydenclaim.com",
+    "logoUrl": "https://haydenclaim.com/logo.png",
+    "address": "Austin, Texas",
+    "license": "TDI License #3378204",
+    "report_header": "Hayden Claims Group - Professional Storm Damage Assessment",
+    "footer_text": "Confidential Report - Generated 10/19/2025"
+  },
+  
+  "styling": {
+    "primaryColor": "#bfa76f",
+    "secondaryColor": "#2c3e50",
+    "accentColor": "#343a40",
+    "successColor": "#28a745",
+    "warningColor": "#fd7e14",
+    "dangerColor": "#dc3545",
+    "lightGray": "#f8f9fa",
+    "mediumGray": "#6c757d"
+  },
+  
+  "property": {
+    "address": "1112 Krystal Vista",
+    "city": "Kerrville",
+    "state": "TX",
+    "zip": "78028",
+    "full_address": "1112 Krystal Vista, Kerrville, TX 78028",
+    "property_type": "Residential Single-Family",
+    "year_built": "1978",
+    "contact_name": "John Smith",
+    "contact_phone": "(555) 123-4567",
+    "contact_email": "john.smith@example.com"
+  },
+  
+  "executive_summary": {
+    "overall_risk": "high",
+    "risk_color": "#ff6b35",
+    "damage_probability": "likely",
+    "estimated_value": "$10,000 - $35,000",
+    "key_findings": [
+      "Significant hail event reported within ~1.5 miles of property on 2025-03-23 (2.5 in) — high probability of roof/shingle damage",
+      "Prior local hail reports (2024-05-13) and measured wind gusts (45 mph on 2024-01-08) increase cumulative wear and risk",
+      "Property is older (1978) with asphalt shingle roof — moderate vulnerability to large-diameter hail and wind-driven damage"
+    ],
+    "critical_actions": [
+      "Schedule full roof and exterior inspection (photographic + moisture scan) within 7 days",
+      "Document current damage (photos, video, date/time-stamped) and secure temporary tarping if exposure found",
+      "Notify insurer and preserve receipts/estimates; retain Hayden Claims Group to manage carrier communications"
+    ],
+    "hayden_advantage": "Hayden combines local Kerrville storm-forensics (event-matching + measured hail reports), contractor network for timely emergency repairs, and public adjuster expertise to maximize settlement and speed claims.",
+    "confidence_level": "high"
+  },
+  
+  "tables": {
+    "storm_risk_summary": {
+      "title": "Local Storm Event Summary",
+      "subtitle": "Events within 15 miles affecting claim likelihood",
+      "headers": ["Date", "Type", "Measurement", "Distance", "Immediate Risk"],
+      "rows": [
+        ["2025-03-23", "Hail", "2.5 in (mPING)", "~1.2 mi", "High — probable roof damage"],
+        ["2024-05-13", "Hail", "0.5–1.0 in (CoCoRaHS)", "~3.0 mi", "Moderate — possible granular loss"],
+        ["2024-01-08", "Wind", "45 mph gust", "13.5 mi", "Low — contributes to wear"]
+      ],
+      "insights": [
+        "Primary high-risk hail strike on 2025-03-23 close to property",
+        "Repeat smaller hail events indicate cumulative roof degradation"
+      ],
+      "total_rows": 3,
+      "has_insights": true
+    },
+    "property_damage_assessment": {
+      "title": "Preliminary Property Vulnerability",
+      "subtitle": "Target systems and likely damage",
+      "headers": ["System", "Likely Condition", "Repair Type", "Urgency"],
+      "rows": [
+        ["Asphalt shingle roof", "Missing granules, bruising, punctures likely", "Partial to full roof replacement or overlay", "Immediate (inspect within 7 days)"],
+        ["Gutters & downspouts", "Dents, seam separations possible", "Replace sections; re-secure fasteners", "Within 2 weeks"],
+        ["HVAC (condensing unit)", "Dented fins/seals possible", "AC fan/coil repair or replacement estimate", "Inspect immediately"]
+      ],
+      "insights": [
+        "Roof is primary loss exposure; large-diameter hail (>2 in) typically causes bruising and shingle failure",
+        "Secondary exposures: vents, flashing, gutters, aluminum components"
+      ]
+    },
+    "repair_cost_analysis": {
+      "title": "Estimated Repair & Replacement Costs (Kerrville, TX market)",
+      "subtitle": "Realistic cost bands for present condition",
+      "headers": ["Item", "Typical Quantity/Unit", "Low Estimate", "High Estimate"],
+      "rows": [
+        ["Asphalt shingle roof replacement (architectural)", "1,700 sq ft", "$8,500", "$16,000"],
+        ["Partial roof repairs / patching + tarping", "patch areas / emergency", "$750", "$2,500"],
+        ["Gutters & downspouts replacement", "linear ft ~200 ft", "$1,200", "$3,000"],
+        ["HVAC condensing unit service/replace", "per unit", "$800", "$3,500"],
+        ["Exterior siding / trim repairs", "localized", "$600", "$4,000"]
+      ],
+      "insights": [
+        "Full roof replacement is the cost driver; presence of hail >2\" often justifies full replacement for insurer settlement",
+        "Emergency tarping and minor repairs typically <$3k"
+      ],
+      "show_totals": true,
+      "total_estimate": "$10,000 - $35,000",
+      "highlight_totals": true
+    },
+    "insurance_claim_strategy": {
+      "title": "Claim Strategy & Tactics",
+      "subtitle": "Maximize recovery while minimizing delays",
+      "headers": ["Step", "Action", "Hayden role", "Estimated timeline"],
+      "rows": [
+        ["Document & Inspect", "Photographic, infrared moisture scan, Xactimate line-item inventory", "Coordinate inspection + scope (Hayden)", "0–7 days"],
+        ["File Notice of Loss", "Prepare timeline, attach storm evidence and public reports", "Draft & submit to insurer; manage communications", "0–3 days after inspection"],
+        ["Estimate & Supplement", "Obtain contractor bids, track supplements for uncovered items", "Negotiate scope and supplements with insurer", "1–6 weeks"],
+        ["Settlement Negotiation", "Demand package with comparable market pricing", "Advocate and, if needed, appeal/UM mediation", "2–12 weeks"]
+      ],
+      "insights": [
+        "Hayden files evidence-matched claim (event reports + geolocated hail) to overcome initial low-paid offers",
+        "Use multiple contractor bids and industry line items (Xactimate) to avoid underpayment"
+      ],
+      "claim_probability": "high",
+      "highlight_strategy": true
+    },
+    "contractor_market_intelligence": {
+      "title": "Local Contractor Market Snapshot",
+      "subtitle": "Availability & fair pricing in Kerr County",
+      "headers": ["Service", "Typical Turnaround", "Market Notes"],
+      "rows": [
+        ["Roofing contractors", "2–4 weeks scheduling for non-emergency; 48–72 hrs for tarping", "Local roofers active post-storm; verify licensing & lien waivers"],
+        ["General contractors", "1–3 weeks", "Good availability; get 2–3 bids"],
+        ["HVAC service", "3–10 days", "AC techs limited in peak season; expedite for safety/claim"]
+      ],
+      "insights": [
+        "Secure emergency tarping quickly; obtain signed scopes before work to protect owner"
+      ],
+      "market_conditions": "Moderate demand following 2025 spring storms",
+      "show_market_indicator": true
+    },
+    "risk_mitigation_plan": {
+      "title": "Short- and Medium-Term Mitigation",
+      "subtitle": "Reduce immediate exposure and strengthen claim position",
+      "headers": ["Action", "Target", "Owner/Contractor/Hayden"],
+      "rows": [
+        ["Emergency roof inspection & moisture scan", "Identify active leaks or hidden damage", "Hayden coordinates / Owner approves"],
+        ["Tarping of open areas", "Prevent water intrusion", "Licensed roofer (Hayden can coordinate)"],
+        ["Trim vulnerable tree limbs", "Reduce branch impact risk", "Licensed arborist"],
+        ["Collect date-stamped photos + receipts", "Claims documentation", "Owner (Hayden provides checklist)"]
+      ],
+      "insights": [
+        "Timely emergency measures preserve habitability and strengthen insurer obligation to pay permanent repairs"
+      ]
+    }
+  },
+  
+  "emergency": {
+    "habitability": "caution_required",
+    "habitability_color": "#fd7e14",
+    "immediate_actions": [
+      "Do not operate HVAC until unit inspected; photograph outdoor unit",
+      "Conduct full roof walk/inspection with safety harness (Hayden-arranged)",
+      "Apply temporary tarping to any visible penetrations/leaks"
+    ],
+    "safety_level": "Caution",
+    "emergency_contacts": [
+      {"type": "Emergency Services", "number": "911"},
+      {"type": "Hayden Claims Group", "number": "(469) 434-2121"},
+      {"type": "Insurance Company", "number": "Your carrier number"}
+    ]
+  },
+  
+  "recommendations": {
+    "next_steps": [
+      {
+        "action": "Schedule full visual + infrared roof inspection",
+        "timeline": "within 7 days",
+        "priority": "critical",
+        "priority_color": "#dc3545",
+        "responsible": "Hayden / licensed roofer",
+        "cost": "$350 - $750"
+      },
+      {
+        "action": "Document claim and submit Notice of Loss to insurer",
+        "timeline": "within 3 days of inspection",
+        "priority": "critical",
+        "priority_color": "#dc3545",
+        "responsible": "Hayden / owner",
+        "cost": "$0 - $150 (document prep)"
+      },
+      {
+        "action": "Secure emergency tarping if any breaches found",
+        "timeline": "within 24-48 hours",
+        "priority": "high",
+        "priority_color": "#ff6b35",
+        "responsible": "local roofer (Hayden can coordinate)",
+        "cost": "$500 - $2,000"
+      }
+    ],
+    "inspections": [
+      {
+        "type": "Roof and attic moisture scan",
+        "urgency": "immediate",
+        "urgency_color": "#dc3545",
+        "purpose": "Detect concealed damage / active leaks",
+        "cost": "$350 - $650",
+        "hayden_coordination": true
+      },
+      {
+        "type": "Exterior envelope / siding audit",
+        "urgency": "within_week",
+        "urgency_color": "#fd7e14",
+        "purpose": "Identify hail dents and trim damage",
+        "cost": "$250 - $500",
+        "hayden_coordination": true
+      }
+    ],
+    "documentation": [
+      "Date-stamped photos (exterior close-ups + wide views)",
+      "Roof measurement, shingle type, serial/age if available",
+      "Contractor bids in Xactimate line-item format",
+      "Receipts for emergency repairs and temporary housing if used"
+    ],
+    "insurance_timeline": "File claim within 7-14 days of inspection; expect 30-90 day resolution timeline",
+    "hayden_coordination": "Hayden Claims Group can coordinate all recommended inspections and contractor services"
+  },
+  
+  "hayden_value": {
+    "value_proposition": "Hayden Claims Group provides specialized storm damage expertise, local contractor coordination, and insurance negotiation skills that maximize your claim settlement while minimizing stress and delays.",
+    "competitive_advantages": [
+      "Local Kerrville storm intelligence and forensic event matching",
+      "Established contractor network for emergency and permanent repairs",
+      "Proven insurance negotiation tactics using Xactimate industry standards",
+      "No upfront costs - we only get paid when you do",
+      "Average claim increase of 30-50% vs. initial insurer offers"
+    ],
+    "potential_savings": "$5,000 - $15,000 in additional claim recovery and contractor negotiation",
+    "success_probability": "high",
+    "risk_without_help": "Substantial risk of claim underpayment (average 40%), delayed settlements, and missed damage documentation"
+  },
+  
+  "risk_summary": {
+    "vulnerability_score": 6.5,
+    "vulnerability_level": "High",
+    "storm_events_count": 3,
+    "cumulative_factors": [
+      "Aging asphalt shingles (1978 construction) — likely multiple overlay cycles since original",
+      "Mature trees near structure increase risk of branch/impact damage",
+      "Multiple independent local hail reports, including very large (2.5 in), increase insurer damage-likelihood scoring"
+    ],
+    "data_quality": 8
+  },
+  
+  "metadata": {
+    "analysis_methodology": "Comprehensive multi-source storm data analysis combining NOAA reports, local CoCoRaHS observations, and property-specific vulnerability assessment",
+    "data_sources": 12,
+    "limitations": [
+      "Analysis based on available public storm reports - actual property damage requires physical inspection",
+      "Cost estimates reflect current market conditions and may vary based on contractor availability",
+      "Insurance claim outcomes depend on policy terms and carrier practices"
+    ],
+    "update_recommendation": "Annual review recommended, or immediately following any new storm event",
+    "report_version": "2.0 - Optimized for Professional Use"
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "report_id": "{{report_id}}",
+  "generated_date": "{{generated_date}}",
+  "generated_time": "{{generated_time}}",
+  
+  "company": {
+    "name": "{{company.name}}",
+    "tagline": "{{company.tagline}}",
+    "phone": "{{company.phone}}",
+    "email": "{{company.email}}",
+    "website": "{{company.website}}",
+    "logoUrl": "{{company.logoUrl}}",
+    "address": "{{company.address}}",
+    "license": "{{company.license}}",
+    "report_header": "{{company.report_header}}",
+    "footer_text": "{{company.footer_text}}"
+  },
+  
+  "styling": {
+    "primaryColor": "{{styling.primaryColor}}",
+    "secondaryColor": "{{styling.secondaryColor}}",
+    "accentColor": "{{styling.accentColor}}",
+    "successColor": "{{styling.successColor}}",
+    "warningColor": "{{styling.warningColor}}",
+    "dangerColor": "{{styling.dangerColor}}",
+    "lightGray": "{{styling.lightGray}}",
+    "mediumGray": "{{styling.mediumGray}}"
+  },
+  
+  "property": {
+    "address": "{{property.address}}",
+    "city": "{{property.city}}",
+    "state": "{{property.state}}",
+    "zip": "{{property.zip}}",
+    "full_address": "{{property.full_address}}",
+    "property_type": "{{property.property_type}}",
+    "year_built": "{{property.year_built}}",
+    "contact_name": "{{property.contact_name}}",
+    "contact_phone": "{{property.contact_phone}}",
+    "contact_email": "{{property.contact_email}}"
+  },
+  
+  "executive_summary": {
+    "overall_risk": "{{executive_summary.overall_risk}}",
+    "risk_color": "{{executive_summary.risk_color}}",
+    "damage_probability": "{{executive_summary.damage_probability}}",
+    "estimated_value": "{{executive_summary.estimated_value}}",
+    "key_findings": "{{#executive_summary.key_findings}}{{.}}{{/executive_summary.key_findings}}",
+    "critical_actions": "{{#executive_summary.critical_actions}}{{.}}{{/executive_summary.critical_actions}}",
+    "hayden_advantage": "{{executive_summary.hayden_advantage}}",
+    "confidence_level": "{{executive_summary.confidence_level}}"
+  },
+  
+  "tables": {
+    "storm_risk_summary": {
+      "title": "{{tables.storm_risk_summary.title}}",
+      "subtitle": "{{tables.storm_risk_summary.subtitle}}",
+      "headers": "{{#tables.storm_risk_summary.headers}}{{.}}{{/tables.storm_risk_summary.headers}}",
+      "rows": "{{#tables.storm_risk_summary.rows}}{{#.}}{{.}}{{/.}}{{/tables.storm_risk_summary.rows}}",
+      "insights": "{{#tables.storm_risk_summary.insights}}{{.}}{{/tables.storm_risk_summary.insights}}",
+      "total_rows": "{{tables.storm_risk_summary.total_rows}}",
+      "has_insights": "{{tables.storm_risk_summary.has_insights}}"
+    },
+    "property_damage_assessment": {
+      "title": "{{tables.property_damage_assessment.title}}",
+      "subtitle": "{{tables.property_damage_assessment.subtitle}}",
+      "headers": "{{#tables.property_damage_assessment.headers}}{{.}}{{/tables.property_damage_assessment.headers}}",
+      "rows": "{{#tables.property_damage_assessment.rows}}{{#.}}{{.}}{{/.}}{{/tables.property_damage_assessment.rows}}",
+      "insights": "{{#tables.property_damage_assessment.insights}}{{.}}{{/tables.property_damage_assessment.insights}}"
+    },
+    "repair_cost_analysis": {
+      "title": "{{tables.repair_cost_analysis.title}}",
+      "subtitle": "{{tables.repair_cost_analysis.subtitle}}",
+      "headers": "{{#tables.repair_cost_analysis.headers}}{{.}}{{/tables.repair_cost_analysis.headers}}",
+      "rows": "{{#tables.repair_cost_analysis.rows}}{{#.}}{{.}}{{/.}}{{/tables.repair_cost_analysis.rows}}",
+      "insights": "{{#tables.repair_cost_analysis.insights}}{{.}}{{/tables.repair_cost_analysis.insights}}",
+      "show_totals": "{{tables.repair_cost_analysis.show_totals}}",
+      "total_estimate": "{{tables.repair_cost_analysis.total_estimate}}",
+      "highlight_totals": "{{tables.repair_cost_analysis.highlight_totals}}"
+    },
+    "insurance_claim_strategy": {
+      "title": "{{tables.insurance_claim_strategy.title}}",
+      "subtitle": "{{tables.insurance_claim_strategy.subtitle}}",
+      "headers": "{{#tables.insurance_claim_strategy.headers}}{{.}}{{/tables.insurance_claim_strategy.headers}}",
+      "rows": "{{#tables.insurance_claim_strategy.rows}}{{#.}}{{.}}{{/.}}{{/tables.insurance_claim_strategy.rows}}",
+      "insights": "{{#tables.insurance_claim_strategy.insights}}{{.}}{{/tables.insurance_claim_strategy.insights}}",
+      "claim_probability": "{{tables.insurance_claim_strategy.claim_probability}}",
+      "highlight_strategy": "{{tables.insurance_claim_strategy.highlight_strategy}}"
+    },
+    "contractor_market_intelligence": {
+      "title": "{{tables.contractor_market_intelligence.title}}",
+      "subtitle": "{{tables.contractor_market_intelligence.subtitle}}",
+      "headers": "{{#tables.contractor_market_intelligence.headers}}{{.}}{{/tables.contractor_market_intelligence.headers}}",
+      "rows": "{{#tables.contractor_market_intelligence.rows}}{{#.}}{{.}}{{/.}}{{/tables.contractor_market_intelligence.rows}}",
+      "insights": "{{#tables.contractor_market_intelligence.insights}}{{.}}{{/tables.contractor_market_intelligence.insights}}",
+      "market_conditions": "{{tables.contractor_market_intelligence.market_conditions}}",
+      "show_market_indicator": "{{tables.contractor_market_intelligence.show_market_indicator}}"
+    },
+    "risk_mitigation_plan": {
+      "title": "{{tables.risk_mitigation_plan.title}}",
+      "subtitle": "{{tables.risk_mitigation_plan.subtitle}}",
+      "headers": "{{#tables.risk_mitigation_plan.headers}}{{.}}{{/tables.risk_mitigation_plan.headers}}",
+      "rows": "{{#tables.risk_mitigation_plan.rows}}{{#.}}{{.}}{{/.}}{{/tables.risk_mitigation_plan.rows}}",
+      "insights": "{{#tables.risk_mitigation_plan.insights}}{{.}}{{/tables.risk_mitigation_plan.insights}}"
+    }
+  },
+  
+  "emergency": {
+    "habitability": "{{emergency.habitability}}",
+    "habitability_color": "{{emergency.habitability_color}}",
+    "immediate_actions": "{{#emergency.immediate_actions}}{{.}}{{/emergency.immediate_actions}}",
+    "safety_level": "{{emergency.safety_level}}",
+    "emergency_contacts": "{{#emergency.emergency_contacts}}{{type}}: {{number}}{{/emergency.emergency_contacts}}"
+  },
+  
+  "recommendations": {
+    "next_steps": "{{#recommendations.next_steps}}{{action}}|{{timeline}}|{{priority}}|{{priority_color}}|{{responsible}}|{{cost}}{{/recommendations.next_steps}}",
+    "inspections": "{{#recommendations.inspections}}{{type}}|{{urgency}}|{{urgency_color}}|{{purpose}}|{{cost}}|{{hayden_coordination}}{{/recommendations.inspections}}",
+    "documentation": "{{#recommendations.documentation}}{{.}}{{/recommendations.documentation}}",
+    "insurance_timeline": "{{recommendations.insurance_timeline}}",
+    "hayden_coordination": "{{recommendations.hayden_coordination}}"
+  },
+  
+  "hayden_value": {
+    "value_proposition": "{{hayden_value.value_proposition}}",
+    "competitive_advantages": "{{#hayden_value.competitive_advantages}}{{.}}{{/hayden_value.competitive_advantages}}",
+    "potential_savings": "{{hayden_value.potential_savings}}",
+    "success_probability": "{{hayden_value.success_probability}}",
+    "risk_without_help": "{{hayden_value.risk_without_help}}"
+  },
+  
+  "risk_summary": {
+    "vulnerability_score": "{{risk_summary.vulnerability_score}}",
+    "vulnerability_level": "{{risk_summary.vulnerability_level}}",
+    "storm_events_count": "{{risk_summary.storm_events_count}}",
+    "cumulative_factors": "{{#risk_summary.cumulative_factors}}{{.}}{{/risk_summary.cumulative_factors}}",
+    "data_quality": "{{risk_summary.data_quality}}"
+  },
+  
+  "metadata": {
+    "analysis_methodology": "{{metadata.analysis_methodology}}",
+    "data_sources": "{{metadata.data_sources}}",
+    "limitations": "{{#metadata.limitations}}{{.}}{{/metadata.limitations}}",
+    "update_recommendation": "{{metadata.update_recommendation}}",
+    "report_version": "{{metadata.report_version}}"
+  }
+}
