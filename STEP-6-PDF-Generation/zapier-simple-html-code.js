@@ -46,6 +46,17 @@ function buildHTML(analysis, formData, apiKeys = {}, stormSwathHtml = '') {
         'low': colors.success
     };
     
+    // Risk badge helper function
+    const getRiskBadge = (level) => {
+        const badges = {
+            'CRITICAL': `<span style="background:${colors.danger};color:#fff;padding:5px 12px;border-radius:15px;font-size:10pt;font-weight:bold;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2)">🔴 CRITICAL</span>`,
+            'HIGH': `<span style="background:${colors.warning};color:#fff;padding:5px 12px;border-radius:15px;font-size:10pt;font-weight:bold;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2)">🟠 HIGH</span>`,
+            'MODERATE': `<span style="background:#ffc107;color:#000;padding:5px 12px;border-radius:15px;font-size:10pt;font-weight:bold;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2)">🟡 MODERATE</span>`,
+            'LOW': `<span style="background:${colors.success};color:#fff;padding:5px 12px;border-radius:15px;font-size:10pt;font-weight:bold;display:inline-block;box-shadow:0 2px 4px rgba(0,0,0,0.2)">🟢 LOW</span>`
+        };
+        return badges[level?.toUpperCase()] || level;
+    };
+    
     const riskColor = riskColors[analysis.executive_summary?.overall_risk?.toLowerCase()] || colors.secondary;
     const address = `${formData.property_address || ''}, ${formData.city || ''}, ${formData.state || ''} ${formData.zip || ''}`.replace(/,\s*,/g, ',').trim();
     const reportId = `HCG-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
@@ -54,7 +65,7 @@ function buildHTML(analysis, formData, apiKeys = {}, stormSwathHtml = '') {
     return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style media="print">
-@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.chart-container{page-break-inside:avoid}.storm-visual{page-break-inside:avoid}.property-details{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}
+@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.chart-container{page-break-inside:avoid}.storm-visual{page-break-inside:avoid}.property-details{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}[title]{position:relative}[title]:hover::after{content:attr(title);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#fff;padding:8px 12px;border-radius:5px;font-size:8pt;white-space:nowrap;z-index:1000;margin-bottom:5px;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
 </style></head><body>
 
 <div class="page"><div class="header" style="display:flex;align-items:center;justify-content:center;padding:20px"><img src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/hayden-logo.png" alt="Hayden Claims Group" style="height:120px;width:auto"></div>
@@ -111,12 +122,143 @@ ${address}</span>
 </div>
 
 <div class="no-break"><h1>Summary</h1>
+
+<!-- COST COMPARISON VISUAL -->
+<div class="no-break" style="margin:20px 0">
+<h3 style="text-align:center;color:#2c3e50;margin-bottom:20px">💰 Value Comparison: Your Options</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;text-align:center;margin-bottom:25px">
+  <div style="border:2px solid ${colors.danger};padding:15px;border-radius:8px;background:#fff5f5">
+    <h4 style="color:${colors.danger};margin:0 0 10px 0">❌ No Action</h4>
+    <div style="font-size:24pt;font-weight:bold;color:${colors.danger};margin:10px 0">$50K+</div>
+    <p style="font-size:8pt;color:#6c757d;margin:5px 0">Denied claim + ongoing damage deterioration</p>
+  </div>
+  <div style="border:2px solid #ffc107;padding:15px;border-radius:8px;background:#fff9e6">
+    <h4 style="color:#856404;margin:0 0 10px 0">⚠️ DIY Filing</h4>
+    <div style="font-size:24pt;font-weight:bold;color:#856404;margin:10px 0">$15K</div>
+    <p style="font-size:8pt;color:#6c757d;margin:5px 0">Underpaid claim, missed hidden damages</p>
+  </div>
+  <div style="border:3px solid ${colors.success};padding:15px;border-radius:8px;background:#f0fff4;box-shadow:0 4px 8px rgba(40,167,69,0.2)">
+    <h4 style="color:${colors.success};margin:0 0 10px 0">✅ Hayden Claims</h4>
+    <div style="font-size:24pt;font-weight:bold;color:${colors.success};margin:10px 0">$35K</div>
+    <p style="font-size:8pt;color:#6c757d;margin:5px 0">Full claim value + expert advocacy</p>
+  </div>
+</div>
+</div>
+
 <div class="risk-box box"><h3>Overall Risk Assessment</h3>
-<p><strong>Risk Level:</strong> <span class="risk-level">${analysis.executive_summary?.overall_risk || 'Not Assessed'}</span></p>
+<p><strong>Risk Level:</strong> ${getRiskBadge(analysis.executive_summary?.overall_risk || 'HIGH')}</p>
 <p><strong>Damage Probability:</strong> ${analysis.executive_summary?.damage_probability || 'Under Review'}</p>
 <p><strong>Estimated Claim Value:</strong> <strong>${analysis.executive_summary?.estimated_claim_value_range || 'TBD'}</strong></p>
 <p><strong>Confidence:</strong> ${analysis.report_metadata?.confidence_level || 'High'}</p></div>
 <h3>Key Findings</h3><ul>${(analysis.executive_summary?.primary_findings || []).map(f => `<li>${f}</li>`).join('')}</ul>
+
+<!-- VISUAL CALLOUT BOXES FOR KEY STATS -->
+${(() => {
+    const stormData = analysis.professional_tables?.storm_risk_summary?.data_rows || [];
+    const damageData = analysis.professional_tables?.property_damage_assessment?.data_rows || [];
+    
+    let calloutBoxes = '';
+    
+    // Extract key stats from storm data
+    if (stormData.length > 0 && stormData[0]) {
+        const windSpeed = stormData[0][2]?.match(/(\d+)\s*mph/i)?.[1] || null;
+        const hailSize = stormData[0][2]?.match(/(\d+\.?\d*)\s*(?:inch|in|")/i)?.[1] || null;
+        
+        if (windSpeed || hailSize) {
+            calloutBoxes += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0">';
+            
+            if (windSpeed) {
+                const windColor = windSpeed >= 75 ? colors.danger : windSpeed >= 58 ? colors.warning : colors.success;
+                calloutBoxes += `
+                <div style="background:linear-gradient(135deg, ${windColor} 0%, ${windColor}dd 100%);color:#fff;padding:20px;border-radius:10px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.2)">
+                  <div style="font-size:48pt;font-weight:bold;line-height:1">${windSpeed}</div>
+                  <div style="font-size:12pt;opacity:0.9;margin-top:5px">MPH Peak Wind Speed</div>
+                  <div style="font-size:9pt;opacity:0.85;margin-top:5px;border-top:1px solid rgba(255,255,255,0.3);padding-top:8px">
+                    ${windSpeed >= 75 ? '💨 Severe wind damage likely' : windSpeed >= 58 ? '💨 Significant wind damage possible' : '💨 Moderate wind impact'}
+                  </div>
+                </div>`;
+            }
+            
+            if (hailSize) {
+                const hailColor = hailSize >= 2 ? colors.danger : hailSize >= 1 ? colors.warning : colors.success;
+                calloutBoxes += `
+                <div style="background:linear-gradient(135deg, ${hailColor} 0%, ${hailColor}dd 100%);color:#fff;padding:20px;border-radius:10px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.2)">
+                  <div style="font-size:48pt;font-weight:bold;line-height:1">${hailSize}"</div>
+                  <div style="font-size:12pt;opacity:0.9;margin-top:5px">Maximum Hail Size</div>
+                  <div style="font-size:9pt;opacity:0.85;margin-top:5px;border-top:1px solid rgba(255,255,255,0.3);padding-top:8px">
+                    ${hailSize >= 2 ? '🧊 Severe roof damage expected' : hailSize >= 1 ? '🧊 Golf ball sized - likely damage' : '🧊 Pea to marble sized'}
+                  </div>
+                </div>`;
+            }
+            
+            calloutBoxes += '</div>';
+        }
+    }
+    
+    return calloutBoxes;
+})()}
+
+<!-- DAMAGE SEVERITY HEATMAP -->
+<div class="no-break" style="margin:25px 0">
+<h3 style="text-align:center;color:#2c3e50;margin-bottom:15px">🏠 Property Damage Severity Map</h3>
+<div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:8px;padding:20px;text-align:center">
+  <svg viewBox="0 0 400 280" style="max-width:100%;height:auto">
+    <!-- Sky background -->
+    <rect x="0" y="0" width="400" height="280" fill="#e3f2fd"/>
+    
+    <!-- Roof (HIGH RISK - Red) -->
+    <polygon points="200,40 360,130 40,130" fill="rgba(220,53,69,0.85)" stroke="#8B0000" stroke-width="3"/>
+    <text x="200" y="100" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">ROOF - HIGH RISK</text>
+    <text x="200" y="118" text-anchor="middle" fill="#fff" font-size="10">🔴 Hail & Wind Damage</text>
+    
+    <!-- House walls (MODERATE RISK - Orange) -->
+    <rect x="70" y="130" width="260" height="120" fill="rgba(253,126,20,0.7)" stroke="#C8511B" stroke-width="2"/>
+    <text x="200" y="170" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">SIDING - MODERATE</text>
+    <text x="200" y="185" text-anchor="middle" fill="#fff" font-size="9">🟠 Impact Damage</text>
+    
+    <!-- Windows (LOW-MODERATE RISK - Yellow) -->
+    <rect x="100" y="150" width="50" height="50" fill="rgba(255,193,7,0.6)" stroke="#856404" stroke-width="2"/>
+    <rect x="250" y="150" width="50" height="50" fill="rgba(255,193,7,0.6)" stroke="#856404" stroke-width="2"/>
+    <text x="125" y="178" text-anchor="middle" fill="#000" font-size="9" font-weight="bold">WINDOWS</text>
+    <text x="275" y="178" text-anchor="middle" fill="#000" font-size="9" font-weight="bold">WINDOWS</text>
+    
+    <!-- Door (LOW RISK - Green) -->
+    <rect x="180" y="190" width="40" height="60" fill="rgba(40,167,69,0.6)" stroke="#1e7e34" stroke-width="2"/>
+    <circle cx="210" cy="220" r="3" fill="#FFD700"/>
+    
+    <!-- Gutters -->
+    <rect x="40" y="125" width="320" height="8" fill="#6c757d" stroke="#495057" stroke-width="1"/>
+    
+    <!-- Ground -->
+    <rect x="0" y="250" width="400" height="30" fill="#8BC34A"/>
+    
+    <!-- Damage indicators -->
+    <circle cx="150" cy="70" r="8" fill="#fff" opacity="0.8"/>
+    <circle cx="250" cy="85" r="6" fill="#fff" opacity="0.8"/>
+    <circle cx="200" cy="60" r="10" fill="#fff" opacity="0.8"/>
+  </svg>
+  
+  <div style="margin-top:15px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:5px">
+      <div style="width:16px;height:16px;background:rgba(220,53,69,0.85);border-radius:3px;border:1px solid #8B0000"></div>
+      <span style="font-size:9pt;color:#2c3e50"><strong>🔴 Critical Risk</strong> - Roof/Shingles</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px">
+      <div style="width:16px;height:16px;background:rgba(253,126,20,0.7);border-radius:3px;border:1px solid #C8511B"></div>
+      <span style="font-size:9pt;color:#2c3e50"><strong>🟠 High Risk</strong> - Siding/Exterior</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px">
+      <div style="width:16px;height:16px;background:rgba(255,193,7,0.6);border-radius:3px;border:1px solid #856404"></div>
+      <span style="font-size:9pt;color:#2c3e50"><strong>🟡 Moderate Risk</strong> - Windows/Gutters</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px">
+      <div style="width:16px;height:16px;background:rgba(40,167,69,0.6);border-radius:3px;border:1px solid #1e7e34"></div>
+      <span style="font-size:9pt;color:#2c3e50"><strong>🟢 Lower Risk</strong> - Protected Areas</span>
+    </div>
+  </div>
+</div>
+</div>
+
 <div class="emergency-box box"><h3>Critical Actions Required</h3><ul>${(analysis.executive_summary?.critical_actions || []).map(a => `<li><strong>${a}</strong></li>`).join('')}</ul></div></div>
 
 <div class="no-break property-details"><div><h3>Property Details</h3>
@@ -158,13 +300,107 @@ ${(() => {
 <h4>Immediate Priorities:</h4><ul>${(analysis.emergency_response?.immediate_priorities || []).map(p => `<li>${p}</li>`).join('')}</ul></div></div>
 
 <div class="no-break"><h1>Professional Recommendations</h1><h3>Next Steps</h3>
-${(analysis.recommendations?.next_steps || []).map(s => `<div class="box"><h4>${s.action}</h4><p><strong>Timeline:</strong> ${s.timeline}</p><p><strong>Priority:</strong> ${s.priority}</p><p><strong>Cost:</strong> ${s.estimated_cost}</p></div>`).join('')}</div>
+
+<!-- URGENCY INDICATOR -->
+<div style="background:#fff3cd;border-left:5px solid ${colors.warning};padding:15px;margin:15px 0;border-radius:5px">
+  <div style="display:flex;align-items:center;gap:15px">
+    <div style="font-size:48pt;line-height:1">⏰</div>
+    <div style="flex:1">
+      <h4 style="margin:0;color:#856404">⚠️ Time Sensitive: Act Now</h4>
+      <p style="margin:5px 0 0 0;color:#856404;font-size:10pt">Insurance claims must be filed within <strong>365 days</strong> of storm damage occurrence</p>
+      <div style="height:10px;background:#e9ecef;border-radius:5px;margin-top:10px;overflow:hidden">
+        <div style="width:75%;height:100%;background:${colors.warning};border-radius:5px;position:relative">
+          <span style="position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:8pt;color:#fff;font-weight:bold">Time remaining</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIMELINE VISUALIZATION WITH MILESTONES -->
+<div class="no-break" style="margin:25px 0">
+<h3 style="text-align:center;color:#2c3e50;margin-bottom:20px">📅 Recommended Action Timeline</h3>
+<div style="position:relative;padding:20px 0">
+  <!-- Timeline bar -->
+  <div style="position:relative;height:8px;background:#e9ecef;border-radius:4px;margin:30px 0">
+    <div style="position:absolute;left:0%;width:25%;height:100%;background:${colors.success};border-radius:4px 0 0 4px"></div>
+    
+    <!-- Milestone 1 -->
+    <div style="position:absolute;left:0%;top:-25px;transform:translateX(-50%)">
+      <div style="width:40px;height:40px;background:${colors.success};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18pt;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.2)">📋</div>
+      <div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+        <div style="font-size:9pt;font-weight:bold;color:#2c3e50">Inspection</div>
+        <div style="font-size:8pt;color:#6c757d">Week 1</div>
+      </div>
+    </div>
+    
+    <!-- Milestone 2 -->
+    <div style="position:absolute;left:25%;top:-25px;transform:translateX(-50%)">
+      <div style="width:40px;height:40px;background:${colors.primary};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18pt;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.2)">📄</div>
+      <div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+        <div style="font-size:9pt;font-weight:bold;color:#2c3e50">Documentation</div>
+        <div style="font-size:8pt;color:#6c757d">Week 2</div>
+      </div>
+    </div>
+    
+    <!-- Milestone 3 -->
+    <div style="position:absolute;left:50%;top:-25px;transform:translateX(-50%)">
+      <div style="width:40px;height:40px;background:#e9ecef;border:3px solid ${colors.secondary};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18pt;box-shadow:0 2px 6px rgba(0,0,0,0.2)">📞</div>
+      <div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+        <div style="font-size:9pt;font-weight:bold;color:#2c3e50">Claim Filed</div>
+        <div style="font-size:8pt;color:#6c757d">Week 3-4</div>
+      </div>
+    </div>
+    
+    <!-- Milestone 4 -->
+    <div style="position:absolute;left:75%;top:-25px;transform:translateX(-50%)">
+      <div style="width:40px;height:40px;background:#e9ecef;border:3px solid ${colors.secondary};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18pt;box-shadow:0 2px 6px rgba(0,0,0,0.2)">🔧</div>
+      <div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+        <div style="font-size:9pt;font-weight:bold;color:#2c3e50">Repairs Start</div>
+        <div style="font-size:8pt;color:#6c757d">Week 6-8</div>
+      </div>
+    </div>
+    
+    <!-- Milestone 5 -->
+    <div style="position:absolute;left:100%;top:-25px;transform:translateX(-50%)">
+      <div style="width:40px;height:40px;background:#e9ecef;border:3px solid ${colors.secondary};border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18pt;box-shadow:0 2px 6px rgba(0,0,0,0.2)">✅</div>
+      <div style="position:absolute;top:45px;left:50%;transform:translateX(-50%);text-align:center;white-space:nowrap">
+        <div style="font-size:9pt;font-weight:bold;color:#2c3e50">Complete</div>
+        <div style="font-size:8pt;color:#6c757d">Week 10-12</div>
+      </div>
+    </div>
+  </div>
+  
+  <div style="margin-top:80px;background:#f8f9fa;padding:12px;border-radius:5px;border-left:4px solid ${colors.primary}">
+    <p style="font-size:9pt;color:#2c3e50;margin:0"><strong>Current Status:</strong> <span style="background:${colors.success};color:#fff;padding:2px 8px;border-radius:10px;font-size:8pt">📋 Ready for Inspection</span></p>
+  </div>
+</div>
+
+${(analysis.recommendations?.next_steps || []).map(s => `<div class="box"><h4>${s.action}</h4><p><strong>Timeline:</strong> ${s.timeline}</p><p><strong>Priority:</strong> ${getRiskBadge(s.priority)}</p><p><strong>Cost:</strong> ${s.estimated_cost}</p></div>`).join('')}</div>
 
 <div class="no-break"><h1>Hayden Claims Group Advantage</h1>
 <div class="box" style="background:#f8f9fa"><h3>Value Proposition</h3>
 <p>${analysis.business_intelligence?.hayden_value_proposition || analysis.executive_summary?.hayden_competitive_advantage || ''}</p>
 <h4>Competitive Advantages:</h4><ul>${(analysis.business_intelligence?.competitive_advantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
-<p><strong>Potential Savings:</strong> ${analysis.business_intelligence?.potential_savings || 'Significant savings'}</p></div></div>
+<p><strong>Potential Savings:</strong> <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Based on industry average claim underpayment rates">ℹ️</span> ${analysis.business_intelligence?.potential_savings || 'Significant savings'}</p>
+
+<!-- INTERACTIVE-LOOKING TOOLTIPS EXAMPLE -->
+<div style="margin-top:15px;padding:15px;background:#fff;border:2px solid ${colors.primary};border-radius:8px">
+<p style="font-size:10pt;margin:5px 0">
+  <strong>Why Choose Hayden Claims Group?</strong>
+</p>
+<p style="font-size:9pt;margin:8px 0;color:#2c3e50">
+  Our <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Licensed Texas Public Insurance Adjusters">licensed adjusters ℹ️</span> work exclusively for YOU, not the insurance company. We handle all 
+  <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Documentation, estimates, negotiations, and appeals">claim complexities ℹ️</span>, ensuring you receive the 
+  <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Full policy coverage without underpayment">maximum settlement ℹ️</span> you deserve.
+</p>
+<p style="font-size:9pt;margin:8px 0;color:#2c3e50">
+  Unlike <span style="border-bottom:2px dotted ${colors.danger};cursor:help" title="Company adjusters work for the insurance company's interests">insurance company adjusters ℹ️</span>, we are 
+  <strong style="color:${colors.primary}">your advocate</strong>, with payment contingent only on your success.
+</p>
+</div>
+
+</div></div>
 
 <div class="footer"><p><strong>${company.name}</strong> | ${company.phone} | ${company.email}</p>
 <p>${company.license}</p><p>Report ID: ${reportId} | ${date}</p></div>
