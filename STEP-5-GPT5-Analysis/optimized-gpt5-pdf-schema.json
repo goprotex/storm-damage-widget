@@ -1,0 +1,435 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Optimized GPT-5 Storm Analysis Schema - PDF Ready",
+  "description": "Streamlined schema optimized for CraftMyPDF integration and professional reporting",
+  "type": "object",
+  "required": [
+    "report_metadata",
+    "executive_summary", 
+    "risk_assessment",
+    "professional_tables",
+    "emergency_response",
+    "recommendations",
+    "business_intelligence"
+  ],
+  "properties": {
+    "report_metadata": {
+      "type": "object",
+      "required": ["analysis_id", "confidence_level", "generated_timestamp"],
+      "properties": {
+        "analysis_id": {
+          "type": "string",
+          "description": "Unique analysis identifier for tracking"
+        },
+        "confidence_level": {
+          "type": "string",
+          "enum": ["high", "medium", "low"],
+          "description": "Overall confidence in analysis results"
+        },
+        "generated_timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this analysis was completed"
+        },
+        "data_sources_analyzed": {
+          "type": "integer",
+          "description": "Number of data sources analyzed",
+          "minimum": 1
+        }
+      }
+    },
+
+    "executive_summary": {
+      "type": "object",
+      "required": ["overall_risk_level", "primary_findings", "critical_actions"],
+      "properties": {
+        "overall_risk_level": {
+          "type": "string",
+          "enum": ["critical", "high", "moderate", "low", "minimal"],
+          "description": "Overall property damage risk level"
+        },
+        "damage_probability": {
+          "type": "string",
+          "enum": ["very_likely", "likely", "possible", "unlikely", "very_unlikely"],
+          "description": "Likelihood of property damage"
+        },
+        "primary_findings": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1,
+          "maxItems": 5,
+          "description": "Top 3-5 key findings from analysis"
+        },
+        "critical_actions": {
+          "type": "array", 
+          "items": {"type": "string"},
+          "minItems": 1,
+          "maxItems": 4,
+          "description": "Most important immediate actions needed"
+        },
+        "hayden_competitive_advantage": {
+          "type": "string",
+          "description": "Why Hayden Claims Group provides superior value"
+        },
+        "estimated_claim_value_range": {
+          "type": "string",
+          "description": "Potential claim value range (e.g., '$15,000 - $45,000')"
+        }
+      }
+    },
+
+    "risk_assessment": {
+      "type": "object",
+      "required": ["storm_impact_events", "property_vulnerability_score"],
+      "properties": {
+        "property_vulnerability_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Property vulnerability score (0-10 scale)"
+        },
+        "storm_impact_events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["event_date", "storm_type", "impact_severity", "damage_potential"],
+            "properties": {
+              "event_date": {"type": "string", "format": "date"},
+              "storm_type": {
+                "type": "string",
+                "enum": ["hail", "wind", "tornado", "severe_thunderstorm", "hurricane"]
+              },
+              "impact_severity": {
+                "type": "string",
+                "enum": ["severe", "moderate", "light", "minimal"]
+              },
+              "damage_potential": {
+                "type": "string",
+                "enum": ["high", "moderate", "low", "negligible"]
+              },
+              "distance_from_property": {"type": "string"},
+              "storm_intensity": {"type": "string"},
+              "affected_systems": {"type": "array", "items": {"type": "string"}}
+            }
+          }
+        },
+        "cumulative_risk_factors": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Factors that increase overall risk"
+        }
+      }
+    },
+
+    "professional_tables": {
+      "type": "object",
+      "required": [
+        "storm_risk_summary",
+        "property_damage_assessment", 
+        "repair_cost_analysis",
+        "insurance_claim_strategy",
+        "contractor_market_intelligence",
+        "risk_mitigation_plan"
+      ],
+      "properties": {
+        "storm_risk_summary": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Storm Risk Assessment Summary"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Storm Event", "Date", "Severity", "Distance", "Damage Risk", "Confidence"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        },
+
+        "property_damage_assessment": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Property Vulnerability & Damage Assessment"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Property Component", "Vulnerability Level", "Damage Indicators", "Replacement Value", "Priority"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array", 
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        },
+
+        "repair_cost_analysis": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Repair Cost Analysis & Market Pricing"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Repair Category", "Scope of Work", "Material Cost", "Labor Cost", "Total Estimate", "Market Factors"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "total_estimate_range": {"type": "string"},
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        },
+
+        "insurance_claim_strategy": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Insurance Claim Strategy & Coverage Analysis"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Coverage Type", "Policy Limits", "Deductible", "Claim Potential", "Strategy", "Expected Outcome"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "claim_success_probability": {"type": "string"},
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        },
+
+        "contractor_market_intelligence": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Contractor Market Intelligence & Selection"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Contractor Type", "Availability", "Pricing Level", "Quality Rating", "Recommended Timing", "Hayden Network"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "market_conditions": {"type": "string"},
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        },
+
+        "risk_mitigation_plan": {
+          "type": "object",
+          "required": ["title", "headers", "data_rows"],
+          "properties": {
+            "title": {"type": "string", "default": "Risk Mitigation & Preventive Measures"},
+            "subtitle": {"type": "string"},
+            "headers": {
+              "type": "array",
+              "items": {"type": "string"},
+              "default": ["Mitigation Strategy", "Implementation Cost", "Risk Reduction", "ROI Timeline", "Priority Level", "Hayden Support"]
+            },
+            "data_rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {"type": "string"}
+              },
+              "minItems": 1
+            },
+            "overall_strategy": {"type": "string"},
+            "key_insights": {
+              "type": "array",
+              "items": {"type": "string"},
+              "maxItems": 3
+            }
+          }
+        }
+      }
+    },
+
+    "emergency_response": {
+      "type": "object",
+      "required": ["habitability_status", "immediate_priorities", "safety_concerns"],
+      "properties": {
+        "habitability_status": {
+          "type": "string",
+          "enum": ["safe_habitable", "caution_required", "temporary_relocation", "uninhabitable_dangerous"],
+          "description": "Current habitability assessment"
+        },
+        "immediate_priorities": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 1,
+          "maxItems": 5,
+          "description": "Most urgent actions needed within 24-48 hours"
+        },
+        "safety_concerns": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Specific safety issues identified"
+        },
+        "emergency_vs_permanent_repairs": {
+          "type": "string",
+          "description": "Strategy for emergency stabilization vs permanent repairs"
+        },
+        "temporary_living_arrangements": {
+          "type": "string",
+          "description": "Recommendations for temporary housing if needed"
+        }
+      }
+    },
+
+    "recommendations": {
+      "type": "object",
+      "required": ["next_steps", "professional_inspections", "documentation_priorities"],
+      "properties": {
+        "next_steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["action", "timeline", "priority"],
+            "properties": {
+              "action": {"type": "string"},
+              "timeline": {"type": "string"},
+              "priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+              "responsible_party": {"type": "string"},
+              "estimated_cost": {"type": "string"}
+            }
+          }
+        },
+        "professional_inspections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["inspection_type", "urgency", "purpose"],
+            "properties": {
+              "inspection_type": {"type": "string"},
+              "urgency": {"type": "string", "enum": ["immediate", "within_week", "within_month", "routine"]},
+              "purpose": {"type": "string"},
+              "estimated_cost": {"type": "string"},
+              "hayden_can_coordinate": {"type": "boolean"}
+            }
+          }
+        },
+        "documentation_priorities": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Critical documentation needed for claims and repairs"
+        },
+        "insurance_claim_timeline": {
+          "type": "string",
+          "description": "Recommended timeline for insurance claim filing and processing"
+        }
+      }
+    },
+
+    "business_intelligence": {
+      "type": "object",
+      "required": ["hayden_value_proposition", "competitive_advantages"],
+      "properties": {
+        "hayden_value_proposition": {
+          "type": "string",
+          "description": "Clear statement of how Hayden Claims Group adds value to this specific situation"
+        },
+        "competitive_advantages": {
+          "type": "array",
+          "items": {"type": "string"},
+          "minItems": 2,
+          "maxItems": 5,
+          "description": "Specific advantages Hayden provides over competitors"
+        },
+        "potential_savings": {
+          "type": "string",
+          "description": "Estimated savings Hayden can provide (financial and time)"
+        },
+        "risk_without_professional_help": {
+          "type": "string",
+          "description": "Risks of proceeding without professional public adjuster assistance"
+        },
+        "success_probability_with_hayden": {
+          "type": "string",
+          "enum": ["very_high", "high", "moderate"],
+          "description": "Probability of successful claim resolution with Hayden's help"
+        }
+      }
+    },
+
+    "technical_appendix": {
+      "type": "object",
+      "properties": {
+        "analysis_methodology": {
+          "type": "string",
+          "description": "Brief explanation of analysis methods used"
+        },
+        "data_quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10,
+          "description": "Quality score of underlying data (0-10)"
+        },
+        "limitations": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Known limitations of this analysis"
+        },
+        "recommended_updates": {
+          "type": "string",
+          "description": "When this analysis should be updated or refreshed"
+        }
+      }
+    }
+  }
+}
