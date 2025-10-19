@@ -50,18 +50,18 @@ function buildHTML(analysis, formData) {
     
     return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
-<style>
-@page{margin:0.75in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50}.page{page-break-after:always}.no-break{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:20px;margin:-0.75in -0.75in 30px -0.75in;text-align:center}.header h1{font-size:28pt;margin-bottom:5px}.header p{font-size:12pt;font-style:italic}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:24pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:18pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:14pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:10pt}th{background:${colors.primary};color:#fff;padding:12px 8px;text-align:left;border:1px solid ${colors.primary}}td{padding:10px 8px;border:1px solid #dee2e6}tr:nth-child(even){background:#f8f9fa}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}
+<style media="print">
+@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}
 </style></head><body>
 
-<div class="page"><div class="header"><h1>${company.name}</h1><p>${company.tagline}</p></div>
-<div style="margin-top:100px;text-align:center"><h1 style="border:none">Storm Damage Intelligence Report</h1>
+<div class="page"><div class="header"><img class="header-logo" src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/assets/hayden-logo.png" alt="Hayden Claims Group"><div class="header-text"><h1>${company.name}</h1><p>${company.tagline}</p></div></div>
+<div style="margin-top:60px;text-align:center"><h1 style="border:none;font-size:26pt">Storm Damage Intelligence Report</h1>
 <p style="font-size:14pt;margin:20px 0"><strong>${address}</strong></p>
-<p>Report ID: ${reportId}</p><p>Generated: ${date}</p></div>
-<div class="box" style="margin-top:100px"><h3>Contact Information</h3><p><strong>${company.name}</strong></p>
+<p style="font-size:10pt;color:#6c757d">Report ID: ${reportId}<br>Generated: ${date}</p></div>
+<div class="box" style="margin-top:60px"><h3>Contact Information</h3><p><strong>${company.name}</strong></p>
 <p>Phone: ${company.phone}</p><p>Email: ${company.email}</p><p>Website: ${company.website}</p><p>${company.license}</p></div></div>
 
-<div class="no-break"><h1>Executive Summary</h1>
+<div class="no-break"><h1>Summary</h1>
 <div class="risk-box box"><h3>Overall Risk Assessment</h3>
 <p><strong>Risk Level:</strong> <span class="risk-level">${analysis.executive_summary?.overall_risk || 'Not Assessed'}</span></p>
 <p><strong>Damage Probability:</strong> ${analysis.executive_summary?.damage_probability || 'Under Review'}</p>
@@ -69,6 +69,19 @@ function buildHTML(analysis, formData) {
 <p><strong>Confidence:</strong> ${analysis.report_metadata?.confidence_level || 'High'}</p></div>
 <h3>Key Findings</h3><ul>${(analysis.executive_summary?.primary_findings || []).map(f => `<li>${f}</li>`).join('')}</ul>
 <div class="emergency-box box"><h3>⚠️ Critical Actions Required</h3><ul>${(analysis.executive_summary?.critical_actions || []).map(a => `<li><strong>${a}</strong></li>`).join('')}</ul></div></div>
+
+<div class="no-break property-details"><div><h3>📍 Property Details</h3>
+<div class="detail-item"><span class="detail-label">Address:</span> ${address}</div>
+<div class="detail-item"><span class="detail-label">Property Type:</span> ${analysis.property_intelligence?.property_type || 'Residential'}</div>
+<div class="detail-item"><span class="detail-label">Year Built:</span> ${analysis.property_intelligence?.year_built || 'N/A'}</div>
+<div class="detail-item"><span class="detail-label">Square Footage:</span> ${analysis.property_intelligence?.square_footage || 'N/A'} sq ft</div>
+<div class="detail-item"><span class="detail-label">Lot Size:</span> ${analysis.property_intelligence?.lot_size || 'N/A'}</div></div>
+<div><h3>🏠 Structure Details</h3>
+<div class="detail-item"><span class="detail-label">Roof Type:</span> ${analysis.property_intelligence?.roof_type || 'Asphalt Shingle'}</div>
+<div class="detail-item"><span class="detail-label">Roof Age:</span> ${analysis.property_intelligence?.roof_age || 'N/A'} years</div>
+<div class="detail-item"><span class="detail-label">Exterior:</span> ${analysis.property_intelligence?.exterior_material || 'N/A'}</div>
+<div class="detail-item"><span class="detail-label">Stories:</span> ${analysis.property_intelligence?.stories || '1'}</div>
+<div class="detail-item"><span class="detail-label">Garage:</span> ${analysis.property_intelligence?.garage_type || 'N/A'}</div></div></div>
 
 ${buildTables(analysis.professional_tables)}
 
@@ -94,12 +107,29 @@ ${(analysis.recommendations?.next_steps || []).map(s => `<div class="box"><h4>${
 function buildTables(tables) {
     if (!tables) return '';
     const keys = ['storm_risk_summary', 'property_damage_assessment', 'repair_cost_analysis', 'insurance_claim_strategy', 'contractor_market_intelligence', 'risk_mitigation_plan'];
-    return keys.map(k => {
+    return keys.map((k, index) => {
         const t = tables[k];
         if (!t || !t.data_rows) return '';
+        
+        // Add storm visual for storm_risk_summary table
+        const stormVisual = (k === 'storm_risk_summary') ? `
+<div class="storm-visual">
+<h3 style="color:#2c3e50;margin-bottom:10px">🌪️ Storm Event Visualization</h3>
+<p style="font-size:9pt;margin-bottom:10px;color:#6c757d"><em>Interactive storm swath and damage radius analysis</em></p>
+<div style="background:#e8f4f8;padding:15px;border-radius:5px;margin:10px 0">
+<p style="font-size:10pt;line-height:1.8"><strong>Storm Details:</strong><br>
+• Primary Event: ${t.data_rows[0]?.[0] || 'N/A'} - ${t.data_rows[0]?.[1] || 'N/A'}<br>
+• Impact Measurement: ${t.data_rows[0]?.[2] || 'N/A'}<br>
+• Distance from Property: ${t.data_rows[0]?.[3] || 'N/A'}<br>
+• Damage Assessment: ${t.data_rows[0]?.[4] || 'High probability of damage'}</p>
+<p style="font-size:9pt;margin-top:10px;font-style:italic">📊 For interactive storm maps and radar imagery, visit the National Weather Service Storm Reports database or contact Hayden Claims Group for detailed forensic analysis.</p>
+</div>
+</div>` : '';
+        
         return `<div class="no-break"><h2>${t.title}</h2>${t.subtitle ? `<p style="font-size:9pt;color:#6c757d"><em>${t.subtitle}</em></p>` : ''}
 <table><thead><tr>${(t.headers || []).map(h => `<th>${h}</th>`).join('')}</tr></thead>
 <tbody>${t.data_rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table>
+${stormVisual}
 ${t.key_insights && t.key_insights.length > 0 ? `<div class="insights"><h4>Key Insights:</h4><ul>${t.key_insights.map(i => `<li>${i}</li>`).join('')}</ul></div>` : ''}</div>`;
     }).join('');
 }

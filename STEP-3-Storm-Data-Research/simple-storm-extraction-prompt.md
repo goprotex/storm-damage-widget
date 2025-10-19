@@ -68,6 +68,7 @@ Extract storm events and present them in a simple, organized format.
 ```
 
 **KEY INSTRUCTIONS:**
+
 - Include ALL storm events found within 15 miles
 - Sort by distance (closest first)  
 - Only include actual measurements (hail size, wind speed)
@@ -76,12 +77,14 @@ Extract storm events and present them in a simple, organized format.
 - **CRITICAL**: Include event_dates and event_types as comma-separated strings for Step 3.5 processing
 
 **WHAT TO EXTRACT:**
+
 - **Hail Events**: Include size in inches
 - **Wind Events**: Include speed in mph
 - **Tornado Events**: Include EF rating
 - **Damage Reports**: Include description of actual damage
 
-**JSON SCHEMA:** https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/SCHEMAS-REFERENCES/simple-storm-data-schema.json
+**JSON SCHEMA:** <https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/SCHEMAS-REFERENCES/simple-storm-data-schema.json>
+
 ```
 
 ---
