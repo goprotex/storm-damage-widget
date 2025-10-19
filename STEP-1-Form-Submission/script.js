@@ -1,7 +1,8 @@
 // Configuration Constants
 const CONFIG = {
   zapierWebhookUrl: 'https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/',
-  apiEndpoint: 'https://haydenclaim.com/api/storm-results', // Real-time results endpoint
+  // UPDATE THIS with your new polling webhook URL after creating the second Zap:
+  apiEndpoint: 'https://hooks.zapier.com/hooks/catch/14608681/XXXXXX/', // Polling endpoint
   timings: {
     factRotation: 5000, // Changed to 5 seconds
     statusRotation: 3000,
