@@ -42,8 +42,24 @@
 
     "executive_summary": {
       "type": "object",
-      "required": ["overall_risk_level", "primary_findings", "critical_actions"],
+      "required": ["overall_risk_level", "primary_findings", "critical_actions", "primary_storm_date"],
       "properties": {
+        "primary_storm_date": {
+          "type": "string",
+          "format": "date",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+          "description": "Primary storm date in YYYY-MM-DD format - CRITICAL for real storm data integration",
+          "examples": ["2024-03-15", "2024-04-26", "2024-05-08"]
+        },
+        "storm_date_confidence": {
+          "type": "string",
+          "enum": ["very_high", "high", "medium", "low"],
+          "description": "Confidence level in the identified storm date"
+        },
+        "storm_date_source": {
+          "type": "string",
+          "description": "Source used to determine the storm date (e.g., 'Claim report', 'Weather data', 'Property owner statement')"
+        },
         "overall_risk_level": {
           "type": "string",
           "enum": ["critical", "high", "moderate", "low", "minimal"],
@@ -81,8 +97,47 @@
 
     "risk_assessment": {
       "type": "object",
-      "required": ["storm_impact_events", "property_vulnerability_score"],
+      "required": ["storm_impact_events", "property_vulnerability_score", "storm_date_intelligence"],
       "properties": {
+        "storm_date_intelligence": {
+          "type": "object",
+          "required": ["primary_storm_date", "date_extraction_method"],
+          "properties": {
+            "primary_storm_date": {
+              "type": "string",
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+              "description": "The most likely storm date causing damage (YYYY-MM-DD format)",
+              "examples": ["2024-03-15", "2024-04-26", "2024-05-08"]
+            },
+            "alternative_storm_dates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "date": {"type": "string", "format": "date"},
+                  "probability": {"type": "string", "enum": ["high", "medium", "low"]},
+                  "reason": {"type": "string"}
+                }
+              },
+              "description": "Other possible storm dates if uncertain"
+            },
+            "date_extraction_method": {
+              "type": "string",
+              "enum": ["claim_report_analysis", "weather_data_correlation", "property_owner_statement", "damage_pattern_analysis", "multiple_sources"],
+              "description": "Method used to determine the storm date"
+            },
+            "date_confidence_factors": {
+              "type": "array",
+              "items": {"type": "string"},
+              "description": "Factors that support the selected storm date"
+            },
+            "storm_event_description": {
+              "type": "string",
+              "description": "Brief description of the storm event on the primary date"
+            }
+          }
+        },
         "property_vulnerability_score": {
           "type": "number",
           "minimum": 0,
