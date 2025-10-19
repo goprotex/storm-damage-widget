@@ -357,10 +357,13 @@ const propertyImages = enhancePropertyLocationAnalysis(propertyLocation);
 const htmlOutput = buildHTML(analysis, formData, stormData);
 */
 
-module.exports = {
-    getHistoricalStormData,
-    generateRealStormSwathMap,
-    generatePropertyImageUrls,
-    enhanceStormVisualizationWithRealData,
-    enhancePropertyLocationAnalysis
-};
+// Export for Node.js environments (but not Zapier)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        getHistoricalStormData,
+        generateRealStormSwathMap,
+        generatePropertyImageUrls,
+        enhanceStormVisualizationWithRealData,
+        enhancePropertyLocationAnalysis
+    };
+}

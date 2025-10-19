@@ -22,12 +22,15 @@ Generate your analysis following this EXACT JSON format. Return ONLY valid JSON 
     "data_sources_analyzed": 5
   },
   "executive_summary": {
+    "primary_storm_date": "2024-03-15",
+    "storm_date_confidence": "high",
+    "storm_date_source": "Claim report analysis",
     "overall_risk_level": "moderate",
     "damage_probability": "possible",
     "primary_findings": [
       "Multiple hail events within 2 miles of property in past 24 months",
       "Roof age and material type increase vulnerability to hail damage",
-      "Recent storm on [date] had 1.75-inch hail reported nearby"
+      "Recent storm on March 15, 2024 had 1.75-inch hail reported nearby"
     ],
     "critical_actions": [
       "Schedule professional roof inspection within 30 days",
