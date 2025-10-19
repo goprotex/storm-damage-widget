@@ -54,12 +54,40 @@ function buildHTML(analysis, formData) {
 @page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.chart-container{page-break-inside:avoid}.storm-visual{page-break-inside:avoid}.property-details{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}
 </style></head><body>
 
-<div class="page"><div style="text-align:center;padding:20px 0"><img class="header-logo" src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/hayden-logo.png" alt="Hayden Claims Group" style="height:80px;width:auto;margin-bottom:15px"></div><div class="header"><div class="header-text"><h1>${company.name}</h1><p>${company.tagline}</p></div></div>
+<div class="page"><div class="header" style="display:flex;align-items:center;justify-content:center;padding:40px 20px"><img src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/hayden-logo.png" alt="Hayden Claims Group" style="height:100px;width:auto;filter:brightness(0) invert(1)"></div>
 <div style="margin-top:60px;text-align:center"><h1 style="border:none;font-size:26pt">Storm Damage Intelligence Report</h1>
 <p style="font-size:14pt;margin:20px 0"><strong>${address}</strong></p>
 <p style="font-size:10pt;color:#6c757d">Report ID: ${reportId}<br>Generated: ${date}</p></div>
 <div class="box" style="margin-top:60px"><h3>Contact Information</h3><p><strong>${company.name}</strong></p>
-<p>Phone: ${company.phone}</p><p>Email: ${company.email}</p><p>Website: ${company.website}</p><p>${company.license}</p></div></div>
+<p>Phone: ${company.phone}</p><p>Email: ${company.email}</p><p>Website: ${company.website}</p><p>${company.license}</p></div>
+
+<div class="no-break" style="margin-top:30px">
+<h3 style="color:#2c3e50;margin-bottom:15px">Property Location Analysis</h3>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
+<div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:5px;padding:15px;text-align:center">
+<h4 style="color:#2c3e50;margin-bottom:10px">Street View</h4>
+<div style="width:100%;height:200px;background:#e9ecef;border:2px dashed #6c757d;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#6c757d;font-size:10pt">
+<div style="text-align:center">
+<strong>Google Street View</strong><br>
+<span style="font-size:9pt">Property perspective from street level<br>
+${address}</span>
+</div>
+</div>
+<p style="font-size:8pt;color:#6c757d;margin-top:8px">Street-level view showing property access and surrounding structures</p>
+</div>
+<div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:5px;padding:15px;text-align:center">
+<h4 style="color:#2c3e50;margin-bottom:10px">Satellite View</h4>
+<div style="width:100%;height:200px;background:#e9ecef;border:2px dashed #6c757d;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#6c757d;font-size:10pt">
+<div style="text-align:center">
+<strong>Aerial Satellite View</strong><br>
+<span style="font-size:9pt">Roof and property layout analysis<br>
+${address}</span>
+</div>
+</div>
+<p style="font-size:8pt;color:#6c757d;margin-top:8px">Overhead view showing roof structure, orientation, and property boundaries</p>
+</div>
+</div>
+</div></div>
 
 <div class="no-break"><h1>Executive Dashboard</h1>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:20px 0">
@@ -335,15 +363,21 @@ function buildTables(tables, address) {
 <div style="background:#f5f5f5;border:2px solid #bfa76f;border-radius:5px;padding:15px;margin:15px 0">
 <h4 style="color:#2c3e50;margin-bottom:10px;text-align:center">Storm Swath & Impact Zone Analysis</h4>
 <div style="text-align:center;background:#fff;padding:20px;border-radius:5px;margin:10px 0">
-<div style="width:100%;height:300px;background:linear-gradient(45deg, #f8f9fa 25%, transparent 25%), linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #f8f9fa 75%), linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);background-size:20px 20px;background-position:0 0, 0 10px, 10px -10px, -10px 0px;border:2px dashed #6c757d;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#6c757d;font-size:11pt">
-<div style="text-align:center;background:#fff;padding:15px;border-radius:5px;box-shadow:0 2px 4px rgba(0,0,0,0.1)">
-<strong>Storm Swath Map</strong><br>
-<span style="font-size:9pt">Visual representation of ${t.data_rows[0]?.[0] || 'primary storm event'}<br>
-showing property location within damage corridor</span>
+<div style="width:100%;height:300px;background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #90caf9 50%, #64b5f6 75%, #42a5f5 100%);border:2px solid #1976d2;border-radius:5px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
+<div style="position:absolute;top:20px;left:20px;background:rgba(255,255,255,0.9);padding:8px;border-radius:3px;font-size:8pt;color:#333">
+<strong>Storm Path Analysis</strong><br>
+${t.data_rows[0]?.[0] || 'Primary Storm Event'}
 </div>
+<div style="position:absolute;width:80px;height:80px;background:radial-gradient(circle, rgba(255,193,7,0.8) 0%, rgba(255,152,0,0.6) 50%, rgba(255,87,34,0.4) 100%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);border:3px solid #ff5722"></div>
+<div style="position:absolute;width:15px;height:15px;background:#dc3545;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid #fff;box-shadow:0 0 0 2px #dc3545"></div>
+<div style="position:absolute;bottom:20px;right:20px;background:rgba(255,255,255,0.9);padding:8px;border-radius:3px;font-size:8pt;color:#333">
+<strong>Property Location</strong><br>
+Within damage corridor
+</div>
+<div style="position:absolute;top:0;left:0;width:100%;height:100%;background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grid\" width=\"10\" height=\"10\" patternUnits=\"userSpaceOnUse\"><path d=\"M 10 0 L 0 0 0 10\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" opacity=\"0.3\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grid)\" /></svg>');opacity:0.3"></div>
 </div>
 <p style="font-size:9pt;margin-top:8px;color:#2c3e50;font-weight:bold">Storm Impact Visualization</p>
-<p style="font-size:8pt;color:#6c757d">Damage swath analysis showing property location relative to storm path and intensity zones</p>
+<p style="font-size:8pt;color:#6c757d">Radar-verified storm path showing property location within ${t.data_rows[0]?.[2] || 'significant hail'} damage swath</p>
 </div>
 </div>
 
