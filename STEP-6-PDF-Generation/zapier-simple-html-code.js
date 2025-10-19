@@ -99,7 +99,7 @@ function buildHTML(analysis, formData) {
 <div class="detail-item"><span class="detail-label">Stories:</span> ${analysis.property_intelligence?.stories || '1'}</div>
 <div class="detail-item"><span class="detail-label">Garage:</span> ${analysis.property_intelligence?.garage_type || 'N/A'}</div></div></div>
 
-${buildTables(analysis.professional_tables)}
+${buildTables(analysis.professional_tables, address)}
 
 <div class="no-break"><h1>📊 Data Visualization & Analytics</h1>
 <div class="chart-grid">
@@ -282,7 +282,7 @@ function generateCharts(analysis) {
     return { riskGauge, progressBars, pieChart, timelineChart, barChart };
 }
 
-function buildTables(tables) {
+function buildTables(tables, address) {
     if (!tables) return '';
     const keys = ['storm_risk_summary', 'property_damage_assessment', 'repair_cost_analysis', 'insurance_claim_strategy', 'contractor_market_intelligence', 'risk_mitigation_plan'];
     return keys.map((k, index) => {
