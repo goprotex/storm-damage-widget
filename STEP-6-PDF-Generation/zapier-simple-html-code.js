@@ -295,7 +295,8 @@ function generateRealPropertyImageUrls(address, googleMapsApiKey) {
     return {
         // Street View: fov=90 for wider view, pitch=10 to angle slightly upward at house
         streetView: `https://maps.googleapis.com/maps/api/streetview?size=400x300&location=${encodedAddress}&fov=90&pitch=10&key=${googleMapsApiKey}`,
-        satellite: `https://maps.googleapis.com/maps/api/staticmap?center=${encodedAddress}&zoom=18&size=400x300&maptype=satellite&markers=color:red%7C${encodedAddress}&key=${googleMapsApiKey}`,
+        // Satellite View: Clean overhead view without marker pin
+        satellite: `https://maps.googleapis.com/maps/api/staticmap?center=${encodedAddress}&zoom=19&size=400x300&maptype=satellite&key=${googleMapsApiKey}`,
         hybrid: `https://maps.googleapis.com/maps/api/staticmap?center=${encodedAddress}&zoom=15&size=400x300&maptype=hybrid&markers=color:red%7C${encodedAddress}&key=${googleMapsApiKey}`
     };
 }
