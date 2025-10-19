@@ -65,7 +65,7 @@ function buildHTML(analysis, formData, apiKeys = {}, stormSwathHtml = '') {
     return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style media="print">
-@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.chart-container{page-break-inside:avoid}.storm-visual{page-break-inside:avoid}.property-details{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}[title]{position:relative}[title]:hover::after{content:attr(title);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.9);color:#fff;padding:8px 12px;border-radius:5px;font-size:8pt;white-space:nowrap;z-index:1000;margin-bottom:5px;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.chart-container{page-break-inside:avoid}.storm-visual{page-break-inside:avoid}.property-details{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}
 </style></head><body>
 
 <div class="page"><div class="header" style="display:flex;align-items:center;justify-content:center;padding:20px"><img src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/hayden-logo.png" alt="Hayden Claims Group" style="height:120px;width:auto"></div>
@@ -129,7 +129,7 @@ ${address}</span>
 
 <!-- Executive Dashboard Cards -->
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:20px 0 25px 0">
-<div style="background:linear-gradient(135deg, ${colors.primary}, #d4c395);color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
+<div style="background:linear-gradient(135deg, ${colors.primary}, #0b0863ff);color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
 <div style="font-size:24pt;font-weight:bold;margin-bottom:5px">${analysis.executive_summary?.damage_probability || '85%'}</div>
 <div style="font-size:10pt;opacity:0.9">Damage Probability</div>
 </div>
@@ -224,7 +224,7 @@ ${(() => {
 <div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:8px;padding:20px;text-align:center">
   <svg viewBox="0 0 400 280" style="max-width:100%;height:auto">
     <!-- Sky background -->
-    <rect x="0" y="0" width="400" height="280" fill="#e3f2fd"/>
+    <rect x="0" y="0" width="200" height="140" fill="#62abdfff"/>
     
     <!-- Roof (HIGH RISK - Red) -->
     <polygon points="200,40 360,130 40,130" fill="rgba(220,53,69,0.85)" stroke="#8B0000" stroke-width="3"/>
@@ -309,25 +309,54 @@ ${(() => {
 <div class="no-break"><h1>Professional Recommendations</h1><h3>Next Steps</h3>
 
 <!-- URGENCY INDICATOR -->
-<div style="background:#fff3cd;border-left:5px solid ${colors.warning};padding:15px;margin:15px 0;border-radius:5px">
+${(() => {
+    // Calculate days remaining to file claim
+    const stormDate = analysis.executive_summary?.primary_storm_date || analysis.risk_assessment?.storm_date_intelligence?.primary_storm_date;
+    let daysRemaining = 365;
+    let percentageRemaining = 100;
+    
+    if (stormDate) {
+        try {
+            const stormDateObj = new Date(stormDate);
+            const currentDate = new Date();
+            const deadlineDate = new Date(stormDateObj);
+            deadlineDate.setDate(deadlineDate.getDate() + 365);
+            
+            const daysPassed = Math.floor((currentDate - stormDateObj) / (1000 * 60 * 60 * 24));
+            daysRemaining = Math.max(0, 365 - daysPassed);
+            percentageRemaining = Math.round((daysRemaining / 365) * 100);
+        } catch (e) {
+            // Use defaults if date parsing fails
+        }
+    }
+    
+    const urgencyColor = daysRemaining < 90 ? colors.danger : daysRemaining < 180 ? colors.warning : colors.success;
+    const urgencyLevel = daysRemaining < 90 ? 'CRITICAL' : daysRemaining < 180 ? 'URGENT' : 'IMPORTANT';
+    
+    return `
+<div style="background:#fff3cd;border-left:5px solid ${urgencyColor};padding:15px;margin:15px 0;border-radius:5px">
   <div style="display:flex;align-items:center;gap:15px">
     <div style="font-size:48pt;line-height:1">⏰</div>
     <div style="flex:1">
       <h4 style="margin:0;color:#856404">⚠️ Time Sensitive: Act Now</h4>
-      <p style="margin:5px 0 0 0;color:#856404;font-size:10pt">Insurance claims must be filed within <strong>365 days</strong> of storm damage occurrence</p>
+      <p style="margin:5px 0 0 0;color:#856404;font-size:10pt">
+        Insurance claims must be filed within 365 days of storm damage occurrence<br>
+        <strong style="font-size:12pt;color:${urgencyColor}">${urgencyLevel}: ${daysRemaining} Days Remaining</strong>
+      </p>
       <div style="height:10px;background:#e9ecef;border-radius:5px;margin-top:10px;overflow:hidden">
-        <div style="width:75%;height:100%;background:${colors.warning};border-radius:5px;position:relative">
-          <span style="position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:8pt;color:#fff;font-weight:bold">Time remaining</span>
+        <div style="width:${percentageRemaining}%;height:100%;background:${urgencyColor};border-radius:5px;position:relative">
+          <span style="position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:8pt;color:#fff;font-weight:bold">${daysRemaining} days left</span>
         </div>
       </div>
     </div>
   </div>
-</div>
+</div>`;
+})()}
 
 <!-- TIMELINE VISUALIZATION WITH MILESTONES -->
 <div class="no-break" style="margin:25px 0">
 <h3 style="text-align:center;color:#2c3e50;margin-bottom:20px">📅 Recommended Action Timeline</h3>
-<div style="position:relative;padding:20px 0">
+<div style="position:relative;padding:20px 40px 20px 40px">
   <!-- Timeline bar -->
   <div style="position:relative;height:8px;background:#e9ecef;border-radius:4px;margin:30px 0">
     <div style="position:absolute;left:0%;width:25%;height:100%;background:${colors.success};border-radius:4px 0 0 4px"></div>
@@ -389,21 +418,17 @@ ${(analysis.recommendations?.next_steps || []).map(s => `<div class="box"><h4>${
 <div class="box" style="background:#f8f9fa"><h3>Value Proposition</h3>
 <p>${analysis.business_intelligence?.hayden_value_proposition || analysis.executive_summary?.hayden_competitive_advantage || ''}</p>
 <h4>Competitive Advantages:</h4><ul>${(analysis.business_intelligence?.competitive_advantages || []).map(a => `<li>${a}</li>`).join('')}</ul>
-<p><strong>Potential Savings:</strong> <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Based on industry average claim underpayment rates">ℹ️</span> ${analysis.business_intelligence?.potential_savings || 'Significant savings'}</p>
+<p><strong>Potential Savings:</strong> ${analysis.business_intelligence?.potential_savings || 'Significant savings'}</p>
 
-<!-- INTERACTIVE-LOOKING TOOLTIPS EXAMPLE -->
 <div style="margin-top:15px;padding:15px;background:#fff;border:2px solid ${colors.primary};border-radius:8px">
 <p style="font-size:10pt;margin:5px 0">
   <strong>Why Choose Hayden Claims Group?</strong>
 </p>
 <p style="font-size:9pt;margin:8px 0;color:#2c3e50">
-  Our <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Licensed Texas Public Insurance Adjusters">licensed adjusters ℹ️</span> work exclusively for YOU, not the insurance company. We handle all 
-  <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Documentation, estimates, negotiations, and appeals">claim complexities ℹ️</span>, ensuring you receive the 
-  <span style="border-bottom:2px dotted ${colors.primary};cursor:help" title="Full policy coverage without underpayment">maximum settlement ℹ️</span> you deserve.
+  Our licensed adjusters work exclusively for YOU, not the insurance company. We handle all claim complexities, ensuring you receive the maximum settlement you deserve.
 </p>
 <p style="font-size:9pt;margin:8px 0;color:#2c3e50">
-  Unlike <span style="border-bottom:2px dotted ${colors.danger};cursor:help" title="Company adjusters work for the insurance company's interests">insurance company adjusters ℹ️</span>, we are 
-  <strong style="color:${colors.primary}">your advocate</strong>, with payment contingent only on your success.
+  Unlike insurance company adjusters, we are <strong style="color:${colors.primary}">your advocate</strong>, with payment contingent only on your success.
 </p>
 </div>
 
