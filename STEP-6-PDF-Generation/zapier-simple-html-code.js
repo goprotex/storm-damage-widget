@@ -464,60 +464,8 @@ function buildTables(tables, address) {
         if (!t || !t.data_rows) return '';
         
         // Add storm visual for storm_risk_summary table
-        const stormVisual = (k === 'storm_risk_summary') ? (() => {
-            const stormImages = generateStormImageUrls(t.data_rows[0], address);
-            return `
-<div class="storm-visual">
-<h3 style="color:#2c3e50;margin-bottom:10px">Storm Event Analysis & Damage Swath</h3>
-<p style="font-size:9pt;margin-bottom:10px;color:#6c757d"><em>Forensic storm analysis focused on primary damage-causing event</em></p>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:15px 0">
-<div style="background:#e8f4f8;padding:15px;border-radius:5px">
-<h4 style="color:#2c3e50;margin-bottom:8px">Storm Event Details</h4>
-<p style="font-size:10pt;line-height:1.8">
-<strong>Primary Event:</strong> ${t.data_rows[0]?.[0] || 'N/A'} - ${t.data_rows[0]?.[1] || 'N/A'}<br>
-<strong>Intensity:</strong> ${t.data_rows[0]?.[2] || 'N/A'}<br>
-<strong>Distance:</strong> ${t.data_rows[0]?.[3] || 'N/A'}<br>
-<strong>Damage Risk:</strong> ${t.data_rows[0]?.[4] || 'High probability of damage'}
-</p>
-</div>
-<div style="background:#f0f8f0;padding:15px;border-radius:5px">
-<h4 style="color:#2c3e50;margin-bottom:8px">Forensic Analysis</h4>
-<p style="font-size:10pt;line-height:1.8">
-<strong>Storm Path:</strong> Verified via NEXRAD radar<br>
-<strong>Impact Zone:</strong> Property within damage swath<br>
-<strong>Hail Core:</strong> Maximum intensity tracked<br>
-<strong>Evidence:</strong> Meteorological reports confirmed
-</p>
-</div>
-</div>
-
-<div style="background:#f5f5f5;border:2px solid #bfa76f;border-radius:5px;padding:15px;margin:15px 0">
-<h4 style="color:#2c3e50;margin-bottom:10px;text-align:center">Storm Swath & Impact Zone Analysis</h4>
-<div style="text-align:center;background:#fff;padding:20px;border-radius:5px;margin:10px 0">
-<div style="width:100%;height:300px;background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #90caf9 50%, #64b5f6 75%, #42a5f5 100%);border:2px solid #1976d2;border-radius:5px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden">
-<div style="position:absolute;top:20px;left:20px;background:rgba(255,255,255,0.9);padding:8px;border-radius:3px;font-size:8pt;color:#333">
-<strong>Storm Path Analysis</strong><br>
-${t.data_rows[0]?.[0] || 'Primary Storm Event'}
-</div>
-<div style="position:absolute;width:80px;height:80px;background:radial-gradient(circle, rgba(255,193,7,0.8) 0%, rgba(255,152,0,0.6) 50%, rgba(255,87,34,0.4) 100%);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);border:3px solid #ff5722"></div>
-<div style="position:absolute;width:15px;height:15px;background:#dc3545;border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);border:2px solid #fff;box-shadow:0 0 0 2px #dc3545"></div>
-<div style="position:absolute;bottom:20px;right:20px;background:rgba(255,255,255,0.9);padding:8px;border-radius:3px;font-size:8pt;color:#333">
-<strong>Property Location</strong><br>
-Within damage corridor
-</div>
-<div style="position:absolute;top:0;left:0;width:100%;height:100%;background:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><defs><pattern id=\"grid\" width=\"10\" height=\"10\" patternUnits=\"userSpaceOnUse\"><path d=\"M 10 0 L 0 0 0 10\" fill=\"none\" stroke=\"white\" stroke-width=\"0.5\" opacity=\"0.3\"/></pattern></defs><rect width=\"100\" height=\"100\" fill=\"url(%23grid)\" /></svg>');opacity:0.3"></div>
-</div>
-<p style="font-size:9pt;margin-top:8px;color:#2c3e50;font-weight:bold">Storm Impact Visualization</p>
-<p style="font-size:8pt;color:#6c757d">Radar-verified storm path showing property location within ${t.data_rows[0]?.[2] || 'significant hail'} damage swath</p>
-</div>
-</div>
-
-<div style="background:#fff3cd;border-left:5px solid #fd7e14;padding:12px;margin:15px 0;border-radius:3px">
-<p style="font-size:9pt;margin:0"><strong>Forensic Weather Analysis:</strong> Hayden Claims Group utilizes advanced meteorological partnerships with NOAA, NWS, and private weather services to provide litigation-quality storm forensics. Our analysis includes NEXRAD radar archives, ground-truth verification, satellite imagery correlation, and professional storm spotter networks for comprehensive damage causation documentation acceptable to insurance carriers and courts.</p>
-</div>
-</div>`;
-        })() : '';
+        // Now uses real storm swath visualization from separate generator step
+        const stormVisual = (k === 'storm_risk_summary') ? (inputData.storm_swath_html || '') : '';
         
         return `<div class="no-break"><h2>${t.title}</h2>${t.subtitle ? `<p style="font-size:9pt;color:#6c757d"><em>${t.subtitle}</em></p>` : ''}
 <table><thead><tr>${(t.headers || []).map(h => `<th>${h}</th>`).join('')}</tr></thead>
