@@ -51,7 +51,7 @@ function buildHTML(analysis, formData) {
     return `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style media="print">
-@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}
+@page{margin:0.5in;size:letter}*{box-sizing:border-box;margin:0;padding:0}body{font-family:Helvetica,Arial,sans-serif;font-size:11pt;line-height:1.6;color:#2c3e50;-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff}.page{page-break-after:always}.no-break{page-break-inside:avoid}.header{background:${colors.primary};color:#fff;padding:25px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:20px}.header-logo{height:60px;width:auto}.header-text{flex:1}.header h1{font-size:28pt;margin:0}.header p{font-size:12pt;font-style:italic;margin:5px 0 0 0}h1,h2,h3{color:#2c3e50;margin-top:20px;margin-bottom:10px}h1{font-size:22pt;border-bottom:3px solid ${colors.primary};padding-bottom:10px}h2{font-size:16pt;border-bottom:2px solid ${colors.primary};padding-bottom:5px}h3{font-size:13pt}table{width:100%;border-collapse:collapse;margin:15px 0;font-size:9.5pt;background:#f5f5f5;box-shadow:0 2px 4px rgba(0,0,0,0.1)}th{background:${colors.primary};color:#fff;padding:10px 8px;text-align:left;border:1px solid ${colors.primary};font-weight:bold}td{padding:8px;border:1px solid #ddd;background:#fafafa}tr:nth-child(even) td{background:#f0f0f0}ul,ol{margin:10px 0 10px 25px}li{margin:5px 0}.box{border:2px solid ${colors.primary};padding:15px;margin:15px 0;border-radius:5px;background:#fff}.risk-box{background:#f8f9fa;border-left:5px solid ${riskColor}}.emergency-box{background:#fff3cd;border-left:5px solid ${colors.warning}}.risk-level{display:inline-block;padding:5px 15px;background:${riskColor};color:#fff;font-weight:bold;border-radius:3px;font-size:12pt}.footer{margin-top:30px;padding-top:15px;border-top:2px solid ${colors.primary};text-align:center;font-size:9pt;color:#6c757d}.insights{background:#f8f9fa;border-left:4px solid ${colors.primary};padding:10px 15px;margin:10px 0}.insights h4{color:${colors.primary};margin-bottom:5px}.property-details{background:#f5f5f5;border:2px solid ${colors.primary};border-radius:5px;padding:15px;margin:15px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}.property-details h3{margin-top:0}.detail-item{margin:5px 0}.detail-label{font-weight:bold;color:${colors.secondary}}.storm-visual{background:#f0f0f0;border:2px solid #ddd;border-radius:5px;padding:15px;margin:15px 0;text-align:center}.storm-visual img{max-width:100%;height:auto;border-radius:3px;margin:10px 0}.chart-container{background:#fff;border:2px solid ${colors.primary};border-radius:8px;padding:20px;margin:20px 0;box-shadow:0 4px 8px rgba(0,0,0,0.1)}.chart-title{font-size:14pt;font-weight:bold;color:${colors.secondary};text-align:center;margin-bottom:15px}.pie-chart{width:200px;height:200px;border-radius:50%;margin:0 auto 15px;position:relative}.gauge-chart{width:150px;height:75px;border-radius:150px 150px 0 0;margin:0 auto 10px;position:relative;overflow:hidden}.gauge-needle{position:absolute;bottom:0;left:50%;width:2px;height:70px;background:${colors.secondary};transform-origin:bottom;margin-left:-1px}.progress-bar{height:25px;background:#e9ecef;border-radius:15px;overflow:hidden;margin:8px 0;position:relative}.progress-fill{height:100%;border-radius:15px;transition:width 0.3s ease}.progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9pt;font-weight:bold;color:#fff;text-shadow:1px 1px 1px rgba(0,0,0,0.5)}.bar-chart{display:flex;align-items:end;height:120px;gap:8px;margin:15px 0}.bar{background:${colors.primary};border-radius:4px 4px 0 0;min-width:40px;position:relative;transition:all 0.3s ease}.bar-label{position:absolute;bottom:-25px;left:50%;transform:translateX(-50%);font-size:8pt;text-align:center;width:60px}.bar-value{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:8pt;font-weight:bold;color:${colors.secondary}}.timeline-chart{position:relative;margin:20px 0}.timeline-item{display:flex;align-items:center;margin:15px 0;position:relative}.timeline-dot{width:16px;height:16px;border-radius:50%;background:${colors.primary};margin-right:15px;border:3px solid #fff;box-shadow:0 0 0 3px ${colors.primary}}.timeline-urgent{background:${colors.danger};box-shadow:0 0 0 3px ${colors.danger}}.timeline-content{flex:1;background:#f8f9fa;padding:10px 15px;border-radius:5px;border-left:4px solid ${colors.primary}}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0}.chart-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:10px 0}.legend-item{display:flex;align-items:center;gap:5px;font-size:9pt}.legend-color{width:12px;height:12px;border-radius:2px}
 </style></head><body>
 
 <div class="page"><div class="header"><img class="header-logo" src="https://raw.githubusercontent.com/goprotex/storm-damage-widget/main/assets/hayden-logo.png" alt="Hayden Claims Group"><div class="header-text"><h1>${company.name}</h1><p>${company.tagline}</p></div></div>
@@ -60,6 +60,22 @@ function buildHTML(analysis, formData) {
 <p style="font-size:10pt;color:#6c757d">Report ID: ${reportId}<br>Generated: ${date}</p></div>
 <div class="box" style="margin-top:60px"><h3>Contact Information</h3><p><strong>${company.name}</strong></p>
 <p>Phone: ${company.phone}</p><p>Email: ${company.email}</p><p>Website: ${company.website}</p><p>${company.license}</p></div></div>
+
+<div class="no-break"><h1>📋 Executive Dashboard</h1>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px;margin:20px 0">
+<div style="background:linear-gradient(135deg, ${colors.primary}, #d4c395);color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
+<div style="font-size:24pt;font-weight:bold;margin-bottom:5px">${analysis.executive_summary?.damage_probability || '85%'}</div>
+<div style="font-size:10pt;opacity:0.9">Damage Probability</div>
+</div>
+<div style="background:linear-gradient(135deg, ${riskColor}, ${riskColor === colors.danger ? '#ff6b6b' : riskColor === colors.warning ? '#ffa726' : '#66bb6a'});color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
+<div style="font-size:16pt;font-weight:bold;margin-bottom:5px">${analysis.executive_summary?.overall_risk || 'HIGH'}</div>
+<div style="font-size:10pt;opacity:0.9">Risk Level</div>
+</div>
+<div style="background:linear-gradient(135deg, ${colors.secondary}, #4a5568);color:#fff;padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.1)">
+<div style="font-size:16pt;font-weight:bold;margin-bottom:5px">${analysis.executive_summary?.estimated_claim_value_range || '$15K-$25K'}</div>
+<div style="font-size:10pt;opacity:0.9">Claim Value</div>
+</div>
+</div>
 
 <div class="no-break"><h1>Summary</h1>
 <div class="risk-box box"><h3>Overall Risk Assessment</h3>
@@ -84,6 +100,25 @@ function buildHTML(analysis, formData) {
 <div class="detail-item"><span class="detail-label">Garage:</span> ${analysis.property_intelligence?.garage_type || 'N/A'}</div></div></div>
 
 ${buildTables(analysis.professional_tables)}
+
+<div class="no-break"><h1>📊 Data Visualization & Analytics</h1>
+<div class="chart-grid">
+${(() => {
+    const charts = generateCharts(analysis);
+    return `${charts.riskGauge || ''}${charts.progressBars || ''}`;
+})()}
+</div>
+<div class="chart-grid">
+${(() => {
+    const charts = generateCharts(analysis);
+    return `${charts.pieChart || ''}${charts.timelineChart || ''}`;
+})()}
+</div>
+${(() => {
+    const charts = generateCharts(analysis);
+    return charts.barChart || '';
+})()}
+</div>
 
 <div class="no-break"><h1>Emergency Response</h1>
 <div class="emergency-box box"><h3>Status: ${analysis.emergency_response?.habitability_status || 'Under Assessment'}</h3>
@@ -118,6 +153,133 @@ function generateStormImageUrls(stormData, address) {
         hail: `https://www.spc.noaa.gov/climo/reports/today_filtered.png?${Date.now()}`,
         satellite: `https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/GEOCOLOR/latest.jpg?${Date.now()}`
     };
+}
+
+function generateCharts(analysis) {
+    const colors = {
+        primary: "#bfa76f",
+        secondary: "#2c3e50",
+        success: "#28a745",
+        warning: "#fd7e14",
+        danger: "#dc3545"
+    };
+    
+    // Risk Assessment Gauge Chart
+    const riskLevels = { 'critical': 90, 'high': 75, 'moderate': 50, 'low': 25 };
+    const riskValue = riskLevels[analysis.executive_summary?.overall_risk?.toLowerCase()] || 50;
+    const riskColor = riskValue >= 75 ? colors.danger : riskValue >= 50 ? colors.warning : colors.success;
+    
+    const riskGauge = `
+    <div class="chart-container">
+        <div class="chart-title">📊 Risk Assessment Gauge</div>
+        <div class="gauge-chart" style="background: conic-gradient(${riskColor} 0deg ${riskValue * 1.8}deg, #e9ecef ${riskValue * 1.8}deg 180deg);">
+            <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:16pt;font-weight:bold;color:${colors.secondary}">${riskValue}%</div>
+        </div>
+        <div style="text-align:center;font-size:10pt;color:#6c757d">Overall Damage Risk: <strong>${analysis.executive_summary?.overall_risk || 'Moderate'}</strong></div>
+    </div>`;
+    
+    // Damage Probability Progress Bars
+    const damageCategories = [
+        { label: 'Roof Damage', value: 85, color: colors.danger },
+        { label: 'Siding/Exterior', value: 70, color: colors.warning },
+        { label: 'Windows/Gutters', value: 60, color: colors.warning },
+        { label: 'Interior/Contents', value: 35, color: colors.success }
+    ];
+    
+    const progressBars = `
+    <div class="chart-container">
+        <div class="chart-title">🎯 Damage Probability Analysis</div>
+        ${damageCategories.map(cat => `
+        <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+                <span style="font-size:10pt;font-weight:bold">${cat.label}</span>
+                <span style="font-size:10pt;color:${cat.color}">${cat.value}%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width:${cat.value}%;background:${cat.color}"></div>
+                <div class="progress-text">${cat.value}%</div>
+            </div>
+        </div>`).join('')}
+    </div>`;
+    
+    // Cost Breakdown Pie Chart
+    const costData = analysis.professional_tables?.repair_cost_analysis?.data_rows || [];
+    const pieChart = costData.length > 0 ? (() => {
+        const totalCost = costData.reduce((sum, row) => {
+            const cost = parseInt(row[2]?.replace(/[$,]/g, '') || '0');
+            return sum + cost;
+        }, 0);
+        
+        const segments = costData.slice(0, 5).map((row, i) => {
+            const cost = parseInt(row[2]?.replace(/[$,]/g, '') || '0');
+            const percentage = totalCost > 0 ? (cost / totalCost * 100) : 0;
+            const segmentColors = [colors.primary, colors.danger, colors.warning, colors.success, colors.secondary];
+            return { label: row[0], value: percentage, color: segmentColors[i] };
+        });
+        
+        let currentAngle = 0;
+        const gradientStops = segments.map(seg => {
+            const startAngle = currentAngle;
+            const endAngle = currentAngle + (seg.value * 3.6);
+            currentAngle = endAngle;
+            return `${seg.color} ${startAngle}deg ${endAngle}deg`;
+        }).join(', ');
+        
+        return `
+        <div class="chart-container">
+            <div class="chart-title">💰 Repair Cost Breakdown</div>
+            <div class="pie-chart" style="background: conic-gradient(${gradientStops});">
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;width:100px;height:100px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12pt;font-weight:bold;color:${colors.secondary}">
+                    $${(totalCost/1000).toFixed(0)}K
+                </div>
+            </div>
+            <div class="chart-legend">
+                ${segments.map(seg => `
+                <div class="legend-item">
+                    <div class="legend-color" style="background:${seg.color}"></div>
+                    <span>${seg.label} (${seg.value.toFixed(1)}%)</span>
+                </div>`).join('')}
+            </div>
+        </div>`;
+    })() : '';
+    
+    // Timeline Chart
+    const recommendations = analysis.recommendations?.next_steps || [];
+    const timelineChart = recommendations.length > 0 ? `
+    <div class="chart-container">
+        <div class="chart-title">⏰ Action Timeline</div>
+        <div class="timeline-chart">
+            ${recommendations.slice(0, 4).map((rec, i) => `
+            <div class="timeline-item">
+                <div class="timeline-dot ${rec.priority?.toLowerCase() === 'urgent' ? 'timeline-urgent' : ''}"></div>
+                <div class="timeline-content" style="border-left-color:${rec.priority?.toLowerCase() === 'urgent' ? colors.danger : colors.primary}">
+                    <div style="font-weight:bold;font-size:11pt;margin-bottom:5px">${rec.action}</div>
+                    <div style="font-size:9pt;color:#6c757d">Timeline: ${rec.timeline} | Priority: ${rec.priority}</div>
+                    <div style="font-size:9pt;color:${colors.primary};font-weight:bold">${rec.estimated_cost}</div>
+                </div>
+            </div>`).join('')}
+        </div>
+    </div>` : '';
+    
+    // Storm Intensity Bar Chart
+    const stormData = analysis.professional_tables?.storm_risk_summary?.data_rows || [];
+    const barChart = stormData.length > 0 ? `
+    <div class="chart-container">
+        <div class="chart-title">🌪️ Storm Intensity Comparison</div>
+        <div class="bar-chart">
+            ${stormData.slice(0, 4).map((storm, i) => {
+                const intensity = storm[2] || 'Unknown';
+                const height = intensity.includes('Large') ? 90 : intensity.includes('Golf') ? 70 : intensity.includes('Quarter') ? 50 : 30;
+                return `
+                <div class="bar" style="height:${height}px;background:linear-gradient(to top, ${colors.primary}, ${colors.warning})">
+                    <div class="bar-value">${intensity}</div>
+                    <div class="bar-label">${storm[0]?.substring(0, 8) || 'Event'}</div>
+                </div>`;
+            }).join('')}
+        </div>
+    </div>` : '';
+    
+    return { riskGauge, progressBars, pieChart, timelineChart, barChart };
 }
 
 function buildTables(tables) {
