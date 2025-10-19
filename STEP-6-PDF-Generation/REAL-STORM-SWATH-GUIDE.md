@@ -1,10 +1,17 @@
 # 🌪️ REAL STORM SWATH INTEGRATION GUIDE
 
+## ⚠️ **SECURITY WARNING** ⚠️
+**DO NOT USE THIS FILE FOR PRODUCTION!** 
+API keys are exposed here for reference only.
+**Use the SECURE-STORM-DATA-GUIDE.md instead!**
+
 ## How to Get Actual Storm Swath Data
 
-With your API keys:
+**⚠️ INSECURE REFERENCE - API KEYS EXPOSED:**
 - **Google Maps**: `AIzaSyDjCYVWl2tFzJEwFtYeG63ob6HkX2sgPUA`
 - **WeatherAPI**: `9cb3a377e2a54cc1bad184511251810`
+
+**🔐 FOR PRODUCTION: Use environment variables instead!**
 
 Here's how to integrate **REAL storm data** instead of placeholders:
 

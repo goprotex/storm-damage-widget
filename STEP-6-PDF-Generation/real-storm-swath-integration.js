@@ -4,8 +4,8 @@
  * This integrates ACTUAL storm swath data instead of placeholder visualizations
  * 
  * API KEYS:
- * - Google Maps: AIzaSyDjCYVWl2tFzJEwFtYeG63ob6HkX2sgPUA
- * - WeatherAPI: 9cb3a377e2a54cc1bad184511251810
+ * - Google Maps: SECURE - Use process.env.GOOGLE_MAPS_API_KEY
+ * - WeatherAPI: SECURE - Use process.env.WEATHER_API_KEY
  * 
  * STORM DATA SOURCES:
  * 1. WeatherAPI.com - Historical weather, storm tracking
@@ -18,8 +18,11 @@
 // 1. HISTORICAL STORM DATA FROM WEATHERAPI.COM
 // ============================================================================
 
-async function getHistoricalStormData(location, stormDate) {
-    const apiKey = '9cb3a377e2a54cc1bad184511251810';
+async function getHistoricalStormData(location, stormDate, apiKey) {
+    // SECURITY: API key must be passed from environment variables
+    if (!apiKey) {
+        throw new Error('WeatherAPI key is required - use process.env.WEATHER_API_KEY');
+    }
     const baseUrl = 'http://api.weatherapi.com/v1';
     
     try {
@@ -77,8 +80,12 @@ async function getHistoricalStormData(location, stormDate) {
 // 2. REAL STORM SWATH VISUALIZATION WITH GOOGLE MAPS
 // ============================================================================
 
-function generateRealStormSwathMap(stormData, propertyAddress) {
-    const googleMapsApiKey = 'AIzaSyDjCYVWl2tFzJEwFtYeG63ob6HkX2sgPUA';
+function generateRealStormSwathMap(stormData, propertyAddress, googleMapsApiKey) {
+    // SECURITY: API key must be passed from environment variables
+    if (!googleMapsApiKey) {
+        console.warn('Google Maps API key not provided');
+        return '<div>Google Maps API key required for real storm visualization</div>';
+    }
     const centerLat = 39.8283;  // Default to center US, should be property location
     const centerLng = -98.5795;
     
@@ -247,8 +254,11 @@ function getWindDamageRisk(stormData) {
 // 4. GOOGLE MAPS INTEGRATION FOR PROPERTY VISUALIZATION
 // ============================================================================
 
-function generatePropertyImageUrls(propertyAddress) {
-    const googleMapsApiKey = 'AIzaSyDjCYVWl2tFzJEwFtYeG63ob6HkX2sgPUA';
+function generatePropertyImageUrls(propertyAddress, googleMapsApiKey) {
+    // SECURITY: API key must be passed from environment variables
+    if (!googleMapsApiKey) {
+        throw new Error('Google Maps API key is required - use process.env.GOOGLE_MAPS_API_KEY');
+    }
     const encodedAddress = encodeURIComponent(propertyAddress);
     
     return {

@@ -18,7 +18,10 @@
  * - report_id: Unique identifier
  */
 
-function buildHTML(analysis, formData) {
+function buildHTML(analysis, formData, apiKeys = {}) {
+    // API Keys should be passed from Zapier environment variables:
+    // apiKeys.googleMaps = process.env.GOOGLE_MAPS_API_KEY
+    // apiKeys.weather = process.env.WEATHER_API_KEY
     const company = {
         name: "Hayden Claims Group",
         tagline: "Mother Nature isn't fair but insurance should be",
@@ -66,7 +69,7 @@ function buildHTML(analysis, formData) {
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
 <div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:5px;padding:15px;text-align:center">
 <h4 style="color:#2c3e50;margin-bottom:10px">Street View</h4>
-<img src="${generateRealPropertyImageUrls(address).streetView}" alt="Street View" style="width:100%;height:200px;border-radius:5px;object-fit:cover;border:1px solid #ddd" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+<img src="${generateRealPropertyImageUrls(address, apiKeys.googleMaps).streetView}" alt="Street View" style="width:100%;height:200px;border-radius:5px;object-fit:cover;border:1px solid #ddd" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
 <div style="width:100%;height:200px;background:#e9ecef;border:2px dashed #6c757d;border-radius:5px;display:none;align-items:center;justify-content:center;color:#6c757d;font-size:10pt">
 <div style="text-align:center">
 <strong>Google Street View</strong><br>
@@ -78,7 +81,7 @@ ${address}</span>
 </div>
 <div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:5px;padding:15px;text-align:center">
 <h4 style="color:#2c3e50;margin-bottom:10px">Satellite View</h4>
-<img src="${generateRealPropertyImageUrls(address).satellite}" alt="Satellite View" style="width:100%;height:200px;border-radius:5px;object-fit:cover;border:1px solid #ddd" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+<img src="${generateRealPropertyImageUrls(address, apiKeys.googleMaps).satellite}" alt="Satellite View" style="width:100%;height:200px;border-radius:5px;object-fit:cover;border:1px solid #ddd" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
 <div style="width:100%;height:200px;background:#e9ecef;border:2px dashed #6c757d;border-radius:5px;display:none;align-items:center;justify-content:center;color:#6c757d;font-size:10pt">
 <div style="text-align:center">
 <strong>Aerial Satellite View</strong><br>
@@ -173,8 +176,12 @@ ${(analysis.recommendations?.next_steps || []).map(s => `<div class="box"><h4>${
 // REAL STORM DATA INTEGRATION
 // ============================================================================
 
-async function getHistoricalStormData(location, stormDate) {
-    const apiKey = '9cb3a377e2a54cc1bad184511251810';
+async function getHistoricalStormData(location, stormDate, apiKey) {
+    // API Key should be passed from Zapier environment variables
+    // In Zapier: process.env.WEATHER_API_KEY
+    if (!apiKey) {
+        throw new Error('WeatherAPI key is required');
+    }
     const baseUrl = 'http://api.weatherapi.com/v1';
     
     try {
@@ -272,8 +279,17 @@ function getWindDamageRisk(stormData) {
     return 'LOW';
 }
 
-function generateRealPropertyImageUrls(address) {
-    const googleMapsApiKey = 'AIzaSyDjCYVWl2tFzJEwFtYeG63ob6HkX2sgPUA';
+function generateRealPropertyImageUrls(address, googleMapsApiKey) {
+    // API Key should be passed from Zapier environment variables
+    // In Zapier: process.env.GOOGLE_MAPS_API_KEY
+    if (!googleMapsApiKey) {
+        console.warn('Google Maps API key not provided, using fallback placeholders');
+        return {
+            streetView: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2U5ZWNlZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzZjNzU3ZCI+U3RyZWV0IFZpZXcgUGxhY2Vob2xkZXI8L3RleHQ+PC9zdmc+',
+            satellite: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2U5ZWNlZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzZjNzU3ZCI+U2F0ZWxsaXRlIFBsYWNlaG9sZGVyPC90ZXh0Pjwvc3ZnPg==',
+            hybrid: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2U5ZWNlZiIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkb21pbmFudC1iYXNlbGluZT0ibWlkZGxlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTRweCIgZmlsbD0iIzZjNzU3ZCI+SHlicmlkIFBsYWNlaG9sZGVyPC90ZXh0Pjwvc3ZnPg=='
+        };
+    }
     const encodedAddress = encodeURIComponent(address);
     
     return {
