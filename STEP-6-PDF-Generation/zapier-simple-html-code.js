@@ -941,45 +941,48 @@ function extractSeverityLevel(severity) {
 // MAIN FUNCTION (NO NPM MODULES NEEDED)
 // ============================================================================
 
-try {
-    // Parse analysis
-    const analysis = typeof inputData.analysis_json === 'string' 
-        ? JSON.parse(inputData.analysis_json) 
-        : inputData.analysis_json;
-    
-    // Build form data
-    const formData = {
-        property_address: inputData.property_address || '',
-        city: inputData.city || '',
-        state: inputData.state || '',
-        zip: inputData.zip || ''
-    };
-    
-    // API Keys (if provided via environment variables)
-    const apiKeys = {
-        googleMaps: inputData.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '',
-        weather: inputData.WEATHER_API_KEY || process.env.WEATHER_API_KEY || ''
-    };
-    
-    // Storm swath HTML from previous step
-    const stormSwathHtml = inputData.storm_swath_html || '';
-    
-    // Generate HTML
-    const html = buildHTML(analysis, formData, apiKeys, stormSwathHtml);
-    const reportId = `HCG-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-    
-    output = {
-        success: true,
-        html_content: html,
-        report_id: reportId,
-        property_address: `${formData.property_address}, ${formData.city}, ${formData.state} ${formData.zip}`.trim(),
-        generated_at: new Date().toISOString()
-    };
-    
-} catch (error) {
-    output = {
-        success: false,
-        error: error.message,
-        error_details: error.stack
-    };
-}
+// Zapier callback pattern for compatibility
+callback(null, (function() {
+    try {
+        // Parse analysis
+        const analysis = typeof inputData.analysis_json === 'string' 
+            ? JSON.parse(inputData.analysis_json) 
+            : inputData.analysis_json;
+        
+        // Build form data
+        const formData = {
+            property_address: inputData.property_address || '',
+            city: inputData.city || '',
+            state: inputData.state || '',
+            zip: inputData.zip || ''
+        };
+        
+        // API Keys (if provided via environment variables)
+        const apiKeys = {
+            googleMaps: inputData.GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY || '',
+            weather: inputData.WEATHER_API_KEY || process.env.WEATHER_API_KEY || ''
+        };
+        
+        // Storm swath HTML from previous step
+        const stormSwathHtml = inputData.storm_swath_html || '';
+        
+        // Generate HTML
+        const html = buildHTML(analysis, formData, apiKeys, stormSwathHtml);
+        const reportId = `HCG-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+        
+        return {
+            success: true,
+            html_content: html,
+            report_id: reportId,
+            property_address: `${formData.property_address}, ${formData.city}, ${formData.state} ${formData.zip}`.trim(),
+            generated_at: new Date().toISOString()
+        };
+        
+    } catch (error) {
+        return {
+            success: false,
+            error: error.message,
+            error_details: error.stack
+        };
+    }
+})());
