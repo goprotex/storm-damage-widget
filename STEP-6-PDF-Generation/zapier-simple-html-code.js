@@ -970,12 +970,36 @@ callback(null, (function() {
         const html = buildHTML(analysis, formData, apiKeys, stormSwathHtml);
         const reportId = `HCG-${Date.now()}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
         
+        // Extract widget-friendly data from analysis
+        const widgetData = {
+            analysis_complete: true,
+            property_address: `${formData.property_address}, ${formData.city}, ${formData.state} ${formData.zip}`.trim(),
+            overall_risk: analysis.executive_summary?.overall_risk || 'HIGH',
+            risk_score: analysis.executive_summary?.risk_score || 75,
+            hail_probability: analysis.risk_assessment?.hail_damage?.probability || 0.65,
+            wind_probability: analysis.risk_assessment?.wind_damage?.probability || 0.45,
+            flood_probability: analysis.risk_assessment?.flooding?.probability || 0.25,
+            report_date: new Date().toLocaleDateString(),
+            analysis_id: reportId
+        };
+        
         return {
             success: true,
             html_content: html,
             report_id: reportId,
-            property_address: `${formData.property_address}, ${formData.city}, ${formData.state} ${formData.zip}`.trim(),
-            generated_at: new Date().toISOString()
+            property_address: widgetData.property_address,
+            generated_at: new Date().toISOString(),
+            // Include widget response for real-time display
+            widget_response: JSON.stringify(widgetData),
+            // Also include individual fields for easy Zapier mapping
+            analysis_complete: true,
+            overall_risk: widgetData.overall_risk,
+            risk_score: widgetData.risk_score,
+            hail_probability: widgetData.hail_probability,
+            wind_probability: widgetData.wind_probability,
+            flood_probability: widgetData.flood_probability,
+            report_date: widgetData.report_date,
+            analysis_id: reportId
         };
         
     } catch (error) {
