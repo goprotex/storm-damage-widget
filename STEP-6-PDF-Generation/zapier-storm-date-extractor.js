@@ -143,7 +143,34 @@ if (!extractedStormDate || !validateStormDate(extractedStormDate)) {
   3. Checking field names in this script match your Zapier step names`;
   
   console.error(errorMessage);
-  throw new Error(errorMessage);
+  
+  // Set error output instead of throwing
+  output = {
+    success: false,
+    error: 'storm_date_not_found',
+    error_message: errorMessage,
+    primary_storm_date: null,
+    extraction_metadata: {
+      method: 'failed',
+      confidence: 'none',
+      source: 'validation_failed',
+      timestamp: new Date().toISOString(),
+      validation_status: 'failed'
+    },
+    troubleshooting: {
+      checked_sources: [
+        'GPT executive_summary.primary_storm_date',
+        'GPT risk_assessment.storm_date_intelligence.primary_storm_date',
+        'GPT risk_assessment.storm_impact_events[].event_date',
+        'Form inputs: storm_date, incident_date, date_of_loss'
+      ],
+      required_format: 'YYYY-MM-DD',
+      example: '2024-03-15'
+    }
+  };
+  
+  // Don't continue to success section
+  return;
 }
 
 // ======================================
