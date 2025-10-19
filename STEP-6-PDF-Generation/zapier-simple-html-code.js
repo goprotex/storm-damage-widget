@@ -32,7 +32,7 @@ function buildHTML(analysis, formData, apiKeys = {}, stormSwathHtml = '') {
     };
     
     const colors = {
-        primary: "#bfa76f",
+        primary: "#254f86ff",
         secondary: "#000000ff",
         success: "#28a745",
         warning: "#fd7e14",
@@ -224,7 +224,7 @@ ${(() => {
 <div style="background:#f8f9fa;border:2px solid ${colors.primary};border-radius:8px;padding:20px;text-align:center">
   <svg viewBox="0 0 400 280" style="max-width:100%;height:auto">
     <!-- Sky background -->
-    <rect x="0" y="0" width="200" height="140" fill="#62abdfff"/>
+    <rect x="0" y="0" width="200" height="140" fill="#ffffffff"/>
     
     <!-- Roof (HIGH RISK - Red) -->
     <polygon points="200,40 360,130 40,130" fill="rgba(220,53,69,0.85)" stroke="#8B0000" stroke-width="3"/>
@@ -587,7 +587,7 @@ function generateStormImageUrls(stormData, address) {
 
 function generateCharts(analysis) {
     const colors = {
-        primary: "#bfa76f",
+        primary: "#1e3a5f",
         secondary: "#2c3e50",
         success: "#28a745",
         warning: "#fd7e14",
@@ -844,7 +844,7 @@ function generateGroundReportsTable(stormDataRows) {
     // Generate the ground reports table HTML
     return `
     <div class="no-break" style="margin-top:20px">
-        <h3 style="color:#2c3e50;border-bottom:2px solid #bfa76f;padding-bottom:8px;margin-bottom:15px">
+        <h3 style="color:#2c3e50;border-bottom:2px solid #1e3a5f;padding-bottom:8px;margin-bottom:15px">
             📡 Official Ground Reports & Observations
         </h3>
         <p style="font-size:9pt;color:#6c757d;font-style:italic;margin-bottom:10px">
