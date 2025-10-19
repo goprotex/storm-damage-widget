@@ -7,6 +7,7 @@
     "report_metadata",
     "executive_summary", 
     "risk_assessment",
+    "property_intelligence",
     "professional_tables",
     "emergency_response",
     "recommendations",
@@ -117,6 +118,68 @@
           "type": "array",
           "items": {"type": "string"},
           "description": "Factors that increase overall risk"
+        }
+      }
+    },
+
+    "property_intelligence": {
+      "type": "object",
+      "required": ["property_type", "year_built"],
+      "properties": {
+        "property_type": {
+          "type": "string",
+          "description": "Type of property (e.g., 'Single-family residential', 'Multi-family', 'Commercial')",
+          "examples": ["Single-family residential", "Townhouse", "Condo", "Multi-family"]
+        },
+        "year_built": {
+          "type": "string",
+          "description": "Year the property was constructed"
+        },
+        "square_footage": {
+          "type": "string",
+          "description": "Total living area in square feet (e.g., '1,700', '2,450')"
+        },
+        "lot_size": {
+          "type": "string",
+          "description": "Size of lot (e.g., '0.25 acres', '7,500 sq ft')"
+        },
+        "roof_type": {
+          "type": "string",
+          "description": "Primary roofing material",
+          "examples": ["Asphalt shingle", "Metal", "Tile", "Flat/TPO", "Slate"]
+        },
+        "roof_age": {
+          "type": "string",
+          "description": "Approximate age of current roof in years"
+        },
+        "roof_condition": {
+          "type": "string",
+          "enum": ["excellent", "good", "fair", "poor", "unknown"],
+          "description": "Overall condition of roof before storm"
+        },
+        "exterior_material": {
+          "type": "string",
+          "description": "Primary exterior siding material",
+          "examples": ["Vinyl siding", "Brick", "Stucco", "Wood", "Fiber cement", "Stone"]
+        },
+        "stories": {
+          "type": "string",
+          "description": "Number of stories",
+          "examples": ["1", "2", "1.5 (with finished attic)", "3"]
+        },
+        "garage_type": {
+          "type": "string",
+          "description": "Garage configuration",
+          "examples": ["2-car attached", "1-car detached", "Carport", "None", "3-car attached"]
+        },
+        "hvac_type": {
+          "type": "string",
+          "description": "HVAC system type",
+          "examples": ["Central AC + gas furnace", "Heat pump", "Window units"]
+        },
+        "hvac_age": {
+          "type": "string",
+          "description": "Approximate age of HVAC system in years"
         }
       }
     },

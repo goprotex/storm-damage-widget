@@ -13,7 +13,14 @@ Analyze the provided property and storm data to create a comprehensive, professi
 
 ### Your Analysis Should:
 
-1. **Evaluate Storm Risk & Damage Probability**
+1. **Research Property Intelligence**
+   - Use web search to find property details from public records (county appraisal, Zillow, Realtor.com)
+   - Extract: property type, year built, square footage, lot size
+   - Determine: roof type/age, exterior material, stories, garage type
+   - Research HVAC type and approximate age if available
+   - If data unavailable, make reasonable estimates based on property age and location
+
+2. **Evaluate Storm Risk & Damage Probability**
    - Assess proximity of reported storm events to the property
    - Analyze storm intensity (hail size, wind speed) and potential impact
    - Consider property age, construction type, and vulnerability factors
