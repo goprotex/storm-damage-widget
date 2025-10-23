@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>Safe Worker Test</h1>
+    <p>Click the button to send a test via the Cloudflare Worker (never directly to Zapier).</p>
+    <button onclick="testWebhook()">Test Webhook</button>
+    <div id="result"></div>
+
+    <script>
+    async function testWebhook() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = 'Sending request...';
+            
+            const testData = {
+                name: "Test User",
+                email: "test@example.com",
+                phone: "5551234567",
+                address: "123 Test St",
+                city: "Dallas",
+                state: "Texas",
+                zip: "75001"
+            };
+
+            console.log('Sending data:', testData);
+
+            try {
+                // Post to the Worker endpoint; the Worker will forward to Zapier safely
+                const response = await fetch('https://haydenclaim.com/api/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+
+                resultDiv.textContent = `✅ SUCCESS!\n\nStatus: ${response.status}\nResponse: ${responseText}`;
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = `❌ ERROR!\n\n${error.message}\n\nCheck the browser console (F12) for details.`;
+            }
+        }
+    </script>
+</body>
+</html>

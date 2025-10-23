@@ -4,10 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storm Damage Assessment - Hayden Claims Group</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20251023-1">
     <meta name="description" content="Get your personalized Texas storm risk analysis from Hayden Claims Group">
 </head>
 <body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Loading status for screen readers -->
+    <div role="status" aria-live="polite" aria-atomic="true" class="sr-only">
+        <span id="loading-status">Ready to analyze storm risk</span>
+    </div>
+    
     <div class="container">
         <!-- Left Panel: Form -->
         <div class="left-panel" id="formPanel">
@@ -17,7 +25,7 @@
                     <p class="tagline">Expert Storm Damage Assessment</p>
                 </div>
                 
-                <form id="stormForm">
+                <form id="stormForm" aria-label="Storm risk analysis form">
                     <h2>Get Your Storm Risk Analysis</h2>
                     <p class="form-description">Enter your property details for a comprehensive Texas storm damage assessment</p>
                     
@@ -57,6 +65,12 @@
                             <input type="text" id="zip" name="zip" required pattern="[0-9]{5}" autocomplete="postal-code">
                         </div>
                     </div>
+
+                                    <!-- Honeypot field: hidden from users, traps bots -->
+                                    <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+                                        <label for="hp">Do not fill this field</label>
+                                        <input type="text" id="hp" name="hp" tabindex="-1" autocomplete="off">
+                                    </div>
                     
                     <button type="submit" class="submit-btn">
                         <span class="btn-text">Run Assessment</span>
@@ -67,9 +81,9 @@
         </div>
 
         <!-- Right Panel: Loading & Results -->
-        <div class="right-panel" id="resultsPanel">
+        <div class="right-panel" id="resultsPanel" role="region" aria-label="Analysis results">
             <!-- Loading State -->
-            <div id="loading" class="loading-container">
+            <div id="loading" class="loading-container" role="status" aria-live="polite">
                 <div class="swirl-container">
                     <div class="swirl">
                         <div class="swirl-inner"></div>
@@ -89,7 +103,7 @@
             </div>
 
             <!-- Results State -->
-            <div id="results" class="results-container hidden">
+            <div id="results" class="results-container hidden" role="main" id="main-content">
                 <div class="results-header">
                     <div class="success-icon">
                         <svg width="40" height="40" viewBox="0 0 40 40">
@@ -157,6 +171,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20251023-1"></script>
 </body>
 </html>

@@ -1,18 +1,28 @@
-name = "storm-widget"
-main = "worker.js"
+name = "storm-proxy"
+main = "worker-zapier-proxy.js"
 compatibility_date = "2023-10-16"
 
 # Environment variables for production
+[env.production]
+name = "storm-proxy" # Keep the same name for route mapping
+
 [env.production.vars]
 ZAPIER_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/"
+# Optional secret to protect /api/poll endpoint (unused if you don't call /api/poll)
+POLL_SECRET = ""
+
+[[env.production.kv_namespaces]]
+binding = "INBOX"
+id = "076c0c54f9734a71b5e7e863c6f52df1"
 
 # Route configuration
-[[env.production.routes]]
-pattern = "haydenclaim.com/storm-track/*"
+# Explicitly set routes to ensure the production worker serves /api/* on both root and www
+routes = [
+	{ pattern = "haydenclaim.com/api/*", zone_name = "haydenclaim.com" },
+	{ pattern = "www.haydenclaim.com/api/*", zone_name = "haydenclaim.com" }
+]
+
+# Keep for compatibility; not strictly required when using explicit routes above
 zone_name = "haydenclaim.com"
 
-# KV namespace for analytics (optional)
-# [[kv_namespaces]]
-# binding = "ANALYTICS"
-# id = "your-kv-namespace-id"
-# preview_id = "your-preview-kv-namespace-id"
+# No KV namespaces required for regular webhook operation
