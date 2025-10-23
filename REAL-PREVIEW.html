@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Results Preview - REAL DATA</title>
+    <link rel="stylesheet" href="CLOUDFLARE-UPLOAD/style.css">
+    <style>
+        body {
+            background: #0a0a0a;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+        }
+        .preview-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            border: 2px solid #FF6A13;
+        }
+        .preview-header h1 {
+            color: #FF6A13;
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+        .preview-header p {
+            color: #999;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .preview-header .badge {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        /* Ensure results are visible */
+        #resultsDisplay {
+            display: block !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+        .results-container {
+            opacity: 1 !important;
+        }
+        /* Right panel styling to match widget */
+        .right-panel {
+            background: #f5f5f5;
+            padding: 40px;
+            border-radius: 12px;
+            min-height: 600px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-wrapper">
+        <div class="preview-header">
+            <h1>🎨 Customer-Facing Results Preview</h1>
+            <p><strong>Using REAL webhook data from:</strong></p>
+            <p style="font-family: monospace; font-size: 12px;">req_1761011387946_7c6miprgl</p>
+            <span class="badge">✓ LIVE DATA</span>
+        </div>
+
+        <div class="right-panel">
+            <div id="resultsDisplay"></div>
+        </div>
+    </div>
+
+    <script>
+        // REAL data from webhook
+        fetch('https://haydenclaim.com/api/storm-results/req_1761011387946_7c6miprgl')
+            .then(response => response.json())
+            .then(rawData => {
+                // Parse the data (same as widget does)
+                let data = rawData;
+                
+                // If data is wrapped in empty string key
+                if (rawData[""] && typeof rawData[""] === 'string') {
+                    try {
+                        data = JSON.parse(rawData[""]);
+                    } catch(e) {
+                        console.error('Parse error:', e);
+                    }
+                }
+                
+                console.log('Loaded data:', data);
+                
+                // Render using the same function as widget
+                renderResults(data);
+            })
+            .catch(error => {
+                console.error('Error loading data:', error);
+                document.getElementById('resultsDisplay').innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #dc3545;">
+                        <h3>⚠️ Error Loading Data</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            });
+
+        // Helper functions (from script.js)
+        function parseProb(val) {
+            if (!val) return 0;
+            const num = typeof val === 'string' ? parseFloat(val) : val;
+            return num > 1 ? num : num * 100;
+        }
+
+        function getRiskClass(risk) {
+            if (!risk) return 'medium';
+            const r = risk.toString().toUpperCase();
+            if (r === 'HIGH') return 'high';
+            if (r === 'LOW') return 'low';
+            return 'medium';
+        }
+
+        function getRiskLevel(score) {
+            if (score >= 70) return 'HIGH';
+            if (score >= 40) return 'MEDIUM';
+            return 'LOW';
+        }
+
+        function getRiskLabelForPercent(percent) {
+            if (percent >= 60) return 'High Risk';
+            if (percent >= 30) return 'Moderate Risk';
+            return 'Low Risk';
+        }
+
+        function createRiskCard(type, probability, icon) {
+            const percent = Math.round(probability);
+            const riskClass = percent > 60 ? 'high' : percent > 40 ? 'medium' : 'low';
+            
+            return `
+                <div class="risk-card ${riskClass}">
+                    <div class="risk-card-header">
+                        <span class="risk-icon">${icon}</span>
+                        <span class="risk-type">${type} Risk</span>
+                    </div>
+                    <div class="risk-percentage">${percent}%</div>
+                    <div class="risk-bar">
+                        <div class="risk-bar-fill" data-width="${percent}%" style="width: 0%"></div>
+                    </div>
+                    <div class="risk-label">${getRiskLabelForPercent(percent)}</div>
+                </div>
+            `;
+        }
+
+        function generateRecommendations(hail, wind, flood, riskScore) {
+            const recommendations = [];
+            
+            if (hail > 50) {
+                recommendations.push({ icon: '🏠', text: 'Consider impact-resistant roofing materials' });
+            }
+            if (wind > 40) {
+                recommendations.push({ icon: '💨', text: 'Secure outdoor items and check roof attachments' });
+            }
+            if (flood > 30) {
+                recommendations.push({ icon: '🌊', text: 'Schedule a free property inspection' });
+            }
+            
+            recommendations.push({ icon: '📋', text: 'Document current property condition' });
+            
+            if (riskScore > 60) {
+                recommendations.push({ icon: '☎️', text: 'Contact us for immediate assessment' });
+            }
+            
+            return recommendations;
+        }
+
+        function renderResults(data) {
+            const hailPercent = parseProb(data.hail_probability);
+            const windPercent = parseProb(data.wind_probability);
+            const floodPercent = parseProb(data.flood_probability);
+            const riskScore = parseProb(data.risk_score) || Math.round((hailPercent + windPercent + floodPercent) / 3);
+            const overallRisk = data.overall_risk || getRiskLevel(riskScore);
+            
+            const html = `
+                <div class="results-container">
+                    <!-- Header Section -->
+                    <div class="results-header">
+                        <h2>🌪️ Storm Risk Assessment Complete</h2>
+                        <div class="completion-badge">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="2"/>
+                                <path d="M7 12l3 3 7-7" stroke="#4CAF50" stroke-width="2" fill="none"/>
+                            </svg>
+                            <span>Analysis Complete</span>
+                        </div>
+                    </div>
+
+                    <!-- Property Info Card -->
+                    <div class="info-card">
+                        <div class="info-row">
+                            <div class="info-item full-width">
+                                <span class="info-label">📍 Property Address</span>
+                                <span class="info-value address">${data.property_address || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-item">
+                                <span class="info-label">📅 Report Date</span>
+                                <span class="info-value">${data.report_date || new Date().toLocaleDateString()}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">⚠️ Overall Risk Level</span>
+                                <span class="info-value risk-badge ${getRiskClass(overallRisk)}">${overallRisk}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">📊 Risk Score</span>
+                                <span class="info-value score">${riskScore}/100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Analysis Section -->
+                    <div class="risk-analysis">
+                        <h3>Storm Risk Breakdown</h3>
+                        <div class="risk-grid">
+                            ${createRiskCard('Hail', hailPercent, '🌨️')}
+                            ${createRiskCard('Wind', windPercent, '💨')}
+                            ${createRiskCard('Flood', floodPercent, '🌊')}
+                        </div>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div class="recommendations">
+                        <h3>Professional Recommendations</h3>
+                        <div class="recommendation-list">
+                            ${generateRecommendations(hailPercent, windPercent, floodPercent, riskScore).map(rec => `
+                                <div class="recommendation-item">
+                                    <span class="rec-icon">${rec.icon}</span>
+                                    <span class="rec-text">${rec.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Full HTML Report Section -->
+                    ${data.html_results ? `
+                        <div class="full-report-section">
+                            <h3>📄 Complete Analysis Report</h3>
+                            <div class="report-frame">
+                                ${data.html_results}
+                            </div>
+                        </div>
+                    ` : '<p style="text-align: center; color: #999; padding: 20px;">No HTML report available</p>'}
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons-results">
+                        ${data.pdf_url ? `
+                            <a href="${data.pdf_url}" class="button primary" target="_blank">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Download PDF Report
+                            </a>
+                        ` : ''}
+                        <button class="button secondary" onclick="return false;">New Assessment</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('resultsDisplay').innerHTML = html;
+            
+            // Animate risk bars after a brief delay
+            setTimeout(() => {
+                document.querySelectorAll('.risk-bar-fill').forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                });
+            }, 300);
+        }
+    </script>
+</body>
+</html>

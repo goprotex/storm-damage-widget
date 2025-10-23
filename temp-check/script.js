@@ -1,9 +1,8 @@
 // Configuration Constants
 const CONFIG = {
-  // Use Worker proxy on haydenclaim.com to avoid CORS
   zapierWebhookUrl: 'https://haydenclaim.com/api/submit',
-  // UPDATE THIS with your new polling webhook URL after creating the second Zap:
-  apiEndpoint: 'https://haydenclaim.com/api/progress', // Polling endpoint
+  // Polling/progress goes through the Worker (never hit Zapier directly):
+  apiEndpoint: 'https://haydenclaim.com/api/progress', // Polling endpoint (if used)
   timings: {
     factRotation: 5000, // Changed to 5 seconds
     statusRotation: 3000,
@@ -672,10 +671,11 @@ async function pollForResults(requestId, originalData) {
       
       await new Promise(resolve => setTimeout(resolve, pollInterval));
       
-      // Try multiple possible endpoints for results (proxy-only; never hit Zapier directly from browser)
+      // Try multiple possible endpoints for results
       const endpoints = [
         `${CONFIG.apiEndpoint}?request_id=${requestId}`,
-        `https://haydenclaim.com/api/storm-results/${requestId}`
+        `https://haydenclaim.com/api/storm-results/${requestId}`,
+  `https://haydenclaim.com/api/storm-results/${requestId}`
       ];
       
       for (const endpoint of endpoints) {

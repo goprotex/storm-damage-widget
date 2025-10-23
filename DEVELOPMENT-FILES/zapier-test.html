@@ -52,9 +52,9 @@
         <h1>🔧 Zapier Real-Time Integration Setup</h1>
         
         <div class="step">
-            <h2>Step 1: Test Current Webhook</h2>
-            <p>First, let's test if your Zapier webhook can return JSON data:</p>
-            <button class="test-btn" onclick="testCurrentWebhook()">Test Current Webhook</button>
+            <h2>Step 1: Test Worker Endpoint</h2>
+            <p>Send a test to the Cloudflare Worker (it forwards to Zapier):</p>
+            <button class="test-btn" onclick="testCurrentWebhook()">Send Test via Worker</button>
             <div id="currentTest"></div>
         </div>
 
@@ -198,10 +198,10 @@ const widgetResponse = {
             result.innerHTML = '<p>Testing webhook...</p>';
             
             try {
-                const response = await fetch('https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/', {
+                const response = await fetch('https://haydenclaim.com/api/submit', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
                         test: 'webhook_response_test',
                         widget_request: 'true',
                         name: 'Test User',
@@ -230,10 +230,10 @@ const widgetResponse = {
             result.innerHTML = '<p>Testing real-time flow...</p>';
             
             try {
-                const response = await fetch('https://hooks.zapier.com/hooks/catch/14608681/u5q2jca/', {
+                const response = await fetch('https://haydenclaim.com/api/submit', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
                         widget_request: 'true',
                         return_results: 'true',
                         name: 'Real Time Test',

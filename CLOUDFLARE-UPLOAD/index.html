@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storm Damage Assessment - Hayden Claims Group</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=20251023-1">
     <meta name="description" content="Get your personalized Texas storm risk analysis from Hayden Claims Group">
 </head>
 <body>
@@ -57,6 +57,12 @@
                             <input type="text" id="zip" name="zip" required pattern="[0-9]{5}" autocomplete="postal-code">
                         </div>
                     </div>
+
+                                    <!-- Honeypot field: hidden from users, traps bots -->
+                                    <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+                                        <label for="hp">Do not fill this field</label>
+                                        <input type="text" id="hp" name="hp" tabindex="-1" autocomplete="off">
+                                    </div>
                     
                     <button type="submit" class="submit-btn">
                         <span class="btn-text">Run Assessment</span>
@@ -157,6 +163,6 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20251023-1"></script>
 </body>
 </html>

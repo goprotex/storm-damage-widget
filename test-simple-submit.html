@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Form Submit Test (via Worker)</h1>
+    <p>This sends data to the Cloudflare Worker, which safely forwards to Zapier.</p>
+    
+    <form id="testForm">
+        <input type="text" name="name" placeholder="Name" value="John Doe" required>
+        <input type="email" name="email" placeholder="Email" value="john@example.com" required>
+        <input type="tel" name="phone" placeholder="Phone" value="5551234567" required>
+        <input type="text" name="address" placeholder="Address" value="123 Main St" required>
+        <input type="text" name="city" placeholder="City" value="Dallas" required>
+        <input type="text" name="state" placeholder="State" value="Texas" readonly>
+        <input type="text" name="zip" placeholder="ZIP" value="75001" required>
+    <button type="submit">Submit via Worker</button>
+    </form>
+    
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('testForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            resultDiv.textContent = 'Submitting...';
+            
+            // Collect form data
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+            
+            console.log('Data being sent:', data);
+            console.log('URLSearchParams string:', new URLSearchParams(data).toString());
+            
+            try {
+                const response = await fetch('https://haydenclaim.com/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response OK:', response.ok);
+                
+                const responseText = await response.text();
+                console.log('Response text:', responseText);
+                
+                resultDiv.textContent = `✅ SUCCESS!\n\nStatus: ${response.status}\nResponse: ${responseText}\n\nForwarded via Worker → Zapier.`;
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.textContent = `❌ ERROR: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
