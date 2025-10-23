@@ -577,6 +577,9 @@ function transitionToLoading() {
   elements.btnLoader.classList.remove('hidden');
   elements.submitBtn.disabled = true;
   
+  // Update screen reader announcement
+  updateLoadingStatus('Processing your storm risk analysis. This may take a few minutes.');
+  
   // Slide out form panel
   elements.formPanel.classList.add('slide-out');
   
@@ -1359,6 +1362,9 @@ function showResults(data) {
   state.resultsShown = true;
   console.log('📊 Showing results for the first time');
   
+  // Update screen reader announcement
+  updateLoadingStatus('Analysis complete. Results are now displayed.');
+  
   // Parse final_results JSON if present
   let finalResults = null;
   if (data.final_results) {
@@ -1396,8 +1402,8 @@ function showResults(data) {
       <!-- Header Section -->
       <div class="results-header">
         <h2>🌪️ Storm Risk Assessment Complete</h2>
-        <div class="completion-badge">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <div class="completion-badge" role="status">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <circle cx="12" cy="12" r="10" stroke="#4CAF50" stroke-width="2"/>
             <path d="M7 12l3 3 7-7" stroke="#4CAF50" stroke-width="2" fill="none"/>
           </svg>
@@ -1406,7 +1412,7 @@ function showResults(data) {
       </div>
 
       <!-- Property Info Card -->
-      <div class="info-card">
+      <div class="info-card" role="region" aria-label="Property information">
         <div class="info-row">
           <div class="info-item full-width">
             <span class="info-label">📍 Property Address</span>
@@ -1420,17 +1426,17 @@ function showResults(data) {
           </div>
           <div class="info-item">
             <span class="info-label">⚠️ Overall Risk Level</span>
-            <span class="info-value risk-badge ${getRiskClass(overallRisk)}">${overallRisk}</span>
+            <span class="info-value risk-badge ${getRiskClass(overallRisk)}" role="status" aria-label="Overall risk level: ${overallRisk}">${overallRisk}</span>
           </div>
           <div class="info-item">
             <span class="info-label">📊 Risk Score</span>
-            <span class="info-value score">${riskScore}/100</span>
+            <span class="info-value score" aria-label="Risk score: ${riskScore} out of 100">${riskScore}/100</span>
           </div>
         </div>
       </div>
 
       <!-- Risk Analysis Section -->
-      <div class="risk-analysis">
+      <div class="risk-analysis" role="region" aria-label="Risk breakdown">
         <h3>Storm Risk Breakdown</h3>
         <div class="risk-grid">
           ${createRiskCard('Hail', hailPercent, '🌨️')}
@@ -1440,12 +1446,12 @@ function showResults(data) {
       </div>
 
       <!-- Recommendations -->
-      <div class="recommendations">
+      <div class="recommendations" role="region" aria-label="Professional recommendations">
         <h3>Professional Recommendations</h3>
         <div class="recommendation-list">
           ${generateRecommendations(hailPercent, windPercent, floodPercent, riskScore).map(rec => `
-            <div class="recommendation-item">
-              <span class="rec-icon">${rec.icon}</span>
+            <div class="recommendation-item" role="article">
+              <span class="rec-icon" aria-hidden="true">${rec.icon}</span>
               <span class="rec-text">${rec.text}</span>
             </div>
           `).join('')}
@@ -1454,7 +1460,7 @@ function showResults(data) {
 
       <!-- Full Analysis Section -->
       ${finalResults ? `
-        <div class="full-analysis-section">
+        <div class="full-analysis-section" role="region" aria-label="Complete analysis report">
           <h3>📋 Complete Analysis Report</h3>
           
           <!-- Executive Summary -->
@@ -1485,7 +1491,7 @@ function showResults(data) {
                 </div>
               ` : ''}
               ${finalResults.executive_summary.critical_actions ? `
-                <div class="critical-actions">
+                <div class="critical-actions" role="alert">
                   <strong>⚠️ Critical Actions:</strong>
                   <ul>
                     ${finalResults.executive_summary.critical_actions.map(action => `<li>${action}</li>`).join('')}
@@ -1564,7 +1570,7 @@ function showResults(data) {
               <div class="steps-timeline">
                 ${finalResults.recommendations.next_steps.map((step, index) => `
                   <div class="step-item priority-${step.priority}">
-                    <div class="step-number">${index + 1}</div>
+                    <div class="step-number" aria-label="Step ${index + 1}">${index + 1}</div>
                     <div class="step-content">
                       <strong>${step.action}</strong>
                       <div class="step-meta">
@@ -1597,18 +1603,37 @@ function showResults(data) {
           ` : ''}
         </div>
       ` : ''}
+      
+      <!-- HTML Report Section (if provided) -->
+      ${data.html_results ? `
+        <div class="full-report-section" role="region" aria-label="Complete analysis report">
+          <h3>📄 Detailed Analysis Report</h3>
+          <div class="report-frame">
+            ${data.html_results}
+          </div>
+        </div>
+      ` : ''}
 
       <!-- Action Buttons -->
       <div class="action-buttons-results">
         ${data.pdf_url ? `
-          <a href="${data.pdf_url}" class="button primary" target="_blank">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <a href="${data.pdf_url}" class="button primary" target="_blank" rel="noopener" aria-label="Download full PDF report">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2"/>
             </svg>
             Download PDF Report
           </a>
         ` : ''}
-        <button class="button secondary" onclick="location.reload()">New Assessment</button>
+        <button class="button secondary" onclick="location.reload()" aria-label="Start new assessment">New Assessment</button>
+      </div>
+      
+      <!-- Feedback Widget -->
+      <div class="feedback-widget" role="region" aria-label="Provide feedback">
+        <p>Was this report helpful?</p>
+        <div class="feedback-buttons">
+          <button class="feedback-btn" data-rating="positive" aria-label="Yes, this report was helpful">👍 Yes</button>
+          <button class="feedback-btn" data-rating="negative" aria-label="No, this report was not helpful">👎 No</button>
+        </div>
       </div>
     </div>
   `;
@@ -1620,28 +1645,75 @@ function showResults(data) {
     });
   }, 100);
   
+  // Setup feedback handlers
+  setTimeout(() => {
+    document.querySelectorAll('.feedback-btn').forEach(btn => {
+      btn.addEventListener('click', handleFeedback);
+    });
+  }, 200);
+  
   // Show results with fade-in
   elements.results.classList.remove('hidden');
+}
+
+// Add feedback handler function
+function handleFeedback(e) {
+  const button = e.currentTarget;
+  const rating = button.getAttribute('data-rating');
+  
+  // Mark as selected
+  document.querySelectorAll('.feedback-btn').forEach(btn => {
+    btn.classList.remove('selected');
+  });
+  button.classList.add('selected');
+  
+  // Log feedback (you can send to analytics)
+  console.log('User feedback:', rating);
+  
+  // Optional: Thank the user
+  const widget = document.querySelector('.feedback-widget');
+  setTimeout(() => {
+    const thankYou = document.createElement('p');
+    thankYou.style.color = '#4CAF50';
+    thankYou.style.marginTop = '10px';
+    thankYou.style.fontWeight = '600';
+    thankYou.textContent = '✓ Thank you for your feedback!';
+    widget.appendChild(thankYou);
+  }, 300);
 }
 
 // Helper: Create risk card HTML
 function createRiskCard(type, probability, icon) {
   const percent = Math.round(probability);
   const riskClass = percent > 60 ? 'high' : percent > 40 ? 'medium' : 'low';
+  const riskLabel = getRiskLabelForPercent(percent);
   
   return `
-    <div class="risk-card ${riskClass}">
+    <div class="risk-card ${riskClass}" role="article" aria-label="${type} risk: ${percent}%, ${riskLabel}">
       <div class="risk-card-header">
-        <span class="risk-icon">${icon}</span>
+        <span class="risk-icon" aria-hidden="true">${icon}</span>
         <span class="risk-type">${type} Risk</span>
       </div>
-      <div class="risk-percentage">${percent}%</div>
-      <div class="risk-bar">
+      <div class="risk-percentage" aria-label="${percent} percent">${percent}%</div>
+      <div class="risk-bar" role="progressbar" aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100" aria-label="${type} risk level">
         <div class="risk-bar-fill" data-width="${percent}%" style="width: 0%"></div>
       </div>
-      <div class="risk-label">${getRiskLabelForPercent(percent)}</div>
+      <div class="risk-label">${riskLabel}</div>
+      <div class="risk-tooltip" role="tooltip">
+        ${getRiskTooltipText(type)}
+      </div>
     </div>
   `;
+}
+
+// Helper: Get tooltip text for risk types
+function getRiskTooltipText(type) {
+  const tooltips = {
+    'Hail': 'Based on historical hail events within 10 miles of your property',
+    'Wind': 'Analyzed from NOAA wind damage reports and local storm patterns',
+    'Flood': 'Calculated using elevation data and flood zone classifications'
+  };
+  return tooltips[type] || 'Risk analysis based on comprehensive data';
 }
 
 // Helper: Generate recommendations
@@ -1789,12 +1861,45 @@ function handleSubmissionError(error) {
   // Stop animations/timers on error
   stopLoadingSequence();
   
-  // Show error state
-  elements.statusMessage.textContent = "Unable to process your request. Please try again.";
-  elements.factText.textContent = "If the problem persists, please call us directly at (469) 434-2121.";
+  // Update screen reader status
+  updateLoadingStatus('Error processing request. Please try again or contact us.');
   
-  // Reset form
-  setTimeout(resetForm, 5000);
+  // Show friendly error state
+  elements.loading.innerHTML = `
+    <div class="error-state">
+      <div class="error-icon" role="img" aria-label="Error">⚠️</div>
+      <h3>Analysis Temporarily Unavailable</h3>
+      <p>We're having trouble processing your request right now. This could be due to high demand or a temporary service interruption.</p>
+      
+      <div class="error-actions">
+        <button class="button primary" onclick="window.location.reload()" aria-label="Retry analysis">
+          <span>Try Again</span>
+        </button>
+        <a href="tel:+14694342121" class="button secondary" aria-label="Call Hayden Claims Group">
+          <span>📞 Call Us: (469) 434-2121</span>
+        </a>
+      </div>
+      
+      <div class="help-message">
+        <p>Need immediate assistance? Our team is available to help you understand your storm damage risk.</p>
+      </div>
+      
+      <details class="error-details">
+        <summary>Technical Details (for support)</summary>
+        <code>${error.message || 'Unknown error occurred'}</code>
+      </details>
+    </div>
+  `;
+  
+  elements.loading.classList.remove('hidden');
+}
+
+// Add function to update screen reader announcements
+function updateLoadingStatus(message) {
+  const statusElement = document.getElementById('loading-status');
+  if (statusElement) {
+    statusElement.textContent = message;
+  }
 }
 
 function resetForm() {
